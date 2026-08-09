@@ -1,0 +1,23 @@
+# Personal / not for a public repo
+applied-ai-switch-schedule.md
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editor / agent local state
+.claude/
+.vscode/
+.idea/
+
+# Derived artifacts — regenerate with `python chunker.py`
+data/chunks.jsonl
+
+# PDF downloads: rbidocs.rbi.org.in sits behind a WAF that returns challenge
+# pages, so this stays empty. The corpus comes from data/html/ instead.
+data/circulars/
+
+# Symlink category views, rebuilt by `python rbi_scraper.py organize`
+data/by_category/
