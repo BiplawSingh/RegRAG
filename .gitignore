@@ -1,6 +1,9 @@
 # Personal / not for a public repo
 applied-ai-switch-schedule.md
 
+# Blog posts — drafted here, published elsewhere; not pushed
+blog/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -12,8 +15,9 @@ venv/
 .vscode/
 .idea/
 
-# Derived artifacts — regenerate with `python chunker.py`
+# Derived artifacts — regenerate with `python chunker.py` / `python embed.py build`
 data/chunks.jsonl
+data/embeddings.npy
 
 # PDF downloads: rbidocs.rbi.org.in sits behind a WAF that returns challenge
 # pages, so this stays empty. The corpus comes from data/html/ instead.
