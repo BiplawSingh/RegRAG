@@ -18,6 +18,7 @@ venv/
 # Derived artifacts — regenerate with `python chunker.py` / `python embed.py build`
 data/chunks.jsonl
 data/embeddings.npy
+data/qdrant/
 
 # PDF downloads: rbidocs.rbi.org.in sits behind a WAF that returns challenge
 # pages, so this stays empty. The corpus comes from data/html/ instead.
@@ -25,3 +26,8 @@ data/circulars/
 
 # Symlink category views, rebuilt by `python rbi_scraper.py organize`
 data/by_category/
+
+# Q&A run history: grows on every question asked, and the latest batch snapshot
+# is redundant with it. Local runtime data, not corpus data -- not committed.
+data/log.jsonl
+data/answers.jsonl

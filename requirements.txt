@@ -1,0 +1,20 @@
+# Hand-curated from the imports each script actually uses -- not a `pip freeze`
+# dump, which would drag in every unrelated package on this machine.
+
+# rbi_scraper.py -- harvest, parse
+httpx>=0.28
+beautifulsoup4>=4.15
+
+# chunker.py -- no third-party deps beyond beautifulsoup4 above
+
+# embed.py -- embeddings
+sentence-transformers>=5.2
+torch>=2.10
+numpy>=2.4
+
+# index_qdrant.py -- vector store client (needs a running Qdrant; see README)
+qdrant-client>=1.19,<2
+
+# rag.py -- generation + structured output
+google-genai>=1.65
+pydantic>=2.12
