@@ -32,6 +32,8 @@ from pathlib import Path
 import httpx
 from bs4 import BeautifulSoup
 
+import env  # noqa: F401  -- loads .env before SCRAPER_CONTACT is read below
+
 # ----------------------------- config ---------------------------------------
 BASE = "https://www.rbi.org.in/scripts"
 CIRCULAR_DETAIL = BASE + "/BS_CircularIndexDisplay.aspx?Id={id}"

@@ -18,3 +18,7 @@ qdrant-client>=1.19,<2
 # rag.py -- generation + structured output
 google-genai>=1.65
 pydantic>=2.12
+
+# tracing.py -- LLM observability. Optional at runtime: without LANGFUSE_* keys
+# everything no-ops and the pipeline runs unchanged.
+langfuse>=4.14

@@ -1,8 +1,16 @@
+# Secrets. .env holds real API keys; .env.example is the committed template.
+# Never remove this line.
+.env
+.env.local
+
 # Personal / not for a public repo
 applied-ai-switch-schedule.md
 
 # Blog posts — drafted here, published elsewhere; not pushed
 blog/
+
+# Personal study notes — for interview prep, not part of the project
+notes/
 
 # Python
 __pycache__/

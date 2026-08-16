@@ -33,6 +33,8 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 import numpy as np
 from qdrant_client import QdrantClient, models
 
+import env  # noqa: F401  -- loads .env before QDRANT_URL is read in the CLI below
+
 ROOT = Path("data")
 CHUNKS = ROOT / "chunks.jsonl"
 VECS = ROOT / "embeddings.npy"

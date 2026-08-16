@@ -36,6 +36,9 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
+import env                # noqa: F401 -- loads .env; must precede the getenv calls below
+import tracing            # no-ops when LANGFUSE_* keys are absent; see tracing.py
+
 ROOT = Path("data")
 OUT = ROOT / "answers.jsonl"      # latest batch run only -- overwritten every `batch`
 LOG = ROOT / "log.jsonl"          # every question ever asked -- append-only, never overwritten
@@ -182,7 +185,14 @@ def generate(question, chunks, attempts=4):
             resp = client.models.generate_content(
                 model=GEN_MODEL, contents=prompt, config=cfg
             )
-            return Answer.model_validate_json(resp.text), time.time() - t0
+            # Token counts ride along so the caller can attach them to the trace --
+            # without them Langfuse shows the call but can't cost it.
+            u = getattr(resp, "usage_metadata", None)
+            usage = {
+                "input": getattr(u, "prompt_token_count", None) or 0,
+                "output": getattr(u, "candidates_token_count", None) or 0,
+            } if u else {}
+            return Answer.model_validate_json(resp.text), time.time() - t0, usage, prompt
         except Exception as e:
             msg = str(e)
             if "RESOURCE_EXHAUSTED" in msg or "429" in msg:
@@ -312,27 +322,71 @@ def cmd_models(all_models=False):
 
 def run_one(question, k=8, entity=None, use_filter=True, quiet=False,
             run_id=None, source="ask"):
-    entity = entity or detect_entity(question)
-    chunks, where = retrieve(question, k=k, entity=entity, use_filter=use_filter)
-    ans, secs = generate(question, chunks)
-    checks = verify(ans, chunks)
+    run_id = run_id or uuid.uuid4().hex[:8]
 
-    rec = {
-        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "run_id": run_id or uuid.uuid4().hex[:8],
-        "source": source,               # "ask" (one-off) or "batch"
-        "question": question,
-        "entity": entity,
-        "filtered": bool(entity) and use_filter,
-        "retrieved": [c["number"] for c in chunks],
-        "answer": ans.answer,
-        "insufficient_context": ans.insufficient_context,
-        "citations": checks,
-        "verified": sum(1 for c in checks if c["status"] == "ok"),
-        "n_citations": len(checks),
-        "seconds": round(secs, 2),
-        "model": GEN_MODEL,
-    }
+    # One trace per question, with each stage as a child span. log.jsonl records a
+    # single `seconds` for the whole thing; this is what tells you whether the time
+    # went to embedding, to the vector search, or to the model.
+    with tracing.observe(
+        "rag-question",
+        input={"question": question},
+        metadata={"run_id": run_id, "source": source, "k": k,
+                  "filter": use_filter, "model": GEN_MODEL},
+    ) as trace:
+        with tracing.observe("detect-entity", input={"question": question}) as sp:
+            entity = entity or detect_entity(question)
+            sp.update(output={"entities": entity})
+
+        with tracing.observe(
+            "retrieve",
+            input={"question": question, "entity": entity, "k": k,
+                   "filter_applied": bool(entity) and use_filter},
+        ) as sp:
+            chunks, where = retrieve(question, k=k, entity=entity, use_filter=use_filter)
+            sp.update(output={"retrieved": [c["number"] for c in chunks],
+                              "store": where})
+
+        # as_type="generation" is what makes Langfuse treat this as an LLM call and
+        # attribute tokens/cost to it, rather than timing it as a plain span.
+        with tracing.observe(
+            "generate", as_type="generation", model=GEN_MODEL,
+            input={"question": question, "n_sources": len(chunks)},
+        ) as gen:
+            ans, secs, usage, prompt = generate(question, chunks)
+            gen.update(
+                input={"prompt": prompt},
+                output=ans.answer,
+                usage_details=usage or None,
+                metadata={"insufficient_context": ans.insufficient_context},
+            )
+
+        with tracing.observe("verify", input={"n_citations": len(ans.citations)}) as sp:
+            checks = verify(ans, chunks)
+            sp.update(output={"statuses": [c["status"] for c in checks]})
+
+        rec = {
+            "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "run_id": run_id,
+            "source": source,               # "ask" (one-off) or "batch"
+            "question": question,
+            "entity": entity,
+            "filtered": bool(entity) and use_filter,
+            "retrieved": [c["number"] for c in chunks],
+            "answer": ans.answer,
+            "insufficient_context": ans.insufficient_context,
+            "citations": checks,
+            "verified": sum(1 for c in checks if c["status"] == "ok"),
+            "n_citations": len(checks),
+            "seconds": round(secs, 2),
+            "model": GEN_MODEL,
+        }
+        trace.update(output={
+            "answer": ans.answer,
+            "verified": rec["verified"],
+            "n_citations": rec["n_citations"],
+            "insufficient_context": ans.insufficient_context,
+        })
+
     log_record(rec)          # every question, logged automatically -- see log_record()
     if not quiet:
         print(f"\nQ  {question}")
@@ -447,11 +501,20 @@ if __name__ == "__main__":
     h.add_argument("--tail", type=int, default=10, help="how many recent questions to show")
     args = ap.parse_args()
 
-    if args.cmd == "models":
-        cmd_models(all_models=args.all)
-    elif args.cmd == "ask":
-        run_one(args.question, k=args.k, entity=args.entity, use_filter=not args.no_filter)
-    elif args.cmd == "batch":
-        cmd_batch(k=args.k, use_filter=not args.no_filter)
-    else:
-        cmd_history(tail=args.tail)
+    try:
+        if args.cmd == "models":
+            cmd_models(all_models=args.all)
+        elif args.cmd == "ask":
+            print(tracing.status())
+            run_one(args.question, k=args.k, entity=args.entity,
+                    use_filter=not args.no_filter)
+        elif args.cmd == "batch":
+            print(tracing.status())
+            cmd_batch(k=args.k, use_filter=not args.no_filter)
+        else:
+            cmd_history(tail=args.tail)
+    finally:
+        # Langfuse buffers events and sends them in the background. A short-lived
+        # CLI can exit before that happens, silently dropping the traces -- so flush
+        # on the way out, including when the run died partway through.
+        tracing.flush()
