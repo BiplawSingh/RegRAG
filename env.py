@@ -58,11 +58,11 @@ def _load_manually():
 def summary() -> str:
     """One line per variable, showing whether it's set -- never the value itself."""
     names = [
-        "GEMINI_API_KEY", "GEMINI_MODEL", "QDRANT_URL",
+        "GROQ_API_KEY", "GROQ_MODEL", "GROQ_TPM_LIMIT", "QDRANT_URL",
         "LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_BASE_URL",
         "SCRAPER_CONTACT",
     ]
-    secret = {"GEMINI_API_KEY", "LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY"}
+    secret = {"GROQ_API_KEY", "LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY"}
     lines = [f"env: {'.env loaded' if _ENV_FILE.exists() else 'no .env file'}"]
     for n in names:
         v = os.getenv(n)

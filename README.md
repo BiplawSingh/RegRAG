@@ -35,10 +35,16 @@ python rag.py history             # everything ever asked, all-time
 ### Requirements to run the last three steps
 
 - **Qdrant** running locally: `docker run -d --name qdrant -p 6333:6333 -v qdrant_storage:/qdrant/storage qdrant/qdrant`
-- **A Gemini API key** (free tier): `setx GEMINI_API_KEY "..."` — get one at
-  <https://aistudio.google.com/apikey>. Check
-  <https://aistudio.google.com/rate-limit> for your daily quota per model before
-  running `batch` — the free tier meters requests *per day, per model*.
+- **A Groq API key** (free tier) — get one at <https://console.groq.com>, then
+  `cp .env.example .env` and paste it in.
+
+  Generation needs strict JSON-schema output, so the model must be one that
+  supports it (`openai/gpt-oss-120b` or `-20b`). On the free tier the binding
+  limit is **tokens per day (200,000)**, not requests per day (1,000): at ~2,700
+  tokens per call that is roughly 74 questions a day, and 8,000 tokens/minute
+  caps throughput at ~3 calls a minute. `rag.py` paces itself against the
+  per-minute ceiling rather than absorbing 429s. Limits are per model, so a
+  second model can carry the eval judge on its own allowance.
 
 ## Current numbers
 

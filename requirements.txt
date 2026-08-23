@@ -15,8 +15,9 @@ numpy>=2.4
 # index_qdrant.py -- vector store client (needs a running Qdrant; see README)
 qdrant-client>=1.19,<2
 
-# rag.py -- generation + structured output
-google-genai>=1.65
+# rag.py -- generation + structured output. Groq's free tier allows ~50x the
+# daily requests Gemini's did, and gpt-oss-* support strict JSON schema.
+groq>=1.6
 pydantic>=2.12
 
 # tracing.py -- LLM observability. Optional at runtime: without LANGFUSE_* keys

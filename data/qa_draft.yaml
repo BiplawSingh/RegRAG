@@ -1,0 +1,2020 @@
+# Ground-truth question set. Fill in `question` and `answer` for each entry.
+#
+# The answer is what a correct response looks like, in your own words, based
+# ONLY on the source text shown. If the chunk doesn't actually answer the
+# question you had in mind, either change the question or set answerable: false.
+#
+# Leave `source_text` and `gold_chunk_ids` alone -- the harness uses them to
+# score whether retrieval found the right documents.
+#
+#   python qa.py stats      progress
+#   python qa.py validate   what's incomplete
+#   python qa.py export     -> data/qa.jsonl
+
+  # --- source chunk 5391 ---
+  #   RBI/DOR/2026-27/398   2026-04-27   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks - Asset Classification, Provisioning and Income Re
+  #   section:  Chapter III: Expected Credit Loss (ECL) – based Provisioning > N. Prudential Floors for EC
+- id: q001
+  category: lookup
+  answerable: true
+  question: "For commercial banks, what is the amount set aside for loans if project is extended, answer this along with timeline"
+  answer: |
+    For every three months delay, on top of the normal cushion, the commercial banks must set aside 0.375% for infrastructure projects, 0.5625% for non-infrastructure
+  notes: ""
+  gold_chunk_ids: [5391]
+  gold_docs: ["RBI/DOR/2026-27/398"]
+  source_text: |
+    Note 1: For project finance exposures (other than CRE (ADC) & CRE-RH (ADC)) which have availed DCCO deferment as per extant norms, a bank shall maintain additional account wise specific provisions of 0.375% for infrastructure project loans and 0.5625% for non-infrastructure project loans, for each quarter of deferment, over and above the applicable Stage 1 provision.
+    (xiii) Exposures guaranteed by the central government
+    For exposures under various schemes of Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE), Credit Risk Guarantee Fund Trust for Low Income Housing (CRGFTLIH) and National Credit Guarantee Trustee Company Ltd (NCGTC), the prudential floor for Stage 1 and Stage 2 exposures shall be as below:
+
+  # --- source chunk 5942 ---
+  #   RBI/DCM/2026-27/394   2026-04-01   DCM
+  #   binds:    All Banks
+  #   document: Master Direction on Counterfeit Notes – Detection, Reporting and Monitoring
+  #   section:  1. Authority to Impound Counterfeit Notes > 8. Provision of Devices Facilitating Detection
+- id: q002
+  category: lookup
+  answerable: true
+  question: "What do banks do to spot fake currency? Give me details."
+  answer: |
+    Every bank branch must have UV lamps and note-checking machines to spot fake currency. Banks must keep a daily record of notes machine-processed and how many fakes were found, and must provide note-counting machines with a customer-facing display at the counter.
+  notes: ""
+  gold_chunk_ids: [5942]
+  gold_docs: ["RBI/DCM/2026-27/394"]
+  source_text: |
+    8.1 With a view to facilitate the detection of Counterfeit Notes, all bank branches/ identified back offices shall be equipped with ultra-violet lamps/ Note Sorting/ Authentication Machines. In addition, all CC branches shall be equipped with verification, processing and sorting machines and shall be used to their optimum capacity. Such machines shall conform to 'Note Authentication and Fitness Sorting Parameters' prescribed in terms of circular DCM(NPD)No.S488/18.00.14/2022-23 dated July 1, 2022 , as also, the Indian Standards duly certified by Bureau of Indian Standards (BIS) as required in terms of circular DCM(NPD)No.S2193/09.45.000/2024-25 dated October 30, 2024
+    8.2 The banks shall maintain a daily record of the notes processed through the Note Sorting Machines, including the number of counterfeits detected.
+    8.3 The banks shall also provide note counting machines (with dual display facility) for public use at the counters.
+
+  # --- source chunk 598 ---
+  #   RBI/DoS/2026-27/414   2026-07-31   DOS
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks – Statutory Audit) Directions, 2026
+  #   section:  Chapter II - Governance and Oversight > A. Role of the Board and Senior Management
+- id: q003
+  category: lookup
+  answerable: false
+  question: "For banks, how do the Audit Committee checks for genuinely independent outside auditors? What measures or steps they take to do so?"
+  answer: |
+    
+  notes: "The source says the Audit Committee monitors and assesses auditor independence but never the specific measures"
+  gold_chunk_ids: [598]
+  gold_docs: ["RBI/DoS/2026-27/414"]
+  source_text: |
+    6. The bank shall decide on the number of SCAs / SAs based on a Board [Local Management (LM) in case of foreign banks operating under branch mode in India] approved policy, inter alia, taking into account the relevant factors such as the size and spread of assets, accounting and administrative units, complexity of transactions, level of computerisation, availability of other independent audit inputs, identified risks in financial reporting and any other relevant factors.
+    7. The Audit Committee of the Board (ACB) / LM shall monitor and assess the independence of the auditors and conflict of interest position in terms of relevant regulatory provisions, standards, and best practices. Any concerns in this regard shall be flagged by the ACB / LM to the Board of Directors of the bank and the concerned Senior Supervisory Manager (SSM), Department of Supervision (DoS), RBI.
+
+  # --- source chunk 2664 ---
+  #   RBI/DoS/2026-27/456   2026-07-31   DOS
+  #   binds:    All India Financial Institutions
+  #   document: Reserve Bank of India (All India Financial Institutions – Cybersecurity, Technology: Risk,
+  #   section:  Chapter III - Information Technology Governance and Oversight > B. Information Security Po
+- id: q004
+  category: lookup
+  answerable: true
+  question: "Why does AIFI keep Information Security Policy and Cybersecurity Policy separate?"
+  answer: |
+    The point of keeping them separate is that cyber risks don't get buried inside general IT policy.
+  notes: ""
+  gold_chunk_ids: [2664]
+  gold_docs: ["RBI/DoS/2026-27/456"]
+  source_text: |
+    13. The AIFI shall put in place an Information Security Policy that takes into consideration, inter alia, aspects such as the objectives, scope, ownership, and responsibility for the policy; information security organisational structure; exceptions; compliance review and penal measures for non-compliance of policies.
+    14. The AIFI shall put in place a Cybersecurity Policy elucidating the strategy containing an appropriate approach to combat cyber threats given the level of complexity of business and acceptable levels of risk, duly approved by its Board. The cybersecurity policy shall be distinct and separate from the broader IT policy / Information Security policy so that it can highlight the risks from cyber threats and the measures to address / mitigate these risks.
+
+  # --- source chunk 7757 ---
+  #   RBI/DOR/2025-26/144   2025-11-28   DOR
+  #   binds:    Foreign Banks
+  #   document: Reserve Bank of India (Setting Up of Wholly Owned Subsidiaries by Foreign Banks) Guideline
+  #   section:  A. Background > 18. Other conditions
+- id: q005
+  category: lookup
+  answerable: false
+  question: "Why must the foreign bank run on Core Banking Solution in India?"
+  answer: |
+    Not answerable from this source. The chunk states that the wholly-owned
+    subsidiary must operate on a Core Banking Solution platform from inception,
+    but gives no reason for the requirement.
+  notes: ""
+  gold_chunk_ids: [7757]
+  gold_docs: ["RBI/DOR/2025-26/144"]
+  source_text: |
+    (1) As the Reserve Bank of India, at present, does not grant a differential licence to banks seeking entry in ‘niche’ markets, preference will be given to applicant banks for a WOS mode of presence in India which have experience in commercial and retail banking.
+    (2) The WOS, from inception, would be required to operate on Core Banking Solution (CBS) platform.
+    (3) The WOS shall make full use of modern infrastructural facilities in office equipment, computers, telecommunications etc. in order to provide cost-effective customer service. It should have a high powered Customer Grievances Cell to handle customer complaints.
+    (4) The WOS would be covered by the provisions of the Reserve Bank - Integrated Ombudsman Scheme, 2021, as amended from time to time.
+
+  # --- source chunk 7354 ---
+  #   RBI/2025-26/134   2025-12-05   DOR
+  #   binds:    All Banks
+  #   document: Penal Interest on shortfall in CRR and SLR requirements - Change in Bank Rate
+  #   section:  -
+- id: q006
+  category: lookup
+  answerable: true
+  question: "What is the bank rate change?"
+  answer: |
+    cut from 5.75% to 5.50%
+  notes: ""
+  gold_chunk_ids: [7354]
+  gold_docs: ["RBI/2025-26/134"]
+  source_text: |
+    RBI/2025-26/134 DoR.RET.REC.341/12.01.001/2025-26
+    December 05, 2025
+    All banks,
+    Madam / Sir,
+    Penal Interest on shortfall in CRR and SLR requirements - Change in Bank Rate
+    Please refer to our circular DoR.RET.REC.22/12.01.001/2025-26 dated June 06, 2025 on the captioned subject.
+    2. As announced in the Monetary Policy Statement 2025-26 dated December 05, 2025 , the Bank Rate is revised downwards by 25 basis points from 5.75 per cent to 5.50 per cent with immediate effect. Accordingly, all penal interest rates on shortfall in CRR and SLR requirements, which are specifically linked to the Bank Rate, also stand revised as under:
+    Penal Interest Rates which are linked to the Bank Rate
+
+  # --- source chunk 5663 ---
+  #   RBI/DOR/2026-27/36   2026-04-27   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks – Income Recognition, Asset Classification and Pro
+  #   section:  -
+- id: q007
+  category: lookup
+  answerable: true
+  question: "When the Commercial Banks Income Recognition and Asset Classification Directions were repealed, what survived the repeal?"
+  answer: |
+    Anything already done under the repealed Directions still stands. Any action
+    taken or initiated under them continues to be governed by them, and
+    approvals or acknowledgments granted under them are treated as governed by
+    the new Directions. The repeal does not affect any right, obligation or
+    liability acquired, accrued or incurred under them, nor any penalty,
+    forfeiture or punishment already incurred for a contravention.
+  notes: "Differentiated from q018, which asks the same thing about the Regional Rural Banks Fraud Risk Management repeal. Both were previously worded 'What survives a repeal?', which retrieval cannot tell apart."
+  gold_chunk_ids: [5663]
+  gold_docs: ["RBI/DOR/2026-27/36"]
+  source_text: |
+    Banks-Asset Classification, Provisioning and Income Recognition) Directions, 2026 issued on April 27, 2026, with effect from April 01, 2027.
+    2. Notwithstanding such repeal, any action taken or purported to have been taken, or initiated under the repealed Directions shall continue to be governed by the provisions thereof. All approvals or acknowledgments granted under these repealed Directions shall be deemed as governed by these Directions. Further, the repeal of these Directions shall not in any way prejudicially affect:
+    (1) any right, obligation or liability acquired, accrued, or incurred thereunder;
+    (2) any, penalty, forfeiture, or punishment incurred in respect of any contravention committed thereunder; and
+
+  # --- source chunk 3084 ---
+  #   RBI/DoS/2026-27/465   2026-07-31   DOS
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies - Statutory Audit) Directions, 2026
+  #   section:  -
+- id: q008
+  category: lookup
+  answerable: false
+  question: "What is RBI?"
+  answer: |
+    Not answerable from this source. The chunk is the opening preamble of the
+    NBFC Statutory Audit Directions, listing the statutes RBI is acting under.
+    It does not define what RBI is.
+  notes: ""
+  gold_chunk_ids: [3084]
+  gold_docs: ["RBI/DoS/2026-27/465"]
+  source_text: |
+    RBI/DoS/2026-27/465 DoS.CO.ARG.59/08.91.001/2026-27
+    July 31, 2026
+    Reserve Bank of India (Non-Banking Financial Companies - Statutory Audit) Directions, 2026
+    In exercise of powers conferred by Sections 45JA, 45K, 45L and 45M of the Reserve Bank of India Act, 1934, Sections 29A, 30A and 32 of National Housing Bank Act, 1987, Sections 3 (read with section 31A) and 6 of Factoring Regulation Act, 2011 and all other provisions / laws enabling the Reserve Bank of India (‘RBI’) in this regard, RBI being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Directions hereinafter specified.
+
+  # --- source chunk 7056 ---
+  #   RBI/2025-26/171   2026-01-01   DPSS
+  #   binds:    (not entity-scoped)
+  #   document: Returns – Department of Payment and Settlement Systems – Submission in CIMS
+  #   section:  -
+- id: q009
+  category: lookup
+  answerable: true
+  question: "Where should regulatory returns be filed?"
+  answer: |
+    RBI's CIMS portal
+  notes: ""
+  gold_chunk_ids: [7056]
+  gold_docs: ["RBI/2025-26/171"]
+  source_text: |
+    2. Accordingly, you are advised to submit the return listed above on the CIMS portal ( https://cims.rbi.org.in/#/login ) for the reporting period December 2025 onwards as per the reporting guidelines.
+    3. The Admin Users for each reporting entity have been created in CIMS. The login credentials for the users who will be submitting this return need to be created by the Admin Users of the respective entity.
+    4. As per the extant practice, the return for every month should be submitted by the 7th of the succeeding month (i.e. return for December 2025 should be submitted by January 07, 2026). This is issued under Section 12 read with Section 19 of the Payment and Settlement Systems Act, 2007. Non-compliance with the instruction will be liable to penal action.
+    Yours faithfully,
+    (Saurabh Nath) Chief General Manager
+
+  # --- source chunk 4325 ---
+  #   RBI/DPSS/2026-27/401   2026-06-15   DPSS
+  #   binds:    (not entity-scoped)
+  #   document: Master Directions on Authorisation to operate a Payment System
+  #   section:  1. Short Title and Commencement > 2. Definitions
+- id: q010
+  category: lookup
+  answerable: true
+  question: "Who is a promoter?"
+  answer: |
+    A "Promoter" is the person who, with relatives, effectively controls the operator through voting shares — and "effective control" covers any arrangement (shareholding, agreement, or otherwise) that lets someone exercise control
+  notes: ""
+  gold_chunk_ids: [4325]
+  gold_docs: ["RBI/DPSS/2026-27/401"]
+  source_text: |
+    1997] for listed companies, a related party (defined in terms of AS 18), common brand name, and investment in equity shares of 20 percent and above.
+    (5) ‘Promoter’ means, the person who together with his relatives [as defined in Section 2(77) of the Companies Act, 2013 and Rules made there under], by virtue of his ownership of voting equity shares, will be/ is in effective control of Payment System Operator, and includes, wherever applicable, all entities which form part of the Promoter Group.
+    Explanation: The term ‘effective control’ means any arrangement whether in the form of shareholding or agreement or otherwise, which enables exercise of control.
+    (6) ‘Promoter Group’ includes:
+    A. the promoter;
+    B. relatives of the promoter [as defined in Section 2 (77) of the Companies Act, 2013 and Rules made there under]; and
+    C. in case promoter is a body corporate:
+    (i) a subsidiary or holding company of such body corporate;
+
+  # --- source chunk 8792 ---
+  #   RBI/DOR/2025-26/151   2025-11-28   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks - Prudential Norms on Capital Adequacy) Directions
+  #   section:  Chapter IV Risk weighted assets (RWAs) > 172. Risk Weights
+- id: q011
+  category: lookup
+  answerable: true
+  question: "When a loan is guaranteed, how much risk does State Government guarantees to carry?"
+  answer: |
+    20 per cent
+  notes: ""
+  gold_chunk_ids: [8792]
+  gold_docs: ["RBI/DOR/2025-26/151"]
+  source_text: |
+    (1) The protected portion is assigned the risk weight of the protection provider. Exposures covered by State Government guarantees shall attract a risk weight of 20 per cent. The uncovered portion of the exposure is assigned the risk weight of the underlying counterparty subject to conditions stipulated in paragraph 172(2).
+    (2) As per Reserve Bank of India (Commercial Banks – Concentration Risk Management) Directions, 2025 on large exposures framework, any CRM instrument from which CRM benefits like shifting of exposure / risk weights etc. are not derived may not be counted as an exposure on the CRM provider. In case of non-fund-based credit facilities provided to a person resident outside India where CRM benefits are not derived and the exposure is shifted to the non-resident person, such exposures to the non-resident person shall attract a minimum risk weight of 150 per cent.
+
+  # --- source chunk 2282 ---
+  #   RBI/DoS/2026-27/446   2026-07-31   DOS
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks – Fraud Risk Management) Directions, 2026
+  #   section:  Chapter V - Reporting of Frauds to Law Enforcement Agencies > 43. The LAB shall immediatel
+- id: q012
+  category: lookup
+  answerable: true
+  question: "Who were consulted for setting the thresholds for reporting fraud to police?"
+  answer: |
+    The Central Vigilance Commission, the Department of Financial Services and selected law-enforcement agencies
+  notes: ""
+  gold_chunk_ids: [2282]
+  gold_docs: ["RBI/DoS/2026-27/446"]
+  source_text: |
+    Note:
+    (1) As the thresholds for reporting to LEAs vary across the States / UTs, these reporting requirements have been prescribed after due consultation with Central Vigilance Commission, Department of Financial Services, Government of India and select LEAs.
+    (2) In case of consortium lending, each of the consortium member may file separate complaints, if separate offences have been committed in respect of each of them and if the fraud so committed is not part of the same fraudulent act / transaction. In other cases of such lending, only one member may file a complaint, and all the other members may extend necessary support to the said member and the LEAs in investigation of the fraud, including by way of providing all necessary information and documents. The LAB may take a decision in this regard depending on the facts and circumstances that may be relevant in a given case and the applicable laws.
+    44. The LAB shall establish suitable nodal point(s) / designate officer(s) for reporting incidents of fraud to LEAs and for proper coordination to meet the requirements of the LEAs.
+
+  # --- source chunk 7580 ---
+  #   RBI/DOR/2025-26/122   2025-12-04   DOR
+  #   binds:    Rural Co-operative Banks
+  #   document: Reserve Bank of India (Rural Co-operative Banks - Branch Authorisation) Repeal Directions,
+  #   section:  -
+- id: q013
+  category: lookup
+  answerable: true
+  question: "What replaced what, and when?"
+  answer: |
+    A Branch Authorisation rulebook for rural co-operative banks issued 28 November 2025 is repealed and replaced by a new one dated 4 December 2025
+  notes: ""
+  gold_chunk_ids: [7580]
+  gold_docs: ["RBI/DOR/2025-26/122"]
+  source_text: |
+    RBI/DOR/2025-26/122 DOR.LIC.REC.No.328/07-01-000/2025-26
+    December 04, 2025
+    Reserve Bank of India (Rural Co-operative Banks - Branch Authorisation) Repeal Directions, 2025
+    The Reserve Bank of India being satisfied that it is necessary and expedient in the public interest to do so, hereby repeals the Reserve Bank of India (Rural Co-operative Banks - Branch Authorisation) Directions, 2025 (DoR.LIC.REC.No.215/07-01-000/2025-26) issued on November 28, 2025 . The Directions have now been replaced with Reserve Bank of India (Rural Co-operative Banks - Branch Authorisation) Directions, 2025 issued on December 04, 2025 .
+    2. Notwithstanding such repeal, any action taken or purported to have been taken, or initiated under the repealed Directions shall continue to be governed by the provisions thereof. All approvals or acknowledgments granted under these repealed Directions shall be deemed as governed by these Directions. Further, the repeal of these Directions shall not in any way prejudicially affect:
+    (1) any right, obligation or liability acquired, accrued, or incurred thereunder;
+
+  # --- source chunk 1556 ---
+  #   RBI/DoS/2026-27/431   2026-07-31   DOS
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks - Internal Audit Function) Directions, 2026
+  #   section:  Chapter III - Risk-Based Internal Audit Framework > 25. The bank may prepare a Risk Audit 
+- id: q014
+  category: lookup
+  answerable: true
+  question: "What must an internal audit review at minimum?"
+  answer: |
+    Whatever the scope, the audit must at minimum review how risks are identified and managed, the control environment, control gaps that could enable fraud, data integrity and MIS reliability, regulatory compliance, budgetary control, and transaction testing.
+  notes: ""
+  gold_chunk_ids: [1556]
+  gold_docs: ["RBI/DoS/2026-27/431"]
+  source_text: |
+    26. AAP should prioritise audit work to give greater attention to the areas of:
+    (1) High magnitude and high frequency
+    (2) High magnitude and medium frequency
+    (3) Medium magnitude and high frequency
+    (4) High magnitude and low frequency
+    (5) Medium magnitude and medium frequency.
+    27. The precise scope of RBIA shall be determined by a bank for low, medium, high, very high, and extremely high risk areas. However, at the minimum, it shall review / report on:
+    (1) process by which risks are identified and managed in various areas;
+    (2) the control environment in various areas;
+    (3) gaps, if any, in control mechanism which might lead to frauds, identification of fraud prone areas;
+    (4) data integrity, reliability and integrity of MIS;
+    (5) internal, regulatory and statutory compliance;
+    (6) budgetary control and performance reviews;
+    (7) transaction testing / verification of assets to the extent considered necessary;
+    (8) monitoring compliance with the RBIA report; and
+    (9) variation, if any, in the assessment of risks under the AAP vis-à-vis the RBIA.
+
+  # --- source chunk 2861 ---
+  #   RBI/DoS/2026-27/460   2026-07-31   DOS
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies - Compliance Function) Directions, 
+  #   section:  Chapter III - Scope, Structure, and Responsibilities > C. Staffing
+- id: q015
+  category: lookup
+  answerable: true
+  question: "What must the compliance staff at an NBFC focus on, and what limits apply to giving them other duties?"
+  answer: |
+    Compliance
+  notes: ""
+  gold_chunk_ids: [2861]
+  gold_docs: ["RBI/DoS/2026-27/460"]
+  source_text: |
+    13. The staff in the Compliance Department shall primarily focus on Compliance function. However, the NBFC may assign some other duties to the Compliance staff while ensuring that there is no conflict of interest.
+    14. Apart from having staff with basic qualifications and practical experience in business lines / audit and inspection functions, Compliance function shall have adequate staff members with knowledge of statutory / regulatory prescriptions, law, accountancy, risk management, and information technology. The NBFC shall ensure appropriate succession planning to avoid any future skill gap.
+
+  # --- source chunk 1559 ---
+  #   RBI/DoS/2026-27/431   2026-07-31   DOS
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks - Internal Audit Function) Directions, 2026
+  #   section:  Chapter III - Risk-Based Internal Audit Framework > F. Performance Evaluation
+- id: q016
+  category: lookup
+  answerable: true
+  question: "What must an internal audit department assess when it reviews its own risk-based audit work?"
+  answer: |
+    Whether that auditing actually reduced the risks. Where the real risk profile differs from what the plan assumed, that gap must be examined to test whether the risk-assessment method is sound.
+  notes: ""
+  gold_chunk_ids: [1559]
+  gold_docs: ["RBI/DoS/2026-27/431"]
+  source_text: |
+    30. IAD shall conduct periodic reviews, annually or more frequently, of the RBIA undertaken by it vis-à-vis the approved AAP. The performance review should also include an evaluation of the effectiveness of RBIA in mitigating identified risks.
+    31. Variations, if any, in the risk profile as revealed by the RBIA vis-à-vis the risk profile as documented in AAP should also be looked into to evaluate the reasonableness of risk assessment methodology of the IAD.
+
+  # --- source chunk 1117 ---
+  #   RBI/DoS/2026-27/423   2026-07-31   DOS
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Statutory Audit) Directions, 2026
+  #   section:  Chapter I - Preliminary > C. Definitions
+- id: q017
+  category: lookup
+  answerable: true
+  question: "Which institutions are covered by the term 'All India Financial Institutions'?"
+  answer: |
+    NABARD, SIDBI, NHB, EXIM Bank and NaBFID
+  notes: ""
+  gold_chunk_ids: [1117]
+  gold_docs: ["RBI/DoS/2026-27/423"]
+  source_text: |
+    4. In these Directions, unless the context states otherwise, the terms herein shall bear the meaning assigned to them below:
+    (1) ‘All India Financial Institutions’ shall mean National Bank for Agriculture and Rural Development (NABARD), Small Industries Development Bank of India (SIDBI), National Housing Bank (NHB), Export-Import Bank of India (EXIM Bank) and National Bank for Financing Infrastructure and Development (NaBFID) as established under their respective statutes (hereinafter collectively referred to as ‘AIFIs’).
+    (2) ‘Audit Firm’ shall mean a partnership firm or Limited Liability Partnership (LLP).
+    (3) ‘Central Co-operative Bank (CCB)’ shall be as defined under Sub-Section (d) of Section 2 of National Bank for Agriculture and Rural Development Act, 1981.
+    (4) ‘Commercial Banks’ means banking companies (other than Small Finance Banks, Payment Banks, and Local Area Banks), corresponding new banks, and the State Bank of India, as defined respectively under clauses (c), (da), and (nc) of Section 5 of the Banking Regulation Act, 1949.
+
+  # --- source chunk 2588 ---
+  #   RBI/DoS/2026-27/454   2026-07-31   DOS
+  #   binds:    Regional Rural Banks
+  #   document: Reserve Bank of India (Regional Rural Banks – Fraud Risk Management) Directions, 2026
+  #   section:  Chapter X - Repeal and Other Provisions > A. Repeal and Saving
+- id: q018
+  category: lookup
+  answerable: true
+  question: "When the Fraud Risk Management rules for Regional Rural Banks were repealed, what survived, and what happened to rules that had already been repealed earlier?"
+  answer: |
+    Rules already repealed under the earlier circular stay repealed. Despite the
+    new repeal, any action taken or initiated under the old directions,
+    instructions or guidelines continues to be governed by them, and approvals
+    or acknowledgments granted under them are treated as governed by these
+    Directions. Rights, obligations, liabilities and penalties already incurred
+    are unaffected.
+  notes: "Differentiated from q007 (Commercial Banks asset-classification repeal). The 'already repealed stay repealed' clause is specific to this chunk."
+  gold_chunk_ids: [2588]
+  gold_docs: ["RBI/DoS/2026-27/454"]
+  source_text: |
+    52. With the issue of these Directions, the existing directions, instructions, and guidelines relating to Fraud Risk Management as applicable to Regional Rural Banks stand repealed, as communicated vide circular no. DoS.CO.PPG.66/11.01.005/2026-27 dated July 31, 2026 . The directions, instructions, and guidelines already repealed vide any of the directions, instructions, and guidelines listed in the above circular shall continue to remain repealed.
+    53. Notwithstanding such repeal, any action taken or purported to have been taken, or initiated under the repealed directions, instructions, or guidelines shall continue to be governed by the provisions thereof. All approvals or acknowledgments granted under these repealed lists shall be deemed as governed by these Directions. Further, the repeal of these directions, instructions, or guidelines shall not in any way prejudicially affect:
+    (1) any right, obligation or liability acquired, accrued, or incurred thereunder;
+    (2) any penalty, forfeiture, or punishment incurred in respect of any contravention committed thereunder;
+
+  # --- source chunk 7967 ---
+  #   RBI/DOR/2025-26/147   2025-11-28   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks - Branch Authorisation) Directions, 2025
+  #   section:  Chapter VI – Doorstep Banking > G. Other conditions
+- id: q019
+  category: lookup
+  answerable: true
+  question: "Doorstep banking services are provided to what kind of customers?"
+  answer: |
+     It may be offered only to customers who've completed KYC.
+  notes: ""
+  gold_chunk_ids: [7967]
+  gold_docs: ["RBI/DOR/2025-26/147"]
+  source_text: |
+    99. A bank shall offer doorstep services to only those customers in whose case proper KYC procedures, as laid down in the Reserve Bank of India (Commercial Banks – Know Your Customer) Directions, 2025 have been followed. Further, it shall ensure that
+    services are offered at either the residence or office of the customer, the address of which shall be clearly and explicitly mentioned in the agreement;
+    the agreement / contract with the customer clearly specifies that the bank will be responsible for the acts of omission and commission of its ‘agent’;
+    the facility is not restricted to any particular client / customer or class of customers; and
+    restrictions imposed by Section 10(1)(b)(ii)(b) of the Banking Regulation Act, 1949, are complied with while making payments for the services outsourced.
+
+  # --- source chunk 9212 ---
+  #   RBI/DOR/2025-26/151   2025-11-28   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks - Prudential Norms on Capital Adequacy) Directions
+  #   section:  Annex IV Guidelines on Stress Testing > 64. Market risk
+- id: q020
+  category: lookup
+  answerable: true
+  question: "State the stress-test scenarios for currency risk."
+  answer: |
+    Rupee depreciation shocks are tested at 15% (baseline), 20% (medium), 25% (severe) over 30 days, with matching appreciation shocks.
+  notes: ""
+  gold_chunk_ids: [9212]
+  gold_docs: ["RBI/DOR/2025-26/151"]
+  source_text: |
+    The prime objective is to study the impact of stress test on Profit and Loss account.
+    (1) Foreign exchange risk
+    (i) Forex risk arises from exchange rate changes adversely impacting the local currency denominated a bank’s assets and liabilities. The stress test evaluates the impact of exchange rate variations on the bank’s net open position and also on bank’s profitability.
+    (ii) Shock 1: Depreciation of Indian rupee
+    (a) Baseline: 15 per cent depreciation in 30 days
+    (b) Medium: 20 per cent depreciation in 30 days
+    (c) Severe: 25 per cent depreciation in 30 days
+    (iii) Shock 2: Appreciation of Indian rupee
+    (a) Baseline: 15 per cent appreciation in 30 days
+    (b) Medium: 20 per cent appreciation in 30 days
+    (c) Severe: 25 per cent appreciation in 30 days
+    (iv) Reverse stress testing: how much depreciation would be necessary for Tier 1 capital to move down to 3 per cent over 60 days?
+    (2) Interest rate risk
+
+  # --- source chunk 1616 ---
+  #   RBI/DoS/2026-27/432   2026-07-31   DOS
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks – Statutory Audit) Directions, 2026
+  #   section:  Chapter III - Guidelines for Appointment > A. Number of Statutory Central Auditors / Statu
+- id: q021
+  category: lookup
+  answerable: true
+  question: "What is the purpose of auditor-count limit?"
+  answer: |
+    to make sure the number of auditors matches the bank's asset size and spread of operations, so audits finish on time and properly
+  notes: ""
+  gold_chunk_ids: [1616]
+  gold_docs: ["RBI/DoS/2026-27/432"]
+  source_text: |
+    The above limits have been prescribed to ensure that the number of SCAs / SAs appointed by the bank are adequate, commensurate with the asset size and extent of operations of the bank, with a view to ensure that audits are conducted in a timely and effective manner.
+    13. In addition, the bank shall ensure adherence to the provisions of Section 143 (8) of the Companies Act, 2013 regarding the audit of accounts of all branches.
+
+  # --- source chunk 3162 ---
+  #   RBI/DoS/2026-27/467   2026-07-31   DOS
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies – Miscellaneous) Supervisory Direct
+  #   section:  Chapter V - Prompt Corrective Action Framework > A. Objective
+- id: q022
+  category: lookup
+  answerable: true
+  question: "What is the Prompt Corrective Action framework for?"
+  answer: |
+    Letting RBI step in early and requiring the NBFC to fix its financial health promptly.
+  notes: ""
+  gold_chunk_ids: [3162]
+  gold_docs: ["RBI/DoS/2026-27/467"]
+  source_text: |
+    15. The objective of the Prompt Corrective Action (PCA) Framework is to enable Supervisory intervention at appropriate time and require the NBFC to initiate and implement remedial measures in a timely manner, so as to restore its financial health. The PCA Framework is also intended to act as a tool for effective market discipline. The PCA Framework does not preclude RBI from taking any other action as it deems fit at any time in addition to the corrective actions prescribed in the Framework.
+
+  # --- source chunk 1159 ---
+  #   RBI/DoS/2026-27/423   2026-07-31   DOS
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Statutory Audit) Directions, 2026
+  #   section:  Chapter IV - Long Form Audit Report > 51. Wilful Defaulter: System of identifying and repo
+- id: q023
+  category: lookup
+  answerable: true
+  question: "What do auditors validate in a bank's investment book?"
+  answer: |
+    whether the investment policy is sound and RBI guidelines followed, with deviations highlighted. Specific focus on purchase/sale systems, delegation of powers, reporting, separation of front, middle and back office, periodic reconciliation against book records, and valuation method plus any change to it.
+  notes: ""
+  gold_chunk_ids: [1159]
+  gold_docs: ["RBI/DoS/2026-27/423"]
+  source_text: |
+    52.
+    Investments including Derivatives: The focus should be on the merit of investment policy and adherence to RBI guidelines.
+    Any deviations to RBI directions, and guidelines issued by Fixed Income Money Market and Derivatives Association of India / Financial Benchmarks India Private Limited / Foreign Exchange Dealers' Association of India should be suitably highlighted.
+    Special focus should be given on system of purchase and sale of investments, delegation of powers, reporting systems, segregation of back, middle and front office functions, efficacy of control over investments, including periodic verification / reconciliation of investments with book records, valuation mode, changes in mode of valuation, system relating to inter-bank call money operations, system relating to unquoted investments in the portfolio, system of audit including periodic verification / verification of investment activities / portfolios, policies and systems for monitoring activities such as underwriting, derivatives, etc., among others.
+
+  # --- source chunk 907 ---
+  #   RBI/DoS/2026-27/419   2026-07-31   DOS
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks - Cybersecurity, Technology: Risk, Resilience a
+  #   section:  Chapter V - Baseline Cybersecurity and Resilience Requirements > 148. The bank shall condu
+- id: q024
+  category: lookup
+  answerable: true
+  question: "In which environment is the security testing carried out and what is the period?"
+  answer: |
+     Testing normally happens on the live production environment. For critical or customer-facing systems: vulnerability assessment at least every six months, penetration testing at least every 12 months. Non-critical systems use a risk-based schedule.
+  notes: ""
+  gold_chunk_ids: [907]
+  gold_docs: ["RBI/DoS/2026-27/419"]
+  source_text: |
+    149. The bank shall periodically conduct VA / PT of critical, internet facing web / mobile applications, servers, and network components throughout their lifecycle including pre-implementation, post-implementation, and after changes.
+    150. For critical information systems and / or those in the DMZ having customer interface, VA shall be conducted at least once in every six months and PT at least once in 12 months. For non-critical information systems, a risk-based approach shall be adopted to decide the requirement and periodicity of conduct of VA / PT.
+    151. In the post-implementation (of IT project / system upgrade) scenario, the VA / PT shall be performed on the production environment. Under unavoidable circumstances, if the PT is conducted in test environment, the bank shall ensure that the version and configuration of the test environment resembles the production environment. Any deviation should be documented and approved by the ISC.
+
+  # --- source chunk 3332 ---
+  #   RBI/DoS/2026-27/470   2026-07-31   DOS
+  #   binds:    Credit Information Companies
+  #   document: Reserve Bank of India (Credit Information Companies – Cybersecurity, Technology: Risk, Res
+  #   section:  Chapter V - Baseline Cybersecurity and Resilience Requirements > S. Straight Through Proce
+- id: q025
+  category: lookup
+  answerable: true
+  question: "How do credit bureaus deal with transfers? What practices do they follow for this?"
+  answer: |
+    For credit bureaus: no manual intervention or modification of data as it moves between processes or applications in critical systems. Transfers must be tested, securely automated, checked, and integrated via straight-through processing with authentication and audit trails.
+  notes: ""
+  gold_chunk_ids: [3332]
+  gold_docs: ["RBI/DoS/2026-27/470"]
+  source_text: |
+    136. In order to prevent unauthorised modification of data, the CIC shall ensure that there is no manual intervention or manual modification in data while it is being transferred from one process to another or from one application to another, in respect of critical applications.
+    137. Data transfer mechanism between processes or applications shall be properly tested, securely automated with necessary checks and balances, and properly integrated through ‘Straight Through Processing’ methodology with appropriate authentication mechanism and audit trails.
+
+  # --- source chunk 6792 ---
+  #   RBI/CEPD/2025-26/381   2026-01-14   CEPD
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks - Internal Ombudsman) Directions, 2026
+  #   section:  Chapter II > 5. Appointment of Internal Ombudsman
+- id: q026
+  category: lookup
+  answerable: true
+  question: "Who can be an Internal Ombudsman?"
+  answer: |
+     Serving or retired officer at General Manager rank or equivalent, with at least seven years in banking, NBFC, regulation, supervision, payments, credit information or consumer protection. A serving officer must resign that post first. They must never have worked for the bank or its group, must be under 70 at the end of tenure, and may serve several entities at once if those entities agree.
+  notes: ""
+  gold_chunk_ids: [6792]
+  gold_docs: ["RBI/CEPD/2025-26/381"]
+  source_text: |
+    (1) The IO shall either be a retired or serving officer, in the rank equivalent to a General Manager in the RE of the Reserve Bank under the purview of the Internal Ombudsman framework or a Financial Sector Regulatory Body, having necessary skills and experience of minimum seven years of working in areas such as banking, non-banking finance, regulation, supervision, payment and settlement systems, credit information or consumer protection.
+    Provided that, if the person is a serving officer, he / she is required to relinquish the same before assuming charge as IO.
+    (2) The IO shall previously not have been employed, nor presently be employed, by the bank or a holding, associate or subsidiary company of the bank.
+    (3) The IO shall not be over 70 years of age before the completion of the tenure.
+    (4) A person may work as the IO in more than one RE simultaneously at the discretion of the REs concerned, subject to the approval of the Board or Customer Service Committee / Consumer Protection Committee of the Board of the appointing RE.
+
+  # --- source chunk 8252 ---
+  #   RBI/DoR/2025-26/152   2025-11-28   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks - Resource Raising Norms) Directions, 2025
+  #   section:  Chapter I - Preliminary > B. Applicability
+- id: q027
+  category: lookup
+  answerable: true
+  question: "Commercial bank - term is defined by what reference?"
+  answer: |
+    Banking Regulation Act 1949
+  notes: ""
+  gold_chunk_ids: [8252]
+  gold_docs: ["RBI/DoR/2025-26/152"]
+  source_text: |
+    3. These Directions shall be applicable to commercial banks (hereinafter collectively referred to as 'banks' and individually as a 'bank') excluding Small Finance Banks (SFBs), Local Area Banks (LABs), Payments Banks (PBs) and Regional Rural Banks (RRBs).
+    In this context, the commercial bank shall mean all banking companies, corresponding new banks and State Bank of India as defined under subsections (c), (da) and (nc) of section 5 of the Banking Regulation Act,1949.
+
+  # --- source chunk 1186 ---
+  #   RBI/DoS/2026-27/424   2026-07-31   DOS
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks - Supervisory Returns) Directions, 2026
+  #   section:  Chapter II - Governance and Oversight > A. Role of the Board and Senior Management
+- id: q028
+  category: lookup
+  answerable: true
+  question: "What must a bank's data-quality risk management framework cover?"
+  answer: |
+    In-house and outsourced processes plus confidentiality, integrity and availability.
+  notes: ""
+  gold_chunk_ids: [1186]
+  gold_docs: ["RBI/DoS/2026-27/424"]
+  source_text: |
+    6. The Board and Senior Management shall include the identification, assessment, and management of data quality risks as part of its overall risk management framework. The framework shall include standards for both in-house and outsourced risks for data-related processes, policies on data confidentiality, integrity, availability, and risk management.
+    7. The bank shall ensure that the risk data aggregation capabilities and risk reporting practices are fully documented and subjected to high standards of validation that are aligned with the bank’s other independent risk management reviews. Validation of risk data aggregation and risk reporting practices should be conducted by staff with specific Information Technology (IT), data and reporting expertise. The Board and Senior Management shall ensure that adequate resources are deployed for this purpose.
+
+  # --- source chunk 4218 ---
+  #   RBI/2026-27/150   2026-06-19   FIDD
+  #   binds:    Rural Co-operative Banks, Commercial Banks, Foreign Banks
+  #   document: Lead Bank Scheme
+  #   section:  2. Objective of Lead Bank Scheme > 14. Expanding and Deepening of Digital Payments Ecosyst
+- id: q029
+  category: lookup
+  answerable: true
+  question: "What is the goal of a digital-payments programme?"
+  answer: |
+     The goal is for everyone in identified districts to be able to pay and be paid digitally, safely and cheaply.
+  notes: ""
+  gold_chunk_ids: [4218]
+  gold_docs: ["RBI/2026-27/150"]
+  source_text: |
+    The objective of the programme is to enable every individual in the identified districts to make / receive payments digitally in a safe, secure, quick, affordable, and convenient manner. SLBCs / UTLBCs shall cover all districts of the state fully under the programme, decide the timeline by which this will be done and ensure that the milestones are achieved as planned through close monitoring of progress.
+
+  # --- source chunk 6256 ---
+  #   RBI/2025-26/391   2026-03-10   DOR
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Prudential Norms on Declaration of Dividend) 
+  #   section:  Chapter I > C. Definitions
+- id: q030
+  category: lookup
+  answerable: true
+  question: "How is adjusted profit after tax calculated?"
+  answer: |
+     "Adjusted Profit After Tax" = that year's profit minus 50% of net NPAs as at 31 March — i.e. profits are discounted by half the bad loans before dividends are considered.
+  notes: ""
+  gold_chunk_ids: [6256]
+  gold_docs: ["RBI/2025-26/391"]
+  source_text: |
+    4. In these Directions, unless the context states otherwise, the terms herein shall bear the meanings assigned to them below.
+    (1) ‘Adjusted Profit After Tax (PAT)’ means PAT of the financial year for which the dividend is proposed to be paid minus 50 per cent of Net NPA as on March 31 of the financial year for which the dividend is to be paid;
+    (2) ‘Dividend’ means dividend payable on equity shares and includes interim dividend but excludes dividend on Perpetual Non-Cumulative Preference Shares (PNCPS); and
+    (3) ‘Extra-ordinary profit / income’ shall have the same meaning as defined under applicable Accounting Standards.
+    5. All other expressions unless defined herein shall have the same meaning as have been assigned to them under the applicable Acts, Rules / Regulations made thereunder, or any statutory modification or re-enactment thereto or as used in commercial parlance, as the case may be.
+
+  # --- source chunk 1265 ---
+  #   RBI/DoS/2026-27/425   2026-07-31   DOS
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Miscellaneous) Supervisory Directions, 2026
+  #   section:  Chapter IX – Vigilance > D. Chief of Internal Vigilance
+- id: q031
+  category: entity_scoped
+  answerable: true
+  question: "In a Small Finance Bank, what does the Chief of Internal Vigilance do?"
+  answer: |
+    Covers gathering intelligence on corrupt practices by employees (committed or likely), investigating verifiable allegations, processing investigation reports for the disciplinary authority, and referring matters to the CEO where needed.
+  notes: ""
+  gold_chunk_ids: [1265]
+  gold_docs: ["RBI/DoS/2026-27/425"]
+  source_text: |
+    69. The bank shall designate an officer of suitable seniority as CIV who will head the Internal Vigilance Division of the bank. Vigilance functions to be performed by the CIV would be wide ranging and include collecting intelligence about the corrupt practices committed, or likely to be committed, by the employees of the bank; investigating or causing an investigation to be made into verifiable allegations reported to him; processing investigation reports for further consideration of the disciplinary authority concerned; referring the matters to the CEO of the bank for advice wherever necessary; and taking steps to prevent commission of improper practices / misconducts. Thus, the CIVs' functions can broadly be divided into three parts, viz. (i) Preventive vigilance; (ii) Punitive vigilance; and (iii) Surveillance and detection.
+    D.1 Appointment
+    70. The basis for appointment of CIV should be experience, track record, proven integrity, and ability to inspire confidence among personnel in the bank.
+    D.2 Tenure
+
+  # --- source chunk 2294 ---
+  #   RBI/DoS/2026-27/446   2026-07-31   DOS
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks – Fraud Risk Management) Directions, 2026
+  #   section:  Chapter IX - Reporting Cases of Theft, Burglary, Dacoity and Robbery
+- id: q032
+  category: entity_scoped
+  answerable: true
+  question: "How does reporting something work in a Local Area Bank?"
+  answer: |
+    A Local Area Bank must report theft, burglary, dacoity and robbery — including attempts — to RBI's Fraud Monitoring Group immediately, and no later than seven days, by email in the prescribed RBR format.
+  notes: ""
+  gold_chunk_ids: [2294]
+  gold_docs: ["RBI/DoS/2026-27/446"]
+  source_text: |
+    63. The LAB shall report instances of theft, burglary, dacoity and robbery (including attempted cases), to Fraud Monitoring Group (FMG), Department of Supervision, Central Office, Reserve Bank of India, immediately (not later than seven days) from their occurrence, in the prescribed ‘Return on Bank Robberies, Dacoities, Thefts and Burglaries (RBR)’ format through e-mail ( doscofrmc@rbi.org.in ). The format is available on RBI website .
+    64. The LAB shall also submit a quarterly Return (RBR) on Bank Robberies, Dacoities, Thefts and Burglaries to RBI using online portal, covering all such cases during the quarter. This shall be submitted within 15 days from the end of the quarter to which it relates.
+
+  # --- source chunk 7198 ---
+  #   RBI/2025-26/147   2025-12-11   DOR
+  #   binds:    Rural Co-operative Banks
+  #   document: Reserve Bank of India (Rural Co-operative Banks – Credit Risk Management) – Amendment Dire
+  #   section:  -
+- id: q033
+  category: entity_scoped
+  answerable: false
+  question: "What is Banking Regulation Act?"
+  answer: |
+    Not answerable from this source. The chunk cites the Banking Regulation Act
+    1949 as the authority for the amendment, but does not describe or define the
+    Act.
+  notes: ""
+  gold_chunk_ids: [7198]
+  gold_docs: ["RBI/2025-26/147"]
+  source_text: |
+    RBI/2025-26/147 DOR.CRE.REC.353/07-02-006/2025-26
+    December 11, 2025
+    Reserve Bank of India (Rural Co-operative Banks – Credit Risk Management) – Amendment Directions, 2025
+    Please refer to Reserve Bank of India (Rural Co-operative Banks – Credit Risk Management) Directions, 2025 dated November 28, 2025 (hereinafter referred to as ‘the Directions’).
+    2. On a review, in exercise of the powers conferred by the Sections 21 and 35A read with Section 56 of the Banking Regulation Act, 1949 and all other provisions / laws enabling the Reserve Bank of India (hereinafter called the Reserve Bank) in this regard, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 5781 ---
+  #   RBI/2026-27/15   2026-04-27   DOR
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks – Miscellaneous) – Amendment Directions, 2026
+  #   section:  -
+- id: q034
+  category: entity_scoped
+  answerable: false
+  question: "What is the  Local Area Banks' Miscellaneous Directions?"
+  answer: |
+    Not answerable from this source. Header and preamble only: it states that an
+    amendment to the Local Area Banks Miscellaneous Directions is being issued,
+    not what those Directions contain.
+  notes: ""
+  gold_chunk_ids: [5781]
+  gold_docs: ["RBI/2026-27/15"]
+  source_text: |
+    RBI/2026-27/15 DOR.STR.REC.28/21-04-048/2026-27
+    April 27, 2026
+    Reserve Bank of India (Local Area Banks – Miscellaneous) – Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Local Area Banks – Miscellaneous) Directions, 2025 (hereinafter referred to as ‘the Directions’).
+    2. On a review, and in exercise of the powers conferred by the section 26A and 35A of the Banking Regulation Act, 1949, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 4810 ---
+  #   RBI/2026-27/106   2026-06-08   DOR
+  #   binds:    Regional Rural Banks
+  #   document: Reserve Bank of India (Regional Rural Banks – Cash Reserve Ratio and Statutory Liquidity R
+  #   section:  -
+- id: q035
+  category: entity_scoped
+  answerable: true
+  question: "When was US Dollar–Rupee swap facility for fresh FCNR(B) deposits raised for a minimum of three and maximum of five years announced?"
+  answer: |
+    5 June 2026
+  notes: ""
+  gold_chunk_ids: [4810]
+  gold_docs: ["RBI/2026-27/106"]
+  source_text: |
+    RBI/2026-27/106 DOR.RET.REC.88/12.01.001/2026-27
+    June 08, 2026
+    Reserve Bank of India (Regional Rural Banks – Cash Reserve Ratio and Statutory Liquidity Ratio) Second Amendment Directions, 2026
+    Please refer to the Governor’s Statement dated June 5, 2026 , wherein it has been decided to introduce a US Dollar-Rupee swap facility for fresh Foreign Currency Non-Resident (Bank) [FCNR (B)] dollar funds, mobilised for a minimum tenor of three years and maximum tenor of five years.
+    2. In this connection, please refer to the Reserve Bank of India (Regional Rural Banks – Cash Reserve Ratio and Statutory Liquidity Ratio) Directions, 2025 (Updated as on January 22, 2026). It has been decided that fresh FCNR (B) deposits of minimum tenor of three years and maximum tenor of five years mobilized (including deposits that are renewed upon maturity) by the banks from the date of this Amendment Directions till September 30, 2026 will be exempted from maintenance of CRR and SLR.
+
+  # --- source chunk 6795 ---
+  #   RBI/CEPD/2025-26/381   2026-01-14   CEPD
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks - Internal Ombudsman) Directions, 2026
+  #   section:  Chapter II > 8. Tenure of Internal Ombudsman / Deputy Internal Ombudsman
+- id: q036
+  category: entity_scoped
+  answerable: true
+  question: "For a Commercial Bank, on what basis is the Internal Ombudsman appointed, and what happens if the post falls vacant?"
+  answer: |
+    Internal Ombudsman appointments are contractual, and the post must never sit vacant — the Deputy IO covers temporary absence. If both are away, the bank may designate a serving General-Manager-equivalent as IO for up to one month with Customer Service Committee approval, and that person must have no reporting relationship with business verticals during the period.
+  notes: ""
+  gold_chunk_ids: [6795]
+  gold_docs: ["RBI/CEPD/2025-26/381"]
+  source_text: |
+    (1) The appointment of the IO / Dy. IO in the bank shall be contractual.
+    (2) The bank shall ensure that the post of the IO does not remain vacant at any point of time. During the temporary absence of the IO, the Dy. IO may function as the IO.
+    (3) In a rare case where both IO/s and Dy IO/s are on leave / absent, the bank may designate its serving official equivalent to the General Manager rank as the IO for a period not exceeding one month, with the approval of the Customer Service Committee of the Board. Such official shall not have any reporting relationship with the business verticals of the bank during the period in which he/she is designated as the IO.
+    (4) The tenure of the IO / Dy. IO in the bank shall be a fixed term of not less than three years. However, the total tenure (including extension/reappointment, if any) of the IO / Dy. IO in the bank shall not exceed five years.
+
+  # --- source chunk 1148 ---
+  #   RBI/DoS/2026-27/423   2026-07-31   DOS
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Statutory Audit) Directions, 2026
+  #   section:  Chapter IV - Long Form Audit Report > A. Procedure and Timelines
+- id: q037
+  category: entity_scoped
+  answerable: true
+  question: "What must a Small Finance Bank do with the Long Form Audit Report once received?"
+  answer: |
+    The bank must examine it, and place it before the Audit Committee together with the action taken or proposed on any irregularities. A copy of the bank-wide LFAR, plus agenda notes and the Board's views, goes to RBI's Senior Supervisory Manager.
+  notes: ""
+  gold_chunk_ids: [1148]
+  gold_docs: ["RBI/DoS/2026-27/423"]
+  source_text: |
+    30. The bank shall ensure timely receipt of Long Form Audit Report (LFAR) from the Statutory Central Auditors (SCAs) / Statutory Auditors (SAs) and Statutory Branch Auditors (SBAs).
+    31. The LFAR of the bank, after due examination, shall be placed before the ACB, indicating the action taken / proposed to be taken for rectification of the irregularities, if any, mentioned therein.
+    32. The bank shall forward a copy of the LFAR (i.e., for the bank as a whole) along with the related agenda notes and the Board's views or directions, to the concerned Senior Supervisory Manager (SSM), Department of Supervision, RBI, within 60 days from the date of submission of the same by the SCA / SA.
+
+  # --- source chunk 1800 ---
+  #   RBI/DoS/2026-27/436   2026-07-31   DOS
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks – Concurrent Audit) Directions, 2026
+  #   section:  Chapter III - Guidelines for Concurrent Audit System > F. Other Instructions
+- id: q038
+  category: entity_scoped
+  answerable: true
+  question: "Can an audit firm be doing concurrent audit and be statutory auditor in the same period for an UCB?"
+  answer: |
+    No, it must give up the concurrent assignment before accepting the statutory one.
+  notes: ""
+  gold_chunk_ids: [1800]
+  gold_docs: ["RBI/DoS/2026-27/436"]
+  source_text: |
+    The concurrent auditors should immediately report serious irregularities brought out in the concurrent audit report to the concerned SSM, RBI.
+    24. Chartered Accountants / audit firms associated with the UCB for concurrent audit assignments should not undertake statutory audit assignment of the same UCB during the same period. The audit firms associated with concurrent audit should relinquish the concurrent audit assignment before accepting the statutory audit assignment during the year.
+
+  # --- source chunk 7148 ---
+  #   RBI/2025-26/150   2025-12-11   DOR
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks – Cash Reserve Ratio and Statutory Liquidity Ratio) 
+  #   section:  -
+- id: q039
+  category: entity_scoped
+  answerable: false
+  question: "What was changed by the Banking Laws (Amendment) Act 2025?"
+  answer: |
+    Not answerable from this source. The chunk notes that the Banking Laws
+    (Amendment) Act 2025 amended provisions relating to CRR and SLR, but does
+    not state what those amendments actually changed.
+  notes: ""
+  gold_chunk_ids: [7148]
+  gold_docs: ["RBI/2025-26/150"]
+  source_text: |
+    RBI/2025-26/150 DOR.RET.REC.356/12.01.001/2025-26
+    December 11, 2025
+    Reserve Bank of India (Payments Banks – Cash Reserve Ratio and Statutory Liquidity Ratio) Amendment Directions, 2025
+    Please refer to Reserve Bank of India (Payments Banks – Cash Reserve Ratio and Statutory Liquidity Ratio) Directions, 2025 dated November 28, 2025 .
+    2. The Banking Laws (Amendment) Act, 2025 has amended various provisions, including the section 42 of Reserve Bank of India Act, 1934 and the sections 18 and 24 of Banking Regulation Act 1949, relating to maintenance of Cash Reserve Ratio (CRR) and Statutory Liquidity Ratio (SLR).
+
+  # --- source chunk 3706 ---
+  #   RBI/2026-27/172   2026-06-24   DOR
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks - Responsible Business Conduct) Third Amen
+  #   section:  Annex II(2) - Compensation for Small Value Fraudulent Electronic Banking Transactions – Cl
+- id: q040
+  category: entity_scoped
+  answerable: false
+  question: "Give me the blank reimbursement-claim form template for the Depositor Education and Awareness Fund."
+  answer: |
+    Not answerable from this source. The chunk is a blank claim-form template
+    with certification and signature lines; there is no rule or substantive
+    content to state.
+  notes: ""
+  gold_chunk_ids: [3706]
+  gold_docs: ["RBI/2026-27/172"]
+  source_text: |
+    The claim for reimbursement for the quarter ended ________, 2027 is ₹__________________ (Rupees _________________________________________ only) ((G) – (N)).
+    i. I certify that the above details have been subjected to internal audit / inspection as per the bank’s internal guidelines and are verified and found to be correct.
+    ii. I confirm that no duplication of claims has been made in the submission.
+    (Signature) (To be signed and stamped by the Identified Executive)
+    (Name & Designation) Date: Seal:
+    (Veena Srivastava) Chief General Manager
+    Please refer to The Depositor Education and Awareness Fund Scheme, 2014 for DEA Fund Code.
+
+  # --- source chunk 1346 ---
+  #   RBI/DoS/2026-27/428   2026-07-31   DOS
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks - Cybersecurity, Technology: Risk, Resilience and As
+  #   section:  -
+- id: q041
+  category: entity_scoped
+  answerable: false
+  question: "Briefly state the first five rules of Payments Banks cybersecurity and technology-risk rulebook"
+  answer: |
+    Not answerable from this source. The chunk is the opening preamble of the
+    Payments Banks cybersecurity Directions, citing enabling statutes. None of
+    the substantive rules appear in it.
+  notes: ""
+  gold_chunk_ids: [1346]
+  gold_docs: ["RBI/DoS/2026-27/428"]
+  source_text: |
+    RBI/DoS/2026-27/428 DoS.CO.CSITEG.22/31.01.015/2026-27
+    July 31, 2026
+    Reserve Bank of India (Payments Banks - Cybersecurity, Technology: Risk, Resilience and Assurance Framework) Directions, 2026
+    In exercise of the powers conferred Section 27 and Section 35-A of the Banking Regulation Act, 1949, the Reserve Bank of India Act, 1934, and all other provisions / laws enabling the Reserve Bank of India (‘RBI’) in this regard, RBI being satisfied that it is necessary and expedient in the public interest so to do, hereby issues Directions hereinafter specified.
+
+  # --- source chunk 4406 ---
+  #   RBI/2026-27/124   2026-06-15   DOR
+  #   binds:    Housing Finance Companies
+  #   document: Reserve Bank of India (Housing Finance Companies) Second Amendment Directions, 2026
+  #   section:  -
+- id: q042
+  category: entity_scoped
+  answerable: true
+  question: "What was reviewed and replaced by comprehensive instructions for Housing Finance Companies?"
+  answer: |
+    Existing advertising, marketing and sales rules for Housing Finance Companies were reviewed, and comprehensive instructions are being issued to all NBFCs including HFCs — replacing what sat under the Fair Practices Code chapter.
+  notes: ""
+  gold_chunk_ids: [4406]
+  gold_docs: ["RBI/2026-27/124"]
+  source_text: |
+    RBI/2026-27/124 DOR.MCS.REC.No.103/01-01-039/2026-27
+    June 15, 2026
+    Reserve Bank of India (Housing Finance Companies) Second Amendment Directions, 2026
+    Reserve Bank had earlier issued instructions on ‘Advertising, Marketing and Sales’ to Housing Finance Companies (HFCs) under Chapter-X on ‘Fair Practices Code’ in Reserve Bank of India (Housing Finance Companies) Directions, 2025 . The extant instructions have since been reviewed and it has been decided to issue comprehensive instructions on advertising, marketing and sale of financial products / services to all Non-Banking Financial Companies (NBFCs), including HFCs but excluding Core Investment Companies, NBFC-Account Aggregators, Non-Operative Financial Holding Companies, and NBFCs not having any customer interface, under the Reserve Bank of India (Non-Banking Financial Companies – Responsible Business Conduct) Directions, 2025 .
+
+  # --- source chunk 21 ---
+  #   RBI/2026-2027/228   2026-08-06   DOR
+  #   binds:    Rural Co-operative Banks
+  #   document: Reserve Bank of India (Rural Co-operative Banks - Responsible Business Conduct) Fourth Ame
+  #   section:  3. Short Title and Commencement
+- id: q043
+  category: entity_scoped
+  answerable: true
+  question: "What are the conduct guidelines for a recovery agent of Rural Co-operative Banks?"
+  answer: |
+    Agents may discuss the debt only with the borrower or guarantor, must behave civilly and maintain decorum when visiting, and only representatives the bank has authorised may act.
+  notes: ""
+  gold_chunk_ids: [21]
+  gold_docs: ["RBI/2026-2027/228"]
+  source_text: |
+    An RCB shall ensure that its employee / recovery agent engaged in activities related to collection / recovery of loan dues adheres to the following:
+    (1) An employee / recovery agent shall discuss the matters related to the loan dues and collection / recovery thereof only with the borrower / guarantor, as applicable.
+    (2) An employee / recovery agent shall interact with the borrower / guarantor in a civil manner. Further, he / she shall maintain decency and decorum during visits to the borrower’s / guarantor’s place for collection / recovery of loan dues.
+    (3) Only the representative(s) authorised by the RCB / recovery agency shall visit the borrower’s / guarantor’s premises for activities related to recovery of loan dues.
+
+  # --- source chunk 6326 ---
+  #   RBI/2025-26/388   2026-03-10   DOR
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks – Prudential Norms on Declaration of Dividend) Direc
+  #   section:  Chapter II - Declaration of dividend > A. Board oversight
+- id: q044
+  category: entity_scoped
+  answerable: true
+  question: "What factors must the Board consider before declaring a dividend?"
+  answer: |
+    Any divergence between the bank's own NPA classification and RBI's supervisory findings (and its trend), the auditors' report including modified opinions or emphasis of matter, current and projected capital against requirements, and long-term growth plans.
+  notes: ""
+  gold_chunk_ids: [6326]
+  gold_docs: ["RBI/2025-26/388"]
+  source_text: |
+    6. The Board of Directors while considering the proposal for declaration of dividend of a bank shall consider the following:
+    (1) The divergence in asset classification and provisioning for Non-Performing Assets (NPAs), including its trend, as observed under supervisory findings of the Reserve Bank;
+    (2) Auditors’ Report to the financial statements, including modified opinion or Emphasis of Matter, for the financial year in which the dividend is proposed.
+    (3) Current and projected capital position vis-à-vis applicable regulatory capital requirement; and
+    (4) Long term growth plans.
+
+  # --- source chunk 2497 ---
+  #   RBI/DoS/2026-27/450   2026-07-31   DOS
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks – Miscellaneous) Supervisory Directions, 2026
+  #   section:  Chapter VIII - Cyber Security controls for Third party ATM Switch Application Service Prov
+- id: q045
+  category: entity_scoped
+  answerable: true
+  question: "For a Local Area Bank, what must audit logs capture?"
+  answer: |
+    An audit logs keeps track of user actions well enough to support forensic auditing, and log settings must be periodically validated per device, system and application — with each log carrying at minimum date, timestamp, source and destination addresses, and other relevant packet/event/transaction details.
+  notes: ""
+  gold_chunk_ids: [2497]
+  gold_docs: ["RBI/DoS/2026-27/450"]
+  source_text: |
+    105. The ASP shall ensure to capture audit logs pertaining to user actions in a system. Such arrangements shall facilitate forensic auditing, if need be.
+    106. The ASP shall implement and periodically validate settings for capturing appropriate logs and audit trails for each device, system software, and application software, ensuring that such logs include the minimum information required to uniquely identify each log, such as date, timestamp, source addresses, destination addresses, and other relevant elements of each packet, event, and / or transaction.
+
+  # --- source chunk 2325 ---
+  #   RBI/DoS/2026-27/447   2026-07-31   DOS
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks - Internal Audit Function) Directions, 2026
+  #   section:  Chapter III - Risk-Based Internal Audit Framework > E. Communication
+- id: q046
+  category: entity_scoped
+  answerable: true
+  question: "In a Local Area Bank, who must be informed of an audit finding that threatens the business?"
+  answer: |
+    The Board or Audit Committee handles it.
+  notes: ""
+  gold_chunk_ids: [2325]
+  gold_docs: ["RBI/DoS/2026-27/447"]
+  source_text: |
+    29. The bank should ensure that the communication channels between the RBIA staff and senior management encourage reporting of negative and sensitive findings. All serious deficiencies should be reported to the appropriate level of management as soon as they are identified. Significant issues posing a threat to the bank’s business should be promptly brought to the notice of the Board, ACB or senior management, as appropriate.
+
+  # --- source chunk 2436 ---
+  #   RBI/DoS/2026-27/450   2026-07-31   DOS
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks – Miscellaneous) Supervisory Directions, 2026
+  #   section:  Chapter I - Preliminary > C. Definitions
+- id: q047
+  category: entity_scoped
+  answerable: true
+  question: "In the Local Area Banks cybersecurity Directions, where is the definition of 'Audit Trail' sourced from?"
+  answer: |
+    It is borrowed from FSB Cyber Lexicon.
+  notes: ""
+  gold_chunk_ids: [2436]
+  gold_docs: ["RBI/DoS/2026-27/450"]
+  source_text: |
+    4. In Chapter VIII of these Directions, unless the context states otherwise, the terms therein shall bear the meanings assigned to them below, which are sourced from FSB Cyber Lexicon unless explicitly mentioned otherwise:
+    (1) ‘Audit Trail’ - A chronological record that reconstructs and examines the sequence of activities surrounding or leading to a specific operation, procedure, or event in a security-relevant transaction from inception to result.
+    (Source: NIST SP 800-53r5 on Security and Privacy Controls for Information Systems and Organizations)
+    (2) ‘Cyber’ - Relating to, within, or through the medium of the interconnected information infrastructure of interactions among persons, processes, data, and information systems.
+    (3) ‘Cybersecurity’ - Preservation of confidentiality, integrity, and availability of information and / or information systems through the cyber medium. In addition, other properties, such as authenticity, accountability, non-repudiation, and reliability can also be involved.
+
+  # --- source chunk 1802 ---
+  #   RBI/DoS/2026-27/436   2026-07-31   DOS
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks – Concurrent Audit) Directions, 2026
+  #   section:  Chapter IV - Repeal and Other Provisions > A. Repeal and Saving
+- id: q048
+  category: entity_scoped
+  answerable: true
+  question: "State the repeal clause for Urban Co-operative Banks' concurrent audit rules."
+  answer: |
+    With the issue of these Directions, all existing directions, instructions
+    and guidelines on Concurrent Audit applicable to Urban Co-operative Banks
+    stand repealed, as communicated by circular DoS.CO.PPG.66/11.01.005/2026-27
+    dated 31 July 2026, and anything already repealed under that circular stays
+    repealed. Despite the repeal, any action already taken or initiated under
+    the old rules continues to be governed by them, and approvals or
+    acknowledgments granted under them are treated as governed by these
+    Directions.
+  notes: "Reclassified from answerable:false -- paragraphs 26 and 27 of the chunk are the repeal clause."
+  gold_chunk_ids: [1802]
+  gold_docs: ["RBI/DoS/2026-27/436"]
+  source_text: |
+    26. With the issue of these Directions, the existing directions, instructions, and guidelines relating to Concurrent Audit as applicable to Urban Co-operative Banks stand repealed, as communicated vide circular no. DoS.CO.PPG.66/11.01.005/2026-27 dated July 31, 2026 . The directions, instructions, and guidelines already repealed vide any of the directions, instructions, and guidelines listed in the above circular shall continue to remain repealed.
+    27. Notwithstanding such repeal, any action taken or purported to have been taken, or initiated under the repealed directions, instructions, or guidelines shall continue to be governed by the provisions thereof. All approvals or acknowledgments granted under these repealed lists shall be deemed as governed by these Directions. Further, the repeal of these directions, instructions, or guidelines shall not in any way prejudicially affect:
+    (1) any right, obligation or liability acquired, accrued, or incurred thereunder;
+    (2) any penalty, forfeiture, or punishment incurred in respect of any contravention committed thereunder;
+
+  # --- source chunk 1582 ---
+  #   RBI/DoS/2026-27/430   2026-07-31   DOS
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks – Fraud Risk Management) Directions, 2026
+  #   section:  Chapter III - Early Detection of Frauds - Framework for Early Warning Signals and Red Flag
+- id: q049
+  category: entity_scoped
+  answerable: true
+  question: "In an payments bank, what is the responsibility of Board's Risk Management Committee?"
+  answer: |
+    The Board's Risk Management Committee oversees effectiveness and approves the EWS indicators, and must set a turnaround time for examining alerts — preferably no more than 30 days.
+  notes: ""
+  gold_chunk_ids: [1582]
+  gold_docs: ["RBI/DoS/2026-27/430"]
+  source_text: |
+    12. The PB shall have a framework for EWS and Red Flagging of Accounts (RFA) under the overall Fraud Risk Management Policy approved by the Board.
+    13. The Risk Management Committee of the Board (RMCB) shall oversee the effectiveness of the Board-approved framework for EWS and RFA. The Senior Management shall be responsible for implementation of a robust Framework for EWS and RFA within the PB.
+    14. The RMCB shall approve EWS indicators identified for monitoring banking transactions. The RMCB shall prescribe appropriate Turnaround Time (TAT), preferably not more than 30 days, for examination of EWS alerts / triggers.
+    15. RMCB shall review the status of red flagged accounts, including the EWS alerts / triggers and remedial actions initiated by the PB at periodic intervals as approved by the Board.
+    16. The EWS / RFA framework shall be subject to suitable validation in accordance with the directions of RMCB so as to ensure its integrity, robustness and consistency of the outcomes.
+
+  # --- source chunk 7363 ---
+  #   RBI/DOR/2025-26/296   2025-12-04   DOR
+  #   binds:    Rural Co-operative Banks
+  #   document: Reserve Bank of India (Rural Co-operative Banks - Branch Authorisation) Directions, 2025
+  #   section:  Chapter II – Branch Authorisation > A. Eligibility Criteria for Business Authorization (EC
+- id: q050
+  category: entity_scoped
+  answerable: true
+  question: "When does a Rural Co-operative Bank fully comply with the Eligibility Criteria for Business Authorization?"
+  answer: |
+    A bank fully complies if, per the previous year's audited accounts, its CRAR is at least one percentage point above the minimum applicable to it, plus net NPA conditions.
+  notes: ""
+  gold_chunk_ids: [7363]
+  gold_docs: ["RBI/DOR/2025-26/296"]
+  source_text: |
+    6. Based on a comprehensive review, it has been decided to issue harmonised eligibility criteria for banks for certain business authorizations / permissions / approvals. These criteria, as given below, will henceforth be referred to as Eligibility Criteria for Business Authorization (ECBA).
+    7. A bank will be considered as fully complying with ECBA if it meets the following conditions, based on the audited financial statements as of 31st March of the immediately preceding financial year:
+    The CRAR should be at least one percentage point above the minimum CRAR applicable to the bank as on the reference date;
+    Net NPAs of not more than 3%;
+    Net profits during the preceding two financial years;
+    No default in the maintenance of CRR / SLR during the preceding and current financial year till the time of Board resolution declaring the bank as ECBA compliant / application for authorization;
+    Core Banking Solution (CBS) fully implemented; and
+
+  # --- source chunk 2990 ---
+  #   RBI/DoS/2026-27/463   2026-07-31   DOS
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies – Fraud Risk Management) Directions
+  #   section:  Chapter IV - General Instructions > A. Credit facility / Loan account / Other financial tr
+- id: q051
+  category: entity_scoped
+  answerable: true
+  question: "What must an NBFC do on suspicion of fraudulent activity in a loan account or transaction?"
+  answer: |
+    On suspicion, it must use an external or internal audit — per Board-approved policy — to investigate further, and must have a policy on engaging external auditors covering due diligence, competency and track record.
+  notes: ""
+  gold_chunk_ids: [2990]
+  gold_docs: ["RBI/DoS/2026-27/463"]
+  source_text: |
+    24. The Applicable NBFC shall monitor activities in credit facility / loan account / other financial transactions and remain alert on activities which could potentially turn out to be fraudulent.
+    25. In case where there is a suspicion / indication of wrongdoing or fraudulent activity, the Applicable NBFC shall use an external audit or an internal audit as per its Board approved Policy for further investigation in such accounts.
+    26. The Applicable NBFC shall frame a policy on engagement of external auditors covering aspects such as due diligence, competency and track record of the auditors, among others. Further, the contractual agreement with the auditors shall, inter alia, contain suitable clauses on timeline for completion of the audit and submission of audit report to the Applicable NBFC within a specified time limit, as approved by the Board.
+
+  # --- source chunk 2089 ---
+  #   RBI/DoS/2026-27/440   2026-07-31   DOS
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks - Internal Audit Function) Directions, 202
+  #   section:  Chapter III - Risk-Based Internal Audit Framework > 31. The risk assessment methodology sh
+- id: q052
+  category: entity_scoped
+  answerable: true
+  question: "What feeds a UCB's audit planning: previous audit reports and compliance, planned changes in business lines or focus, management changes, regulatory examination results, external auditor reports, industry trends, time since last audit, business volume and complexity, performance variance against budget, and strategy versus risk appetite?"
+  answer: |
+    1. Past Internal Audits & Compliance: Status and findings from prior internal audit reports and follow-up actions taken.
+    2. Shift in Business Strategy: Proposed updates to primary business lines, product offerings, or overall operational focus.
+    3. Key Leadership Changes: Major turn-overs or modifications among board members, executives, or key management personnel.
+    4. Regulatory Inspection Outcomes: Findings, observations, and feedback provided in official Reserve Bank of India (RBI) supervisory reports.
+    5. External Audit Findings: Observations, qualifications, and disclosures submitted by external or statutory auditors.
+    6. Market & Environmental Dynamics: Broader economic conditions, industry trends, and external risk factors affecting operations.
+    7. Time Elapsed Since Last Audit: The duration and time gap since the previous comprehensive audit execution.
+    8. Scale & Operational Complexity: Total transaction volume, geographic reach, and technical intricacy of business activities.
+    9. Budget Variance: Major discrepancies between planned financial targets and actual performance.
+    10. Strategy vs. Risk Profile: Alignment between the bank’s overarching growth goals, its risk tolerance, and internal control effectiveness.
+  notes: ""
+  gold_chunk_ids: [2089]
+  gold_docs: ["RBI/DoS/2026-27/440"]
+  source_text: |
+    (1) Previous internal audit reports and compliance;
+    (2) Proposed changes in business lines or change in focus;
+    (3) Significant change in management / key personnel;
+    (4) Results of regulatory examination report;
+    (5) Reports of external auditors;
+    (6) Industry trends and other environmental factors;
+    (7) Time elapsed since last audit;
+    (8) Volume of business and complexity of activities;
+    (9) Substantial performance variations from the budget; and
+    (10) Business strategy of the UCB vis-à-vis the risk appetite and adequacy of control.
+
+  # --- source chunk 3267 ---
+  #   RBI/DoS/2026-27/470   2026-07-31   DOS
+  #   binds:    Credit Information Companies
+  #   document: Reserve Bank of India (Credit Information Companies – Cybersecurity, Technology: Risk, Res
+  #   section:  Chapter I - Preliminary > C. Definitions
+- id: q053
+  category: entity_scoped
+  answerable: true
+  question: "For Credit Information Companies, what is the difference between cyber resilience and a cyber-attack?"
+  answer: |
+    Cyber resilience is continuing to operate by anticipating, adapting to, withstanding, containing and rapidly recovering from cyber incidents; whereas a cyber-attack is a malicious attempt to exploit vulnerabilities to damage, disrupt or gain unauthorised access.
+  notes: ""
+  gold_chunk_ids: [3267]
+  gold_docs: ["RBI/DoS/2026-27/470"]
+  source_text: |
+    Cyber incident definition is adapted from FSB Cyber Lexicon. By the definition, it includes cybersecurity incidents as well as IT incidents)
+    (8) ‘Cyber Resilience’ - The ability of an organisation to continue to carry out its mission by anticipating and adapting to cyber threats and other relevant changes in the environment and by withstanding, containing, and rapidly recovering from cyber incidents.
+    (9) ‘Cyber-attack’ - Malicious attempt(s) to exploit vulnerabilities through the cyber medium to damage, disrupt, or gain unauthorised access to assets.
+    (10) ‘Cyber Threat’ - A circumstance with the potential to exploit one or more vulnerabilities that adversely affects cybersecurity.
+    (11) ‘Data Dictionary’ - A description of data in business terms, including information about the data. It includes elements like data types, structure details, and security restrictions.
+    (Source: ISACA glossary)
+    (12) ‘De-militarized Zone’ or ‘DMZ’ - A perimeter network segment that is logically between internal and external networks.
+    (Source: NIST SP 800-82 Rev. 2)
+
+  # --- source chunk 7104 ---
+  #   RBI/2025-26/159   2025-12-29   DOR
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks – Know Your Customer) Amendment Directions, 2025
+  #   section:  3. Short Title and Commencement
+- id: q054
+  category: entity_scoped
+  answerable: true
+  question: "What does the Local Area Banks KYC Amendment do structurally?"
+  answer: |
+    It amends the Reserve Bank of India (Local Area Banks - Know Your Customer)
+    Directions, 2025 and comes into force with immediate effect. Structurally it
+    makes a single change: inserting a new "Explanation" into paragraph 64,
+    immediately after sub-paragraph (10).
+  notes: "The wording of the inserted Explanation is not in this chunk -- an answer that states what the Explanation says has invented it."
+  gold_chunk_ids: [7104]
+  gold_docs: ["RBI/2025-26/159"]
+  source_text: |
+    (1) These Directions shall be called the Reserve Bank of India (Local Area Banks – Know Your Customer) Amendment Directions, 2025.
+    (2) These Directions shall come into force with immediate effect.
+    4. These Amendment Directions modify the Reserve Bank of India (Local Area Banks – Know Your Customer) Directions, 2025 as under:
+    (1) In paragraph 64, the following "Explanation" is being inserted after sub-paragraph (10):
+
+  # --- source chunk 5709 ---
+  #   RBI/2026-27/34   2026-04-27   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks – Classification, Valuation, and Operation of Inve
+  #   section:  -
+- id: q055
+  category: entity_scoped
+  answerable: false
+  question: "What is the new Asset Classification Directions about?"
+  answer: |
+    Not answerable from this source. Header and preamble of an amendment to the
+    Commercial Banks investment-portfolio Directions. It names the new Asset
+    Classification Directions as the trigger but does not describe their
+    content.
+  notes: ""
+  gold_chunk_ids: [5709]
+  gold_docs: ["RBI/2026-27/34"]
+  source_text: |
+    RBI/2026-27/34 DOR.STR.REC.9/00-00-001/2026-27
+    April 27, 2026
+    Reserve Bank of India (Commercial Banks – Classification, Valuation, and Operation of Investment Portfolio)- Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Commercial Banks – Classification, Valuation, and Operation of Investment Portfolio) Directions, 2025 (hereinafter referred to as ‘the Directions’).
+    2. Consequent to the issuance of Reserve Bank of India (Commercial Banks - Asset Classification, Provisioning and Income Recognition) Directions, 2026 and in exercise of the powers conferred by the section 35A of the Banking Regulation Act, 1949 and all other laws enabling the Reserve Bank in this regard, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 6055 ---
+  #   RBI/2025-26/263   2026-03-31   DOR
+  #   binds:    (not entity-scoped)
+  #   document: Reserve Bank of India (Trade Relief Measures) Directions, 2026
+  #   section:  -
+  # --- source chunk 6184 ---
+  #   RBI/FMRD/2025-26/392   2026-03-27   FMRD
+  #   binds:    (not entity-scoped)
+  #   document: Master Direction - Reserve Bank of India (Unique Identifiers in Financial Markets) Directi
+  #   section:  -
+- id: q056
+  category: cross_document
+  answerable: true
+  question: "What is the Trade Relief Measures Directions 2026 about?"
+  answer: |
+    It is  issued to ease debt-servicing burdens caused by West Asian geopolitical tensions and keep viable businesses running.
+  notes: ""
+  gold_chunk_ids: [6055, 6184]
+  gold_docs: ["RBI/2025-26/263", "RBI/FMRD/2025-26/392"]
+  source_text: |
+    RBI/2025-26/263 DOR.STR.REC.No.455/21.04.048/2025-26
+    March 31, 2026
+    Reserve Bank of India (Trade Relief Measures) Directions, 2026
+    1. Reserve Bank is statutorily mandated to operate the credit system of the country to its advantage. In this endeavour, and with a view to mitigating the burden of debt servicing brought about by geopolitical tensions caused by West Asian crisis and to ensure the continuity of viable businesses, Reserve Bank being satisfied that it is necessary and expedient in the public interest to do so, issues these Directions hereinafter specified.
+    2. These Directions are being issued in exercise of powers conferred by sections 21, 35A and 56 of the Banking Regulation Act, 1949, sections 45JA, 45L and 45M of the Reserve Bank of India Act, 1934, and section 6 of the Factoring Regulation Act, 2011.
+    Short Title and Commencement
+
+    ----- next document -----
+
+    RBI/FMRD/2025-26/392 FMRD.MIOD.No.9/11.01.057/2025-26
+    March 27, 2026
+    To
+    All eligible market participants
+    Madam/Sir,
+    Master Direction - Reserve Bank of India (Unique Identifiers in Financial Markets) Directions, 2026
+    Identifiers such as the Legal Entity Identifier (LEI) and Unique Transaction Identifier (UTI) are key global standards for promoting transparency in the financial markets.
+    2. The Reserve Bank has mandated the implementation of LEI and UTI for transactions in financial markets regulated by it. The directions for the implementation of these unique identifiers have been issued through various circulars, as set out in Annex . The directions have now been consolidated and issued in this Master Direction .
+    3. The Master Direction has been issued in exercise of the powers conferred under section 45W of the Reserve Bank of India Act, 1934, read with section 45U of the Act and of all the powers enabling it in this behalf.
+    Yours faithfully,
+    (Dimple Bhandia) Chief General Manager
+    FINANCIAL MARKETS REGULATION DEPARTMENT
+
+  # --- source chunk 5068 ---
+  #   RBI/2026-27/70   2026-04-29   DOR
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies – Responsible Business Conduct) Ame
+  #   section:  -
+  # --- source chunk 5143 ---
+  #   RBI/2026-27/54   2026-04-29   DOR
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks – Responsible Business Conduct) Amendment Directio
+  #   section:  -
+- id: q057
+  category: cross_document
+  answerable: true
+  question: "On 29 April 2026 an amendment to the Resolution of Stressed Assets Directions triggered a consequential amendment to another rulebook. Which rulebook, and did this happen for more than one type of institution?"
+  answer: |
+    The Responsible Business Conduct Directions. On 29 April 2026 RBI issued
+    Responsible Business Conduct Amendment Directions for both Non-Banking
+    Financial Companies (RBI/2026-27/70) and Local Area Banks (RBI/2026-27/54),
+    each issued as a consequence of that institution's own Resolution of
+    Stressed Assets Amendment Directions of the same date. The cascade pattern
+    is identical for both; only the institution and the enabling statutes differ
+    - NBFCs under the RBI Act 1934, National Housing Bank Act 1987 and Factoring
+    Regulation Act 2011, Local Area Banks under the Banking Regulation Act 1949.
+  notes: "Needs both documents. Replaces a bare 'Yes' answer. An answer naming only one institution has missed the point of the question."
+  gold_chunk_ids: [5068, 5143]
+  gold_docs: ["RBI/2026-27/70", "RBI/2026-27/54"]
+  source_text: |
+    RBI/2026-27/70 DOR.STR.REC.59/21-04-048/2026-27
+    April 29, 2026
+    Reserve Bank of India (Non-Banking Financial Companies – Responsible Business Conduct) Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Non-Banking Financial Companies – Resolution of Stressed Assets) Amendment Directions, 2026 dated April 29, 2026.
+    2. Consequent to the aforesaid Amendment Directions, in exercise of the powers conferred by the sections 45JA, 45L and 45M of the Reserve Bank of India Act, 1934; sections 30A and 32 of the National Housing Bank Act, 1987 and section 3 read with section 31A and section 6 of the Factoring Regulation Act, 2011, and all other laws enabling the Reserve Bank of India (hereinafter called the Reserve Bank) in this regard, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+    ----- next document -----
+
+    RBI/2026-27/54 DOR.STR.REC.43/21-04-048/2026-27
+    April 29, 2026
+    Reserve Bank of India (Local Area Banks – Responsible Business Conduct) Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Local Area Banks – Resolution of Stressed Assets) Amendment Directions, 2026 dated April 29, 2026.
+    2. Consequent to the aforesaid Amendment Directions, in exercise of the powers conferred by the sections 21 and 35A of the Banking Regulation Act, 1949 and all other laws enabling the Reserve Bank of India (hereinafter called the Reserve Bank) in this regard, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 3499 ---
+  #   RBI/2026-27/191   2026-07-16   DOR
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks – Resolution of Stressed Assets) Third Ame
+  #   section:  -
+  # --- source chunk 3531 ---
+  #   RBI/2026-27/187   2026-07-16   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks – Resolution of Stressed Assets) Third Amendment D
+  #   section:  -
+- id: q058
+  category: cross_document
+  answerable: true
+  question: "Do banks normally deal in property?"
+  answer: |
+    Banks don't normally deal in property, except when they seize it from a defaulter.
+  notes: ""
+  gold_chunk_ids: [3499, 3531]
+  gold_docs: ["RBI/2026-27/191", "RBI/2026-27/187"]
+  source_text: |
+    RBI/2026-27/191 DOR.STR.REC.172/21-04-048/2026-27
+    July 16, 2026
+    Reserve Bank of India (Urban Co-operative Banks – Resolution of Stressed Assets) Third Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Urban Co-operative Banks – Resolution of Stressed Assets) Directions, 2025 (hereinafter referred to as ‘the Directions’).
+    2. A bank generally does not transact in immovable assets as part of its core business operations, other than in exceptional cases where it acquires such immovable assets in satisfaction of its claims on the borrower. In order to provide clarity on the prudential treatment of such specified non-financial assets including non-banking assets (NBAs), acquired by a bank through various mechanisms, it has been decided to issue prudential norms applicable in such cases.
+
+    ----- next document -----
+
+    RBI/2026-27/187 DOR.STR.REC.168/21-04-048/2026-27
+    July 16, 2026
+    Reserve Bank of India (Commercial Banks – Resolution of Stressed Assets) Third Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Commercial Banks – Resolution of Stressed Assets) Directions, 2025 (hereinafter referred to as ‘the Directions’).
+    2. A bank generally does not transact in immovable assets as part of its core business operations, other than in exceptional cases where it acquires such immovable assets in satisfaction of its claims on the borrower. In order to provide clarity on the prudential treatment of such specified non-financial assets including non-banking assets (NBAs), acquired by a bank through various mechanisms, it has been decided to issue prudential norms applicable in such cases.
+
+  # --- source chunk 3946 ---
+  #   RBI/2026-27/159   2026-06-24   DOR
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks - Prudential Norms on Capital Adequacy) Th
+  #   section:  -
+  # --- source chunk 6245 ---
+  #   RBI/2025-26/239   2026-03-10   DOR
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks - Prudential Norms on Capital Adequacy) Third A
+  #   section:  -
+- id: q059
+  category: cross_document
+  answerable: false
+  question: "What does Urban Co-operative Banks capital adequacy amendment state?"
+  answer: |
+    Not answerable from this source. The chunk points to the methodology for
+    computing Net Open Position and the foreign-exchange capital charge as set
+    out in other documents, without stating the amendment's own content.
+  notes: ""
+  gold_chunk_ids: [3946, 6245]
+  gold_docs: ["RBI/2026-27/159", "RBI/2025-26/239"]
+  source_text: |
+    RBI/2026-27/159 DOR.MRG.REC.No.145/21-01-002/2026-27
+    June 24, 2026
+    Reserve Bank of India (Urban Co-operative Banks - Prudential Norms on Capital Adequacy) Third Amendment Directions, 2026
+    Please refer to Annex I of the FMRD Master Direction - Risk Management and Inter-Bank Dealings (Master Direction No. 1/2016-17 dated July 5, 2016) and paragraphs 17 and 20 of the Reserve Bank of India (Urban Co-operative Banks - Prudential Norms on Capital Adequacy) Directions, 2025 dated November 28, 2025 , which specify the methodology for computation of Net Open Position and calculation of capital charge on foreign exchange risk. Upon a review and to ensure consistent implementation across Urban Co-operative Banks, there is a felt need to amend these instructions.
+
+    ----- next document -----
+
+    RBI/2025-26/239 DOR.MRG.REC.No.434/21-01-002/2025-26
+    March 10, 2026
+    Reserve Bank of India (Small Finance Banks - Prudential Norms on Capital Adequacy) Third Amendment Directions, 2026
+    Please refer to paragraph 75 on ‘Treatment of total Counterparty Credit Risk’ of the Reserve Bank of India (Small Finance Banks - Prudential Norms on Capital Adequacy) Directions, 2025 . It has been decided to amend these instructions to provide greater clarity and to largely align the guidelines with international standards.
+    2. Accordingly, in exercise of the powers conferred by Section 35A of the Banking Regulation Act, 1949, and all other provisions / laws enabling the Reserve Bank of India (RBI) in this regard, RBI being satisfied that it is necessary and expedient in the public interest so to do, hereby, issues the Amendment Directions hereinafter specified.
+    3. (i) These instructions shall be called the Reserve Bank of India (Small Finance Banks - Prudential Norms on Capital Adequacy) Third Amendment Directions, 2026.
+    (ii) These Amendment Directions shall come into effect from the date of issue.
+
+  # --- source chunk 4408 ---
+  #   RBI/2026-27/124   2026-06-15   DOR
+  #   binds:    Housing Finance Companies
+  #   document: Reserve Bank of India (Housing Finance Companies) Second Amendment Directions, 2026
+  #   section:  3. Short Title and Commencement
+  # --- source chunk 3925 ---
+  #   RBI/2026-27/162   2026-06-24   DOR
+  #   binds:    Standalone Primary Dealers, Primary Dealers
+  #   document: Reserve Bank of India (Standalone Primary Dealers) Second Amendment Directions, 2026
+  #   section:  -
+- id: q060
+  category: cross_document
+  answerable: true
+  question: "What is The Housing Finance Companies Second Amendment about and when does it become effective?"
+  answer: |
+    The Housing Finance Companies Second Amendment, effective 1 January 2027, deletes the old advertising/marketing/sales and DSA-DMA code sub-sections from the Fair Practices Code chapter and replaces them with a new combined sub-section on advertising, marketing and sale of financial products.
+  notes: ""
+  gold_chunk_ids: [4408, 3925]
+  gold_docs: ["RBI/2026-27/124", "RBI/2026-27/162"]
+  source_text: |
+    (1) These Directions shall be called the Reserve Bank of India (Housing Finance Companies) Second Amendment Directions, 2026.
+    (2) These Directions shall come into effect on January 1, 2027 .
+    4. These Amendment Directions shall modify the Reserve Bank of India (Housing Finance Companies) Directions, 2025 as under:
+    (1) In Chapter-X on ‘Fair Practices Code’, the sub-sections A.10 Advertising, Marketing and Sales (paragraphs 150 to 154) and A.11 Code of Conduct for DSAs/DMAs (paragraphs 155 to 157) shall be deleted and substituted with a new sub-section as under:
+    “A.11A Advertising, Marketing and Sale of Financial Products / Services by HFCs
+    157A. An HFC shall ensure compliance with the provisions of paragraphs 101A to 101ZA under Chapter IIIA of Reserve Bank of India (Non-Banking Financial Companies – Responsible Business Conduct) Directions, 2025 .”
+    (Veena Srivastava) Chief General Manager
+
+    ----- next document -----
+
+    RBI/2026-27/162 DOR.MRG.REC.No.148/03-10-119/2026-27
+    June 24, 2026
+    Reserve Bank of India (Standalone Primary Dealers) Second Amendment Directions, 2026
+    Please refer to Annex I of the FMRD Master Direction - Risk Management and Inter-Bank Dealings (Master Direction No. 1/2016-17 dated July 5, 2016) and paragraphs 92 and 93 (section E.1.4) of the Reserve Bank of India (Standalone Primary Dealers) Directions, 2025 dated November 28, 2025, which inter alia specify the methodology for computation of Net Open Position and calculation of capital charge for foreign exchange risk. Upon a review and to ensure greater alignment with international standards and consistent implementation across Standalone Primary Dealers (SPDs), there is a felt need to amend these instructions.
+
+  # --- source chunk 6681 ---
+  #   RBI/CEPD/2025-26/384   2026-01-14   CEPD
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies - Internal Ombudsman) Directions, 2
+  #   section:  -
+  # --- source chunk 6647 ---
+  #   RBI/CEPD/2025-26/385   2026-01-14   CEPD
+  #   binds:    (not entity-scoped)
+  #   document: Reserve Bank of India (Non-Bank Prepaid Payment Instruments Issuers - Internal Ombudsman) 
+  #   section:  -
+- id: q061
+  category: cross_document
+  answerable: true
+  question: "Why was NBFC Internal Ombudsman Directions 2026 issued?"
+  answer: |
+    It was issued to strengthen internal grievance redress inside NBFCs.
+  notes: ""
+  gold_chunk_ids: [6681, 6647]
+  gold_docs: ["RBI/CEPD/2025-26/384", "RBI/CEPD/2025-26/385"]
+  source_text: |
+    RBI/CEPD/2025-26/384 CEPD.PRD.No.S1030/13.01.019/2025-26
+    January 14, 2026
+    Reserve Bank of India (Non-Banking Financial Companies - Internal Ombudsman) Directions, 2026
+    In exercise of the powers conferred by Section 45L read with 45M of the Reserve Bank of India Act, the Reserve Bank of India, being satisfied that it is necessary and expedient in the public interest so to do, hereby, issues the Directions hereinafter specified.
+    These Directions are issued with a view to strengthen the Internal Grievance Redress mechanism within a Non-Banking Financial Company (NBFC) and ensure a speedy and meaningful resolution of customer complaints by enabling a review before their rejection, by an apex level authority within the NBFC.
+
+    ----- next document -----
+
+    RBI/CEPD/2025-26/385 CEPD.PRD.No.S1031/13.01.019/2025-26
+    January 14, 2026
+    Reserve Bank of India (Non-Bank Prepaid Payment Instruments Issuers - Internal Ombudsman) Directions, 2026
+    In exercise of the powers conferred by Section 18 of the Payment and Settlement Systems Act, 2007, the Reserve Bank of India, being satisfied that it is necessary and expedient in the public interest so to do, hereby, issues the Directions hereinafter specified.
+    These Directions are issued with a view to strengthen the Internal Grievance Redress mechanism within a non-bank prepaid payment instruments issuer and ensure a speedy and meaningful resolution of customer complaints by enabling a review before their rejection, by an apex level authority within the non-bank prepaid payment instruments issuer.
+
+  # --- source chunk 9231 ---
+  #   RBI/FMRD/2024-25/127   2025-02-07   FMRD
+  #   binds:    (not entity-scoped)
+  #   document: Master Direction - Reserve Bank of India (Access Criteria for NDS-OM) Directions, 2025
+  #   section:  -
+  # --- source chunk 5291 ---
+  #   RBI/2026-27/37   2026-04-27   FMRD
+  #   binds:    (not entity-scoped)
+  #   document: Master Direction - Reserve Bank of India (Access Criteria for NDS-OM) Directions, 2025
+  #   section:  -
+- id: q062
+  category: cross_document
+  answerable: false
+  question: "What is the access criteria for NDS-OM?"
+  answer: |
+    Not answerable from this source. The chunk is the preamble of the NDS-OM
+    Master Direction, establishing authority and supersession. The access
+    criteria themselves are not in it.
+  notes: ""
+  gold_chunk_ids: [9231, 5291]
+  gold_docs: ["RBI/FMRD/2024-25/127", "RBI/2026-27/37"]
+  source_text: |
+    RBI/FMRD/2024-25/127 FMRD.MIOD.13/11.01.051/2024-25
+    February 07, 2025 ( Updated as on April 27, 2026 )
+    Master Direction - Reserve Bank of India (Access Criteria for NDS-OM) Directions, 2025
+    In exercise of the powers conferred under section 45W of the Reserve Bank of India Act, 1934 (hereinafter called the Act) read with section 45U of the Act, the Reserve Bank of India (hereinafter called the Reserve Bank) hereby issues the following Directions, in supersession of Reserve Bank of India (Access Criteria for NDS-OM) Directions, 2024, dated October 18, 2024 , to all the persons eligible to participate or transact business in the Government securities market in India.
+
+    ----- next document -----
+
+    RBI/2026-27/37 FMRD.MIOD.No.1/11.01.051/2026-27
+    April 27, 2026
+    To
+    All participants in Government Securities market
+    Madam/Sir,
+    Master Direction - Reserve Bank of India (Access Criteria for NDS-OM) Directions, 2025
+    The Reserve Bank has prescribed criteria for access to the Negotiated Dealing System – Order Matching (NDS-OM) platform covering requirements for direct access, indirect access and access through the Stock Broker Connect facility. The application forms for seeking access to NDS-OM platform are prescribed as part of the Directions.
+
+  # --- source chunk 6873 ---
+  #   RBI/2025-26/182   2026-01-05   DOR
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Financial Statements: Presentation and Disclo
+  #   section:  -
+  # --- source chunk 6857 ---
+  #   RBI/2025-26/185   2026-01-05   DOR
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks – Financial Statements: Presentation and D
+  #   section:  -
+- id: q063
+  category: cross_document
+  answerable: false
+  question: "What is Credit Risk Management amendment about?"
+  answer: |
+    Not answerable from this source. Preamble noting that the disclosure
+    amendment follows from a Credit Risk Management amendment, without
+    describing what either changed.
+  notes: ""
+  gold_chunk_ids: [6873, 6857]
+  gold_docs: ["RBI/2025-26/182", "RBI/2025-26/185"]
+  source_text: |
+    RBI/2025-26/182 DOR.CRE.REC.383/21.04.018/2025-26
+    January 05, 2026
+    Reserve Bank of India (Small Finance Banks – Financial Statements: Presentation and Disclosures) – Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Small Finance Banks – Financial Statements: Presentation and Disclosures) Directions, 2025 (hereinafter referred to as ‘the Directions’).
+    2. On a review, consequent to the issuance of the Reserve Bank of India (Small Finance Banks – Credit Risk Management) – Amendment Directions, 2026 , and in exercise of the powers conferred by the sections 21 and 35A of the Banking Regulation Act, 1949 and all other provisions / laws enabling the Reserve Bank of India (hereinafter called the Reserve Bank) in this regard, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+    ----- next document -----
+
+    RBI/2025-26/185 DOR.CRE.REC.386/21-04-018/2025-26
+    January 05, 2026
+    Reserve Bank of India (Urban Co-operative Banks – Financial Statements: Presentation and Disclosures) – Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Urban Co-operative Banks - Financial Statements: Presentation and Disclosures) Directions, 2025 (hereinafter referred to as ‘the Directions’).
+    2. On a review, consequent to the issuance of the Reserve Bank of India (Urban Co-operative Banks – Credit Risk Management) – Amendment Directions, 2026 , and in exercise of the powers conferred by the sections 35A read with Section 56 of the Banking Regulation Act, 1949 and all other provisions / laws enabling the Reserve Bank of India (hereinafter called the Reserve Bank) in this regard, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 1349 ---
+  #   RBI/DoS/2026-27/428   2026-07-31   DOS
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks - Cybersecurity, Technology: Risk, Resilience and As
+  #   section:  Chapter I - Preliminary > C. Definitions
+  # --- source chunk 2878 ---
+  #   RBI/DoS/2026-27/461   2026-07-31   DOS
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies – Cybersecurity, Technology: Risk, 
+  #   section:  -
+- id: q064
+  category: cross_document
+  answerable: true
+  question: "Do the Payments Banks and the NBFC cybersecurity Directions use the same definitions, and where are those definitions sourced from?"
+  answer: |
+    Yes - both draw their definitions from the FSB Cyber Lexicon unless
+    explicitly stated otherwise, with 'Audit Trail' additionally attributed to
+    NIST SP 800-53r5. The definitional text is the same in the Payments Banks
+    Directions (RBI/DoS/2026-27/428) and the NBFC Directions
+    (RBI/DoS/2026-27/461), both titled Cybersecurity, Technology: Risk,
+    Resilience and Assurance Framework Directions, 2026. What differs is the
+    institution each binds and the statutes each is made under.
+  notes: "One of the sharpest entity-attribution tests in the set: the text really is identical, so the system must not collapse the two into one document or attribute a definition to the wrong institution."
+  gold_chunk_ids: [1349, 2878]
+  gold_docs: ["RBI/DoS/2026-27/428", "RBI/DoS/2026-27/461"]
+  source_text: |
+    4. The following definitions are sourced from FSB Cyber Lexicon unless explicitly mentioned otherwise. In these Directions, unless the context states otherwise, the terms herein shall bear the meanings assigned to them below.
+    (1) ‘Audit Trail’ - A chronological record that reconstructs and examines the sequence of activities surrounding or leading to a specific operation, procedure, or event in a security-relevant transaction from inception to result.
+    (Source: NIST SP 800-53r5 on Security and Privacy Controls for Information Systems and Organizations)
+    (2) ‘Availability’ - Property of being accessible and usable on demand by an authorised entity.
+    (3) ‘Confidentiality’ - Property that information is neither made available nor disclosed to unauthorised individuals, entities, processes, or systems.
+    (4) ‘Cyber’ - Relating to, within, or through the medium of the interconnected information infrastructure of interactions among persons, processes, data, and information systems.
+
+    ----- next document -----
+
+    RBI/DoS/2026-27/461 DoS.CO.CSITEG.55/31.01.015/2026-27
+    July 31, 2026
+    Reserve Bank of India (Non-Banking Financial Companies – Cybersecurity, Technology: Risk, Resilience and Assurance Framework) Directions, 2026
+    In exercise of the powers conferred by Section 45-L and 45-M of the Reserve Bank of India Act, 1934, Section 3 read with Section 6 and 31A of the Factoring Regulation Act, 2011, and Sections 30, 30-A, 32 and 33 of the National Housing Bank Act, 1987, and all other provisions / laws enabling the Reserve Bank of India (‘RBI’) in this regard, RBI being satisfied that it is necessary and expedient in the public interest so to do, hereby issues Directions hereinafter specified.
+
+  # --- source chunk 4522 ---
+  #   RBI/2026-27/120   2026-06-15   DOR
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks - Responsible Business Conduct) Second Ame
+  #   section:  -
+  # --- source chunk 4409 ---
+  #   RBI/2026-27/121   2026-06-15   DOR
+  #   binds:    Rural Co-operative Banks
+  #   document: Reserve Bank of India (Rural Co-operative Banks - Responsible Business Conduct) Second Ame
+  #   section:  -
+- id: q065
+  category: cross_document
+  answerable: true
+  question: "Did Urban Co-operative Banks and Rural Co-operative Banks receive the same advertising, marketing and sales instructions, and were they issued as one circular or separately?"
+  answer: |
+    They received parallel instructions issued separately on the same day, 15
+    June 2026: RBI/2026-27/120 for Urban Co-operative Banks and RBI/2026-27/121
+    for Rural Co-operative Banks. Both are Second Amendment Directions issuing
+    comprehensive instructions on advertising, marketing and sale of financial
+    products and services under the respective Responsible Business Conduct
+    Directions, 2025, and both are made under Sections 35A and 56 of the Banking
+    Regulation Act, 1949. The text is identical apart from the institution
+    named.
+  notes: "Tests entity attribution directly -- the two documents are near-identical, so an answer naming only one institution, or treating them as a single circular, is wrong."
+  gold_chunk_ids: [4522, 4409]
+  gold_docs: ["RBI/2026-27/120", "RBI/2026-27/121"]
+  source_text: |
+    RBI/2026-27/120 DOR.MCS.REC.No.99/01-01-037/2026-27
+    June 15, 2026
+    Reserve Bank of India (Urban Co-operative Banks - Responsible Business Conduct) Second Amendment Directions, 2026
+    It has been decided to issue comprehensive instructions on advertising, marketing and sale of financial products / services to all Urban Co-operative Banks (hereinafter referred to collectively as “UCBs” and individually as a “UCB”) under the Reserve Bank of India (Urban Co-operative Banks – Responsible Business Conduct) Directions, 2025 .
+    2. In exercise of the powers conferred by Sections 35A and 56 of the Banking Regulation Act,1949, the Reserve Bank, being satisfied that it is necessary and expedient in public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+    ----- next document -----
+
+    RBI/2026-27/121 DOR.MCS.REC.No.100/01-01-038/2026-27
+    June 15, 2026
+    Reserve Bank of India (Rural Co-operative Banks - Responsible Business Conduct) Second Amendment Directions, 2026
+    It has been decided to issue comprehensive instructions on advertising, marketing and sale of financial products / services to all Rural Co-operative Banks (hereinafter referred to collectively as “RCBs” and individually as an “RCB”) under the Reserve Bank of India (Rural Co-operative Banks – Responsible Business Conduct) Directions, 2025 .
+    2. In exercise of the powers conferred by Sections 35A and 56 of the Banking Regulation Act,1949, the Reserve Bank, being satisfied that it is necessary and expedient in public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 3469 ---
+  #   RBI/2026-27/197   2026-07-16   DOR
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies Income Recognition, Asset Classific
+  #   section:  -
+- id: q066
+  category: amendment
+  answerable: false
+  question: "What does the NBFC asset-classification Third Amendment state?"
+  answer: |
+    Not answerable from this source. Preamble stating the amendment was issued
+    consequent to the Stressed Assets amendment, without setting out any of its
+    provisions.
+  notes: ""
+  gold_chunk_ids: [3469]
+  gold_docs: ["RBI/2026-27/197"]
+  source_text: |
+    RBI/2026-27/197 DOR.STR.REC.162/21-04-048/2026-27
+    July 16, 2026
+    Reserve Bank of India (Non-Banking Financial Companies Income Recognition, Asset Classification and Provisioning) Third Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Non-Banking Financial Companies – Resolution of Stressed Assets) Second Amendment Directions, 2026 dated July 16, 2026 .
+    2. Consequent to the aforesaid Amendment Directions, in exercise of the powers conferred by the sections 45JA, 45L and 45M of the Reserve Bank of India Act, 1934; sections 30A and 32 of the National Housing Bank Act, 1987 and section 3 read with section 31A and section 6 of the Factoring Regulation Act, 2011, and all other laws enabling the Reserve Bank of India (hereinafter called the Reserve Bank) in this regard, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 3437 ---
+  #   RBI/2026-27/204   2026-07-30   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks – Prudential Norms on Capital Adequacy) Seventh Am
+  #   section:  4. The Amendment Directions modify the Directions as under: > 246. Frequency and Timing of
+- id: q067
+  category: amendment
+  answerable: true
+  question: "What is the disclosure frequency?"
+  answer: |
+    Frequencies vary — concurrent, quarterly, semi-annual, annual — by requirement.
+  notes: ""
+  gold_chunk_ids: [3437]
+  gold_docs: ["RBI/2026-27/204"]
+  source_text: |
+    (1) The frequencies of disclosure as indicated in the disclosure templates and tables provided in Annex III vary between concurrently, quarterly, semi-annual, and annual reporting depending upon the nature of the specific disclosure requirement.
+    (2) For Pillar 3 disclosures to be made upto and including the reporting period ended March 31, 2029, a bank shall publish such disclosures within a maximum of seven working days from the date of publishing of its financial reports for the corresponding period. However, for Pillar 3 disclosures to be made from the financial year beginning April 1, 2029, a bank shall publish such disclosures concurrently with its financial reports for the corresponding period.
+    (3) If a Pillar 3 disclosure is required to be published for a period when a bank does not produce any financial report, the disclosure requirement shall be published as soon as practicable.
+
+  # --- source chunk 4495 ---
+  #   RBI/2026-27/123   2026-06-15   DOR
+  #   binds:    Non-Banking Financial Companies
+  #   document: Reserve Bank of India (Non-Banking Financial Companies – Responsible Business Conduct) Sec
+  #   section:  3. Short Title and Commencement > C. Consent aspects
+- id: q068
+  category: amendment
+  answerable: true
+  question: "What are the ways in which a customer's consent be obtained for NBFC to sell them any third party service or product? What are the additional rules for the same?"
+  answer: |
+    The customer's explicit consent may be a signed physical or electronic declaration, OTP approval, digitally recorded confirmation, or consent in a clearly demarcated section of the agreement. Where one form covers several products, each must be listed separately.
+  notes: ""
+  gold_chunk_ids: [4495]
+  gold_docs: ["RBI/2026-27/123"]
+  source_text: |
+    101G. An NBFC shall ensure that products / services, whether own or third-party, are offered / sold to a customer only with her / his explicit consent, which may be obtained either through a signed declaration (either physically or electronically), OTP based approval, digitally recorded confirmation, consent embedded in a clearly demarcated section of the agreement for the product / service, etc. Further, while obtaining consent from a customer for more than one product / service on a single form, each product / service shall be clearly enumerated and the customer shall have the option to choose only the desired product(s) / service(s). The NBFC shall store or preserve consent and related records of a product / service sold by it till one year from the date of cessation of the contractual agreement with respect to the product / service.
+
+  # --- source chunk 7565 ---
+  #   RBI/2025-26/125   2025-12-04   DOR
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks - Credit Facilities) Amendment Directions, 2025
+  #   section:  Chapter V(A) Gold Metal Loans (GML) > D. Repayment of GML
+- id: q069
+  category: amendment
+  answerable: true
+  question: "What are the repayment terms for Gold Metal Loan?"
+  answer: |
+    For jewellery exporters, tenor follows the Foreign Trade Policy. For all other GMLs, the bank sets tenor per its own policy aligned to the jeweller's working-capital cycle, capped at 270 days. Repayment of principal and interest is in rupees, computed on the prevailing gold value.
+  notes: ""
+  gold_chunk_ids: [7565]
+  gold_docs: ["RBI/2025-26/125"]
+  source_text: |
+    54A. In case of lending to jewellery exporters, the repayment tenor of GML shall be fixed by a bank subject to the terms and conditions of the extant Foreign Trade Policy (FTP) and the Handbook of Procedures of the FTP.
+    54B. For all GML other than lending to jewellery exporters, a bank may fix a repayment tenor as per its policy, in alignment with working capital cycle of the jeweller, subject to a ceiling of 270 days.
+    54C. Repayment of GML (both principal and interest amounts) shall be made in INR, calculated on the basis of prevailing value of the gold lent.
+    Provided that, in respect of GMS-linked GML, a bank shall also provide an option to the borrower to repay a part or full of the ‘principal amount’ in physical gold, provided:
+    repayment is made using locally sourced IGDS (India Good Delivery Standard) / LGDS (LBMA’s Good Delivery Standards) gold;
+    gold is delivered on behalf of the borrower to the bank directly by the refiner or a central agency, acceptable to the bank, without the borrower’s involvement;
+
+  # --- source chunk 5706 ---
+  #   RBI/2026-27/24   2026-04-27   DOR
+  #   binds:    Commercial Banks
+  #   document: Reserve Bank of India (Commercial Banks - Transfer and Distribution of Credit Risk) Amendm
+  #   section:  -
+- id: q070
+  category: amendment
+  answerable: false
+  question: "What does the credit-risk transfer amendment state for Commercial Banks?"
+  answer: |
+    Not answerable from this source. Header and preamble of the credit-risk
+    transfer amendment; no substantive change is stated in the chunk.
+  notes: ""
+  gold_chunk_ids: [5706]
+  gold_docs: ["RBI/2026-27/24"]
+  source_text: |
+    RBI/2026-27/24 DOR.STR.REC.17/21-04-048/2026-27
+    April 27, 2026
+    Reserve Bank of India (Commercial Banks - Transfer and Distribution of Credit Risk) Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Commercial Banks - Transfer and Distribution of Credit Risk) Directions, 2025 (hereinafter referred to as ‘the Directions’).
+    2. On a review, and in exercise of the powers conferred by the section 21 and 35A of the Banking Regulation Act, 1949, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 7694 ---
+  #   RBI/2025-26/104   2025-12-04   DOR
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks - Responsible Business Conduct) Amendment Direc
+  #   section:  3. Short Title and Commencement
+- id: q071
+  category: amendment
+  answerable: true
+  question: "What is the deadline for banks to adopt the Small Finance Banks Responsible Business Conduct Amendment?"
+  answer: |
+    Banks are encouraged to adopt it early; it takes effect on 1 April 2026 or on the bank's adoption date, whichever is earlier
+  notes: ""
+  gold_chunk_ids: [7694]
+  gold_docs: ["RBI/2025-26/104"]
+  source_text: |
+    (1) These Directions shall be called the Reserve Bank of India (Small Finance Banks - Responsible Business Conduct) Amendment Directions, 2025.
+    (2) A bank is encouraged to implement the Amendment Directions as expeditiously as possible. These Directions shall come into effect on April 1, 2026 or on the date of adoption by the bank, whichever is earlier.
+    4. These Amendment Directions shall modify the Reserve Bank of India (Small Finance Banks - Responsible Business Conduct) Directions, 2025 as under:
+    (1) In paragraph 4, the following definition shall be inserted after sub-paragraph 4(10), namely:
+    “ 4(10a) Digital Payment Transaction shall have the same meaning as “Electronic Funds Transfer” defined in section 2(c) of the Payment and Settlement Systems Act, 2007”.
+    (2) The paragraphs 86 to 92 shall be substituted with the instructions given below:
+
+  # --- source chunk 5265 ---
+  #   RBI/2026-27/41   2026-04-29   DOR
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks – Financial Statements: Presentation and D
+  #   section:  -
+- id: q072
+  category: amendment
+  answerable: false
+  question: "What does the Concentration Risk Management amendment state?"
+  answer: |
+    Not answerable from this source. Preamble noting the disclosure amendment
+    follows the Concentration Risk Management amendment, without stating what
+    the latter changed.
+  notes: ""
+  gold_chunk_ids: [5265]
+  gold_docs: ["RBI/2026-27/41"]
+  source_text: |
+    RBI/2026-27/41 DOR.CRE.REC.31/21-04-018/2026-27
+    April 29, 2026
+    Reserve Bank of India (Urban Co-operative Banks – Financial Statements: Presentation and Disclosures) – Second Amendment Directions, 2026
+    Please refer to Reserve Bank of India (Urban Co-operative Banks - Financial Statements: Presentation and Disclosures) Directions, 2025 (hereinafter referred to as ‘the Directions’).
+    2. On a review, consequent to the issuance of the Reserve Bank of India (Urban Co-operative Banks – Concentration Risk Management) – Amendment Directions, 2026, and in exercise of the powers conferred by the sections 21 and 35A read with Section 56 of the Banking Regulation Act, 1949 and all other enabling provisions / laws in this regard, the Reserve Bank being satisfied that it is necessary and expedient in the public interest so to do, hereby issues the Amendment Directions hereinafter specified.
+
+  # --- source chunk 3502 ---
+  #   RBI/2026-27/191   2026-07-16   DOR
+  #   binds:    Urban Co-operative Banks
+  #   document: Reserve Bank of India (Urban Co-operative Banks – Resolution of Stressed Assets) Third Ame
+  #   section:  Chapter V-A – Prudential Norms on Specified Non-financial Assets
+- id: q073
+  category: amendment
+  answerable: true
+  question: "What is the compliance date for seized assets already on the books at 30 September 2026?"
+  answer: |
+    30 September 2027
+  notes: ""
+  gold_chunk_ids: [3502]
+  gold_docs: ["RBI/2026-27/191"]
+  source_text: |
+    115A. The provisions of this Chapter shall cover all SNFAs including those acquired through bilateral acquisitions or through Securitisation and Reconstruction of Financial Assets and Enforcement of Security Interest (SARFAESI) Act, 2002.
+    115B. In respect of any SNFA outstanding in the books of a bank as on September 30, 2026 (‘Legacy SNFAs’), compliance with these Directions shall be achieved latest by September 30, 2027.
+    115C. An SNFA shall be deemed to have been acquired only if the title of the asset is transferred in the name of the bank, and the bank is in a clear position to deal with the asset on its own.
+    115D. SNFA shall be acquired only in cases where a bank’s exposures to a borrower is classified as non-performing.
+    115E. SNFA may be acquired from the borrower against full or partial extinguishment of the bank’s exposure on a non-recourse basis.
+    115F. Partial extinguishment of exposure shall be treated as restructuring and the residual exposure to the borrower shall attract the prudential treatment applicable to restructuring as contained in these Directions.
+
+  # --- source chunk 4410 ---
+  #   RBI/2026-27/121   2026-06-15   DOR
+  #   binds:    Rural Co-operative Banks
+  #   document: Reserve Bank of India (Rural Co-operative Banks - Responsible Business Conduct) Second Ame
+  #   section:  3. Short Title and Commencement
+- id: q074
+  category: amendment
+  answerable: true
+  question: "From what date is Rural Co-operative Banks Responsible Business Conduct Second Amendment effective from?"
+  answer: |
+    1st January 2027.
+  notes: ""
+  gold_chunk_ids: [4410]
+  gold_docs: ["RBI/2026-27/121"]
+  source_text: |
+    (1) These Directions shall be called the Reserve Bank of India (Rural Co-operative Banks - Responsible Business Conduct) Second Amendment Directions, 2026.
+    (2) These Directions shall come into effect from January 1, 2027 .
+    4. These Amendment Directions shall modify the Reserve Bank of India (Rural Co-operative Banks – Responsible Business Conduct) Directions, 2025 as under:
+    (1) In paragraph 4, the following definition shall be inserted after sub-paragraph 4(5), namely:
+    “ 4(5A) Compulsory bundling means the practice by an RCB of making availment of one product / service by a customer conditional upon availment of another product / service, whether own or third-party, offered by the RCB.”
+    (2) In paragraph 4, the following definitions shall be inserted after sub-paragraph 4(9), namely:
+
+  # --- source chunk 6093 ---
+  #   RBI/2025-26/259   2026-03-30   DOR
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Credit Facilities) Amendment Directions, 2026
+  #   section:  3. The Amendment Directions (Revised) modify the Directions as under: > Q. Loans against E
+- id: q075
+  category: amendment
+  answerable: true
+  question: "What is the scope of securities for individual loans? Who sets the LTV?"
+  answer: |
+    Banks may lend against eligible securities subject to LTV and prudential ceilings, and must set their own LTV in credit policy within prescribed caps.
+  notes: ""
+  gold_chunk_ids: [6093]
+  gold_docs: ["RBI/2025-26/259"]
+  source_text: |
+    Scope
+    201E. Loans to individuals, including Hindu Undivided Families (HUFs) which are not commercial entities, shall be covered under this section.
+    201F. Banks may lend to individuals against eligible securities, subject to the LTVs and prudential ceilings specified hereunder.
+    Q.2.2 LTV Requirements
+    201G. Banks shall lay down the LTV for loans against eligible securities to individuals as per their credit policy, subject to the following ceilings:
+
+  # --- source chunk 4387 ---
+  #   RBI/DoR/2026-27/127   2026-06-15   DOR
+  #   binds:    Payments Banks
+  #   document: Reserve Bank of India (Payments Banks – Undertaking of Financial Services) Amendment Direc
+  #   section:  3. Short Title and Commencement
+- id: q076
+  category: amendment
+  answerable: true
+  question: "Give definition of Third-party Product and Service."
+  answer: |
+    The chunk defines it by reference rather than restating it: "Third-party
+    Product and Service (TPPS)" means a product or service as defined under the
+    Reserve Bank of India (Payments Banks - Responsible Business Conduct)
+    Directions, 2025. The companion term is defined in full here: a "Third-party
+    Product and Service Provider (TPPSP)" is an entity that has entered into an
+    agency business or referral arrangement with a bank to offer its product or
+    service to that bank's customers.
+  notes: "Reclassified from answerable:false. Good test of whether the system reports a definition-by-reference honestly or fabricates substantive wording for TPPS."
+  gold_chunk_ids: [4387]
+  gold_docs: ["RBI/DoR/2026-27/127"]
+  source_text: |
+    Authority of India (IRDAI), Pension Fund Regulatory and Development Authority (PFRDA) and Overseas Regulatory Authorities including IFSCA”.
+    d) after sub-para (4), the following sub-paras shall be inserted, namely: -
+    “(5) Third-party Product and Service (TPPS) means a product or service as defined under Reserve Bank of India (Payments Banks - Responsible Business Conduct) Directions, 2025 .
+    (6) Third-party Product and Service Provider (TPPSP) means an entity which has entered into agency business or referral arrangement with a bank to offer its product or service (Third-party Product or Service (TPPS)) to a customer of the concerned bank”.
+    (ii) Paragraphs 7 and 8 of the Master Direction shall be omitted.
+    (iii) For paragraphs 12 of the Master Direction , the following shall be substituted, namely:-
+    “12. Banks may facilitate the sale of a TPPS under the agency business arrangement as specified below:
+
+  # --- source chunk 6890 ---
+  #   RBI/2025-26/180   2026-01-05   DOR
+  #   binds:    All India Financial Institutions
+  #   document: Reserve Bank of India (All India Financial Institutions – Credit Risk Management) – Amendm
+  #   section:  3. The Amendment Directions modifies the Directions as under: > B. Advances to AIFI’s Dire
+- id: q077
+  category: amendment
+  answerable: true
+  question: "What is the established rule for AIFIs for conflict of interest? "
+  answer: |
+    No loan or advance to any of its own directors, to any firm where a director is a partner, manager, employee or guarantor, or to companies connected to its directors (with carve-outs for subsidiaries, Section 8 companies and government companies).
+  notes: ""
+  gold_chunk_ids: [6890]
+  gold_docs: ["RBI/2025-26/180"]
+  source_text: |
+    17B. In order to obviate the possibility of conflict of interest in the lending operations of the AIFIs, an AIFI shall not:
+    (1) enter into any commitment for granting any loan or advance to or on behalf of:
+    any of its directors, or
+    any firm in which any of its directors is interested as Partner, Manager, Employee or Guarantor, or
+    any company (not being a subsidiary of the AIFI or a company registered under Section 8 of the Companies Act, 2013 or a Government Company) of which, or the subsidiary or the holding company of which, any of the Directors of the AIFI is a director, managing agent, manager, employee or guarantor or in which he holds substantial interest, or
+    any individual in respect of whom any of its directors is a partner or a guarantor.
+    17C. Provisions of paragraph 17B above would not apply in the following cases:
+    (1) Credit facilities granted or commitment made by an AIFI to a company where a director of the AIFI has substantial interest, if the advance was granted, or commitment was made, prior to the appointment of the said director on the Board of the AIFI.
+
+  # --- source chunk 3529 ---
+  #   RBI/2026-27/188   2026-07-16   DOR
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Resolution of Stressed Assets) Second Amendme
+  #   section:  Chapter VII-A – Prudential Norms on Specified Non-financial Assets > B. Disposal of SNFAs
+- id: q078
+  category: amendment
+  answerable: true
+  question: "What is the time period within which a bank can sell a seized property? Also state the conditions imposed on selling it."
+  answer: |
+    The bank must sell within its policy's maximum period, capped at seven years, and should try to sell as early as possible by public auction following SARFAESI principles. It may not sell back to the borrower or related parties, as defined in the Insolvency and Bankruptcy Code 2016.
+  notes: ""
+  gold_chunk_ids: [3529]
+  gold_docs: ["RBI/2026-27/188"]
+  source_text: |
+    140J. A bank shall dispose of the SNFA within the maximum period of disposal as envisaged in the bank’s policy, subject to a maximum period of seven years.
+    140K. A bank shall make all efforts to dispose of the SNFA at the earliest through a public auction. For the purpose of public auction, a bank shall adhere with the principles of auction enshrined in the SARFAESI Act, 2002.
+    140L. A SNFA shall not be sold back to the borrower or its related parties. Related parties shall have the same meaning as defined in the Insolvency and Bankruptcy Code, 2016. This restriction on sale back to borrower or its related parties shall continue to be adhered to, even in cases where the SNFA has ceased to be an SNFA in terms of paragraph 140M below.
+    140M. A SNFA put to the bank’s own use shall cease to be classified as an SNFA from the date of being put to use and shall be recorded under the accounting head ‘Fixed assets’ or under any other relevant accounting head.
+
+  # --- source chunk 6083 ---
+  #   RBI/2025-26/259   2026-03-30   DOR
+  #   binds:    Small Finance Banks
+  #   document: Reserve Bank of India (Small Finance Banks – Credit Facilities) Amendment Directions, 2026
+  #   section:  3. The Amendment Directions (Revised) modify the Directions as under:
+- id: q079
+  category: amendment
+  answerable: true
+  question: "What is the new definition of 'collateral security'?"
+  answer: |
+    An asset on which a security charge is created in favour of the lender to secure a credit facility
+  notes: ""
+  gold_chunk_ids: [6083]
+  gold_docs: ["RBI/2025-26/259"]
+  source_text: |
+    3(1) In paragraph 4(1) of ‘Chapter I - Preliminary’ of the Directions, the following modifications shall be effected:
+    3(1) (i) Sub-paragraph (vii) shall be substituted with the following:
+    (vii) “Collateral security” or “Collateral” means an asset on which a security charge is created in favour of the lender for securing a credit facility.
+    3(1) (ii) The following sub-paragraphs shall be inserted:
+    (va) “Capital Market Intermediaries (CMIs)” shall mean regulated entities undertaking trade execution and market infrastructure services in capital markets, including broking, clearing, custody, market making or other incidental services.
+    Provided that CMIs shall not include Standalone Primary Dealers and Qualified Central Counterparty (QCCPs).
+    (vb) "Cash and cash equivalents” shall include cash, balances held in demand and term deposits placed with the lending bank and investments in units of overnight mutual funds (with a minimum haircut of 10 per cent).
+    (viiia) “Control” shall have the same meaning as defined in Section 2(27) of the Companies Act, 2013.
+
+  # --- source chunk 4560 ---
+  #   RBI/2026-27/118   2026-06-15   DOR
+  #   binds:    Local Area Banks
+  #   document: Reserve Bank of India (Local Area Banks - Responsible Business Conduct) Second Amendment D
+  #   section:  3. Short Title and Commencement
+- id: q080
+  category: amendment
+  answerable: true
+  question: "For Local Area Banks Responsible Business Conduct Second Amendment, effective 1 January 2027, what is the definition of compulsory bundling?"
+  answer: |
+    Making one product conditional on taking another.
+  notes: ""
+  gold_chunk_ids: [4560]
+  gold_docs: ["RBI/2026-27/118"]
+  source_text: |
+    (1) These Directions shall be called the Reserve Bank of India (Local Area Banks - Responsible Business Conduct) Second Amendment Directions, 2026.
+    (2) These Directions shall come into effect from January 1, 2027 .
+    4. These Amendment Directions shall modify the Reserve Bank of India (Local Area Banks - Responsible Business Conduct) Directions, 2025 as under:
+    (1) In paragraph 4, the following definition shall be inserted after sub-paragraph 4(6), namely:
+    “ 4(6A) Compulsory bundling means the practice by an LAB of making availment of one product / service by a customer conditional upon availment of another product / service, whether own or third-party, offered by the LAB.”
+    (2) In paragraph 4, the following definition shall be inserted after sub-paragraph 4(10), namely:
+
+- id: q081
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "At what specific level are banks now required to apply enhanced Customer Due Diligence (CDD) procedures under updated KYC master directions?"
+  answer: |
+    
+  notes: "Not mentioned in the corpus."
+  gold_chunk_ids: []
+  gold_docs: []
+
+- id: q082
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "Are the new measures  that are introduced regarding Foreign Currency Non-Resident [FCNR(B)] and Non-Resident External [NRE] deposits to encourage foreign currency inflows effective?"
+  answer: |
+    
+  notes: "There is no data to measure its effectiveness in any of the chunks."
+  gold_chunk_ids: []
+  gold_docs: []
+
+- id: q083
+  category: lookup
+  answerable: true
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "Why are agency banks required to keep their branches open for public transactions on March 31 if it falls on a public holiday, in order to process government receipts and payments?"
+  answer: |
+    So that all government receipts and payments are accounted for within FY 2025-26 itself.
+  notes: ""
+  gold_chunk_ids: [6539]
+  gold_docs: ["RBI/2025-26/204"]
+
+- id: q084
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "List all the GST deadlines."
+  answer: |
+    Not answerable from this corpus. GST filing deadlines are set by the GST
+    Council and administered by the tax authorities, not RBI. No circular here
+    covers them.
+  notes: ""
+  gold_chunk_ids: []
+  gold_docs: []
+
+- id: q085
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "What is the new deadline for filing ITR?"
+  answer: |
+    Not answerable from this corpus. Income tax return deadlines are set by the
+    Income Tax Department / CBDT, not RBI.
+  notes: ""
+  gold_chunk_ids: []
+  gold_docs: []
+
+- id: q086
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "Why there is RBI governor's sign on each currency?"
+  answer: |
+    Not answerable from this corpus. These circulars cover detection and
+    reporting of counterfeit notes, but none explains why the Governor's
+    signature appears on banknotes.
+  notes: ""
+  gold_chunk_ids: []
+  gold_docs: []
+
+- id: q087
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "Which denominations of banknotes are no longer legal tender?"
+  answer: |
+    
+  notes: "RBI/2026-27/107 states ₹2000 notes Will continue as Legal Tender, and RBI/DCM/2026-27/395 says coins of 25 paise and below ceased to be legal tender in 2011 — but that's coins, not banknotes. No banknote denomination is identified as having ceased to be legal tender."
+  gold_chunk_ids: []
+  gold_docs: []
+
+- id: q088
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "Who is the current governor of RBI?"
+  answer: |
+    Not answerable from this corpus. The circulars are signed by departmental
+    Chief General Managers and never name the sitting Governor.
+  notes: ""
+  gold_chunk_ids: []
+  gold_docs: []
+
+- id: q089
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "What is the public sector banks' lunch time?"
+  answer: |
+    Not answerable from this corpus. Branch working hours are touched on in
+    passing, but no circular here prescribes a lunch break for public sector
+    banks.
+  notes: ""
+  gold_chunk_ids: []
+  gold_docs: []
+
+- id: q090
+  category: unanswerable
+  answerable: false
+  # No source chunk. Write something this corpus cannot answer
+  # (e.g. a topic RBI doesn't cover in these circulars).
+  question: "What is the current rate of interest for education loan? Give me category wise answer based on the different tier of institutes for India."
+  answer: |
+    Not answerable from this corpus. Education loan interest rates are set by
+    individual banks under their own policies; no circular here publishes tiered
+    rates by institute.
+  notes: ""
+  gold_chunk_ids: []
+  gold_docs: []
+

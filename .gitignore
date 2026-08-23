@@ -39,3 +39,8 @@ data/by_category/
 # is redundant with it. Local runtime data, not corpus data -- not committed.
 data/log.jsonl
 data/answers.jsonl
+
+# The ground-truth question set IS committed -- it's hand-written work and the
+# thing every eval number is measured against, so it belongs in version control.
+!data/qa_draft.yaml
+!data/qa.jsonl

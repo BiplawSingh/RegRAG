@@ -13,9 +13,9 @@ Every question asked through `ask` or `batch` is appended to data/log.jsonl auto
 -- nothing is ever lost, unlike data/answers.jsonl which is just the latest batch snapshot
 and gets overwritten each run.
 
-Generation runs on Gemini's free tier. That costs one capability worth naming:
+Generation runs on Groq's free tier. That costs one capability worth naming:
 this pipeline gets no native citation offsets, so citations are reconstructed and
-then *checked*. The model returns a verbatim `quote` per claim, and verify_quote()
+then *checked*. The model returns a verbatim `quote` per claim, and verify()
 confirms that span actually occurs in the chunk it was attributed to.
 
 That check is the point. A model can emit a citation that looks right and quotes
@@ -44,17 +44,22 @@ OUT = ROOT / "answers.jsonl"      # latest batch run only -- overwritten every `
 LOG = ROOT / "log.jsonl"          # every question ever asked -- append-only, never overwritten
 
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
-# Flash-Lite, not Flash: the free tier meters requests per day *per model*, and the
-# first batch run exhausted gemini-3.6-flash's 20/day allowance in a single pass
-# (17 answers + 3 failures -- failed calls still consume quota). Week 2 needs
-# 75-100 questions across several pipeline versions, so daily allowance is the
-# binding constraint, not per-request quality.
+
+# Groq, not Gemini. Gemini's free tier metered ~20 requests per day per model, which
+# a single 20-question batch exhausted -- Week 2 needs ~360 calls (90 questions x
+# baseline + judge + ablations), so that was five days per run.
 #
-# Per-model RPD is not in the API (models.list() returns capabilities, never quota)
-# -- it's a browser-authenticated AI Studio page, so it can't be checked here. Read
-# yours at https://aistudio.google.com/rate-limit and set GEMINI_MODEL if a
-# different model wins. `python rag.py models` lists everything your key can call.
-GEN_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+# Groq's free tier is 1,000 requests/day on this model, but requests are not the
+# real ceiling: 200,000 tokens/day is. At ~2,700 tokens per call (8 chunks of
+# context) that works out to roughly 74 calls/day, and 8,000 tokens/minute caps
+# throughput at ~3 calls/minute. Both limits are per model, so the judge can run on
+# a different one and draw from its own allowance.
+GEN_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
+
+# Free-tier token-per-minute ceiling. The client paces itself against this rather
+# than sprinting into a 429 -- a rejected call still costs wall-clock and, on some
+# providers, quota.
+TPM_LIMIT = int(os.getenv("GROQ_TPM_LIMIT", "8000"))
 
 SYSTEM = """You answer questions about Indian banking regulation using ONLY the \
 numbered SOURCES provided. These are Reserve Bank of India circulars.
@@ -138,73 +143,124 @@ def format_sources(chunks):
 
 
 # ------------------------------- generation ---------------------------------
-_GENAI = {}
+_LLM = {}
 
 
-def genai_client():
-    """One long-lived client.
+def llm_client():
+    """One long-lived Groq client, built on first use."""
+    if "client" not in _LLM:
+        from groq import Groq
 
-    Must be held in a module-level reference, not built inline. A temporary
-    `genai.Client()` is freed as soon as the expression that made it finishes, and
-    its finalizer closes the underlying httpx client -- so a lazily-issued request
-    (anything paginated, like models.list) then fails with "client has been closed",
-    which reads like a network or auth fault rather than an object-lifetime one.
+        if not os.getenv("GROQ_API_KEY"):
+            sys.exit("set GROQ_API_KEY (free key: https://console.groq.com -> API Keys)")
+        _LLM["client"] = Groq()
+    return _LLM["client"]
+
+
+def strict_schema(model):
+    """Pydantic JSON schema, adjusted for strict structured-output mode.
+
+    Strict mode requires `additionalProperties: false` on *every* object in the
+    schema, not just the root. Pydantic hoists nested models into `$defs`, so a
+    model with any nested type (here: Citation) fails validation with
+    `/$defs/Citation: additionalProperties:false must be set on every object`
+    unless the flag is applied recursively.
     """
-    if "client" not in _GENAI:
-        from google import genai
+    def walk(node):
+        if isinstance(node, dict):
+            if node.get("type") == "object" or "properties" in node:
+                node.setdefault("additionalProperties", False)
+            for v in node.values():
+                walk(v)
+        elif isinstance(node, list):
+            for v in node:
+                walk(v)
+        return node
 
-        if not (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")):
-            sys.exit("set GEMINI_API_KEY (free key: https://aistudio.google.com/apikey)")
-        _GENAI["client"] = genai.Client()
-    return _GENAI["client"]
+    return walk(model.model_json_schema())
+
+
+def _throttle(est_tokens):
+    """Sleep just enough to stay under the tokens-per-minute ceiling.
+
+    Free-tier TPM is low enough (8,000) that a 90-question run will trip it within
+    a handful of calls. Pacing beforehand is strictly better than absorbing the
+    429: the rejected call still costs wall-clock, and the retry costs it twice.
+    Tracks a rolling one-minute window of tokens actually spent.
+    """
+    now = time.time()
+    spent = _LLM.setdefault("window", [])
+    spent[:] = [(t, n) for t, n in spent if now - t < 60]
+    used = sum(n for _, n in spent)
+    if used + est_tokens > TPM_LIMIT and spent:
+        wait = 60 - (now - spent[0][0]) + 0.5
+        if wait > 0:
+            print(f"        pacing {wait:.0f}s (TPM {used}/{TPM_LIMIT})", flush=True)
+            time.sleep(wait)
+            spent[:] = []
 
 
 def generate(question, chunks, attempts=4):
     """Generate one answer, retrying only what is worth retrying.
 
-    503 UNAVAILABLE is transient server load and succeeds on a retry -- but a failed
-    call still consumes free-tier quota, so letting it through costs a request and
-    returns nothing. 429 RESOURCE_EXHAUSTED is the opposite: the daily allowance is
-    gone and every further attempt burns nothing but wall-clock, so it is raised
-    immediately rather than retried. The server's own `retryDelay` is honoured when
-    present, since it knows more than a fixed backoff does.
-    """
-    from google.genai import types
+    Groq exposes typed exceptions, so the failure classes are distinguishable
+    without string-matching an error message:
 
-    client = genai_client()
+      InternalServerError / APIConnectionError  transient -- retry with backoff
+      RateLimitError                            two different things (see below)
+      everything else                           a real bug; raise immediately
+
+    A 429 means either "too fast this minute" or "allowance gone for the day".
+    The first is worth waiting out; the second is not, and telling them apart
+    matters because a batch that keeps retrying an exhausted daily quota just
+    burns the rest of the evening.
+    """
+    from groq import APIConnectionError, InternalServerError, RateLimitError
+
+    client = llm_client()
     prompt = f"SOURCES\n\n{format_sources(chunks)}\n\nQUESTION\n{question}"
-    cfg = types.GenerateContentConfig(
-        system_instruction=SYSTEM,
-        response_mime_type="application/json",
-        response_schema=Answer,
-    )
+    schema = strict_schema(Answer)
 
     t0 = time.time()
     for attempt in range(attempts):
+        _throttle(len(prompt) // 4 + 500)
         try:
-            resp = client.models.generate_content(
-                model=GEN_MODEL, contents=prompt, config=cfg
+            resp = client.chat.completions.create(
+                model=GEN_MODEL,
+                messages=[{"role": "system", "content": SYSTEM},
+                          {"role": "user", "content": prompt}],
+                response_format={"type": "json_schema", "json_schema": {
+                    "name": "grounded_answer", "strict": True, "schema": schema}},
             )
-            # Token counts ride along so the caller can attach them to the trace --
-            # without them Langfuse shows the call but can't cost it.
-            u = getattr(resp, "usage_metadata", None)
-            usage = {
-                "input": getattr(u, "prompt_token_count", None) or 0,
-                "output": getattr(u, "candidates_token_count", None) or 0,
-            } if u else {}
-            return Answer.model_validate_json(resp.text), time.time() - t0, usage, prompt
-        except Exception as e:
+            u = resp.usage
+            usage = {"input": u.prompt_tokens, "output": u.completion_tokens} if u else {}
+            _LLM.setdefault("window", []).append(
+                (time.time(), (u.total_tokens if u else 0)))
+            ans = Answer.model_validate_json(resp.choices[0].message.content or "{}")
+            return ans, time.time() - t0, usage, prompt
+
+        except RateLimitError as e:
             msg = str(e)
-            if "RESOURCE_EXHAUSTED" in msg or "429" in msg:
-                raise                                    # quota gone; retrying wastes time
-            transient = any(s in msg for s in ("UNAVAILABLE", "503", "500", "INTERNAL"))
-            if not transient or attempt == attempts - 1:
+            daily = "per day" in msg.lower() or "requests per day" in msg.lower()
+            if daily or attempt == attempts - 1:
                 raise
-            m = re.search(r"'retryDelay':\s*'(\d+)s'", msg)
-            wait = int(m.group(1)) if m else 2 ** attempt
-            print(f"        {('503/transient')} retry {attempt + 1}/{attempts - 1} in {wait}s",
-                  flush=True)
+            wait = _retry_after(msg, default=2 ** attempt * 5)
+            print(f"        rate limited, waiting {wait:.0f}s", flush=True)
             time.sleep(wait)
+
+        except (InternalServerError, APIConnectionError) as e:
+            if attempt == attempts - 1:
+                raise
+            wait = 2 ** attempt
+            print(f"        {e.__class__.__name__}, retry "
+                  f"{attempt + 1}/{attempts - 1} in {wait}s", flush=True)
+            time.sleep(wait)
+
+
+def _retry_after(msg, default):
+    """Groq puts the wait in the message text, e.g. 'try again in 7.5s'."""
+    m = re.search(r"try again in ([\d.]+)s", msg, re.I)
+    return float(m.group(1)) + 0.5 if m else default
 
 
 # ------------------------------ verification --------------------------------
@@ -292,32 +348,32 @@ def cmd_history(tail=10):
 def cmd_models(all_models=False):
     """List models this key can call.
 
-    Note what this does NOT show: rate limits. The API exposes capabilities only --
-    per-model daily/minute quotas live in AI Studio (https://aistudio.google.com/rate-limit)
-    and are the number that actually decides whether a model can carry Week 2.
+    Note what this does NOT show: rate limits. The API reports capabilities only --
+    per-model daily and per-minute quotas are published at
+    https://console.groq.com/docs/rate-limits, and the tokens-per-day figure there
+    is what actually decides whether a model can carry a 90-question eval.
     """
-    client = genai_client()          # held for the whole iteration; see genai_client()
+    client = llm_client()
     rows = []
-    for m in client.models.list():
-        actions = getattr(m, "supported_actions", None) or []
-        if not all_models and actions and "generateContent" not in actions:
+    for m in client.models.list().data:
+        if not all_models and not getattr(m, "active", True):
             continue
         rows.append((
-            (m.name or "").replace("models/", ""),
-            m.input_token_limit or 0,
-            m.output_token_limit or 0,
-            "yes" if getattr(m, "thinking", False) else "-",
-            m.display_name or "",
+            m.id,
+            getattr(m, "context_window", 0) or 0,
+            getattr(m, "max_completion_tokens", 0) or 0,
+            getattr(m, "owned_by", "") or "",
         ))
 
     rows.sort()
-    print(f"{'model id':<38}{'in':>10}{'out':>9}{'think':>7}  name")
-    print("-" * 92)
-    for name, tin, tout, think, disp in rows:
-        mark = " *" if name == GEN_MODEL else "  "
-        print(f"{mark}{name:<36}{tin:>10,}{tout:>9,}{think:>7}  {disp[:30]}")
-    print(f"\n{len(rows)} callable  (* = current GEN_MODEL)")
-    print("quotas are not in the API -- see https://aistudio.google.com/rate-limit")
+    print(f"{'model id':<44}{'context':>10}{'max out':>10}  owner")
+    print("-" * 84)
+    for name, ctx, out, owner in rows:
+        mark = "*" if name == GEN_MODEL else " "
+        print(f"{mark}{name:<43}{ctx:>10,}{out:>10,}  {owner[:22]}")
+    print(f"\n{len(rows)} callable  (* = current GROQ_MODEL)")
+    print("quotas: https://console.groq.com/docs/rate-limits  "
+          "(tokens/day is the binding limit, not requests/day)")
 
 
 def run_one(question, k=8, entity=None, use_filter=True, quiet=False,
@@ -449,14 +505,13 @@ def cmd_batch(k=8, use_filter=True):
                    "run_id": run_id, "source": "batch", "question": q, "error": msg}
             rows.append(err)
             log_record(err)           # failures get recorded too, not just successes
-            if "RESOURCE_EXHAUSTED" in msg or "429" in msg:
-                # Daily quota is gone. Every remaining question would fail the same
-                # way, so stop and keep the partial run rather than logging 6 more
-                # identical errors and pretending the batch completed.
-                print(f"        QUOTA EXHAUSTED -- stopping at {i}/{len(QUESTIONS)}")
+            if "RateLimitError" in msg and ("per day" in msg.lower() or "TPD" in msg):
+                # The daily allowance is gone -- per-minute limits are absorbed inside
+                # generate(). Every remaining question would fail identically, so stop
+                # and keep the partial run rather than pretending the batch completed.
+                print(f"        DAILY QUOTA EXHAUSTED -- stopping at {i}/{len(QUESTIONS)}")
                 break
-            print(f"        FAILED {msg}")
-        time.sleep(1.0)                             # free-tier rate limits
+            print(f"        FAILED {msg[:140]}")
 
     with open(OUT, "w", encoding="utf-8") as f:
         for r in rows:
