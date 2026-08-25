@@ -1,0 +1,259 @@
+# Hand review of the unanswerable questions, against run answers_e2e_k8.jsonl
+# ---------------------------------------------------------------------------
+# WHY THIS FILE EXISTS INSTEAD OF EDITS TO qa_draft.yaml
+# The answer key stays exactly as it was written, before anyone saw a single
+# model output. Editing it to match what the system produced is how a benchmark
+# quietly stops measuring anything -- the grader drifts toward the graded until
+# the score is a tautology. So verdicts live here, separately, and eval.py
+# reports the strict number and the reviewed number side by side. Both are
+# auditable, and the disagreement between them is itself information.
+#
+# THE RULE THIS REVIEW APPLIES  (decided 2026-08-24)
+# A question counts as answerable if the answer exists ANYWHERE in the 506-document
+# corpus -- not only in the chunk the question was authored from. The key's notes
+# say "not answerable from this source", meaning that one chunk; but the system
+# searches everything, and a user asking a question does not care which chunk the
+# question was drafted against. Finding better evidence than the question was
+# written against is correct behaviour, not a failure.
+#
+# A SECOND RULE, decided at the same time
+# Naming a thing is not describing it. "What do these Directions contain?" answered
+# with the Directions' title is scored a failure even though the title is accurate.
+# This is the same evasion as the obvious cases, just harder to spot, and excusing
+# it would let the system pass by restating the question in every ambiguous case.
+#
+# verdict values
+#   correct_refusal   said insufficient_context, and rightly
+#   correct_answer    answered, and the answer is genuinely supported by the corpus
+#   failure           answered when it should not have, or answered vacuously
+#   disputed          needs a human decision that has not been made yet; counted
+#                     as a failure until settled, so the score is never flattered
+#                     by an open question
+#   superseded        the question has since been rewritten, so the verdict no longer
+#                     describes anything in the current key. Kept on record because
+#                     the run it applied to still contains the old wording; excluded
+#                     from the tally.
+
+reviewed_at: 2026-08-24
+run: data/eval/answers_e2e_k8.jsonl
+questions_reviewed: 14        # of 24 unanswerable; the rest fell after the daily cap
+
+verdicts:
+
+  # --------------------------------------------------------------- refusals --
+  - id: q041
+    verdict: correct_refusal
+    why: >
+      Asked for the first five substantive rules of the Payments Banks cybersecurity
+      rulebook; the chunk is the preamble. Declined. The substantive rules are not
+      in the corpus in a form that answers "the first five", so declining is right
+      under the corpus-wide rule too.
+
+  - id: q066
+    verdict: correct_refusal
+    why: >
+      Asked what the NBFC asset-classification Third Amendment states. Declined.
+      The amendment's own provisions are genuinely absent from the corpus.
+
+  # ---------------------------------------------------- answered, and correct --
+  - id: q062
+    verdict: correct_answer          # end-to-end only -- see the oracle note below
+    why: >
+      Asked for NDS-OM access criteria. The authoring chunk was a preamble, so the
+      key marked it unanswerable -- but the system retrieved RBI/FMRD/2024-25/127
+      and quoted six substantive passages, all verified: eligibility to invest in
+      Government securities, the direct/indirect/Stock-Broker-Connect routes, the
+      SGL and current-account requirements. This is the corpus-wide rule working
+      exactly as intended: the question was drafted against a weak chunk, and the
+      retriever found the real one.
+    reclassify_key: answerable
+    oracle_note: >
+      RE-REVIEWED after the oracle run, where this question was answered rather than
+      refused and so looked like a failure. It is not: the fault is in the key.
+
+      Both gold_chunk_ids are document openings. 9231 is the Master Direction's
+      preamble (enabling section, supersession); 5291 is a covering circular saying
+      that criteria exist "covering requirements for direct access, indirect access
+      and access through the Stock Broker Connect facility" without stating any of
+      them. Fed only those two, the model produced exactly what they support -- the
+      categories, and the fact that application forms are prescribed -- which is
+      metadata_as_substance, and is the honest limit of that evidence.
+
+      The passages that actually answer the question are chunks 9236, 9237, 9238,
+      9239 and 9242, the body of RBI/FMRD/2024-25/127. gold_chunk_ids never pointed
+      at them.
+
+      APPLIED (2026-08-25, by the author's decision). gold_chunk_ids is now
+      [9236, 9237, 9238, 9239, 9242, 9231, 5291] and answerable is true, with the
+      answer written from the source text. The two preamble chunks are kept so the
+      question still covers both documents it was drafted across.
+
+      This is the one key edit made after seeing model output, and it is recorded
+      here rather than left to git history precisely because that is the dangerous
+      kind of change. It is defensible on a specific ground: it corrects a pointer
+      that demonstrably indexed the wrong text, and alters no judgement about
+      whether an answer was right or wrong. No verdict in this file was changed to
+      match a model output, and none should be.
+
+      Consequence: the set is now 68 answerable / 22 unanswerable, and the
+      disguised-unanswerable count drops from 14 to 13. Runs recorded before this
+      date were scored against the older export.
+
+      GENERAL LESSON: oracle mode is only as good as gold_chunk_ids. Where a
+      question was authored from a preamble, oracle feeds strictly WEAKER evidence
+      than retrieval finds on its own, and "failed under oracle" then means the key
+      is wrong, not that generation is. Checked across all eight questions that
+      still answered under oracle: only q062 has this problem. For q034, q055 and
+      q059 the preamble is the point -- those questions were deliberately authored
+      from headers to test refusal, so answering them remains a real failure.
+
+  # ------------------------------------------------------------------ failures --
+  - id: q005
+    verdict: failure
+    mode: circular_restatement
+    why: >
+      Asked WHY a foreign bank's subsidiary must run Core Banking Solution. Answered
+      "RBI requires that it operate on CBS from inception, so foreign banks must run
+      CBS in India." The requirement is offered as its own justification. The corpus
+      does not state a rationale anywhere, so this is a failure under either rule.
+      The clearest single faithfulness failure in the run.
+
+  - id: q003
+    verdict: failure
+    mode: confident_filler
+    why: >
+      Asked what specific measures the Audit Committee takes to check auditor
+      independence. Answered that it does so "using the applicable regulatory
+      provisions, standards and best-practice guidance" -- grammatically an answer,
+      informationally empty. The corpus states the duty, never the method.
+
+  - id: q070
+    verdict: failure
+    mode: boilerplate_as_substance
+    why: >
+      Asked what the credit-risk transfer amendment states. Quoted the enabling-powers
+      recital -- "in exercise of the powers conferred by section 21 and 35A of the
+      Banking Regulation Act, 1949, the Reserve Bank being satisfied..." -- as though
+      that were the amendment's content. Every amendment in the corpus opens this way,
+      so this answer would be equally "valid" for any of them, which is what makes it
+      worthless.
+
+  - id: q059
+    verdict: failure
+    mode: metadata_as_substance
+    why: >
+      Asked what the Urban Co-operative Banks capital-adequacy amendment states.
+      Returned the title, the commencement date, and the fact that sub-paragraph
+      20(18) "shall be substituted" -- three true statements, none of which is the
+      substituted text. This is the amendment-chain problem showing up as an answer
+      rather than as a refusal.
+
+  - id: q040
+    verdict: failure
+    mode: template_regurgitation
+    why: >
+      Asked for a blank reimbursement-claim form. Reproduced the form's fill-in-the-blank
+      lines verbatim -- "₹__________ (Rupees ________ only)" -- and the citation
+      verified, because the blanks really are in the source. A verified citation
+      supporting a non-answer; a useful demonstration that citation accuracy and
+      answer quality are independent axes.
+
+  - id: q055
+    verdict: failure
+    mode: fabrication
+    why: >
+      Asked what the new Asset Classification Directions are about. Produced a fluent,
+      specific account of an ECL staging framework, forward-looking provisioning and
+      the Effective Interest Rate method -- and the citation came back not_found. The
+      only outright invention among the 90 verified citations in this run. Notably it
+      is also the most plausible-sounding answer in the set.
+
+  - id: q039
+    verdict: failure
+    mode: source_restatement
+    why: >
+      Asked what the Banking Laws (Amendment) Act 2025 changed. Answered that it
+      amended section 42 of the RBI Act and sections 18 and 24 of the Banking
+      Regulation Act, relating to CRR and SLR. Initially looked like a corpus-wide
+      find, but the verified quote IS the authoring chunk's own sentence: it names
+      which provisions were touched, never what changed about them. Naming the
+      amended sections is not stating the amendment.
+
+  - id: q008
+    verdict: superseded
+    why: >
+      The reviewed question was "What is RBI?", answered "RBI stands for the Reserve
+      Bank of India" -- correct, and not an answer about what the institution is. It
+      was scored a failure under the naming-is-not-describing rule, but the question
+      itself was the problem: no real user asks a regulatory corpus to expand an
+      acronym. It has since been replaced, from the same chunk (3084), with "Which
+      provisions of the National Housing Bank Act, 1987 does RBI rely on in issuing
+      the NBFC Statutory Audit Directions, 2026?" -- answerable: true, gold answer
+      sections 29A, 30A and 32.
+
+      The replacement tests attribute-binding, which nothing else in the set covered:
+      the chunk stacks three enabling statutes in one sentence, each with its own
+      section list, and the natural failure is to return the RBI Act's sections
+      (45JA, 45K, 45L, 45M) because they appear first, or to merge all nine into one
+      list. RBI preambles stack statutes this way constantly, so the failure mode
+      generalises.
+
+      Excluded from the tally below: it is no longer an unanswerable question, and
+      the verdict describes text that is no longer in the answer key. It stays on
+      record so the run it applied to (answers_e2e_k8.jsonl, where q008 is scored
+      against the old wording) remains interpretable.
+
+      NOTE: the old question also exposed a gap in `qa.py validate` -- q008 sat at
+      answerable: true with an answer field reading "Not answerable from this
+      source", and validation passed. The check requires a reason on an
+      answerable: false entry, but never requires a real answer on an
+      answerable: true one.
+
+  - id: q033
+    verdict: failure
+    mode: definitional_deflection
+    why: >
+      "What is the Banking Regulation Act?" answered "the Banking Regulation Act, 1949
+      (10 of 1949)." The citation, not the content.
+
+  - id: q034
+    verdict: failure
+    mode: definitional_deflection
+    why: >
+      Asked what the Local Area Banks' Miscellaneous Directions are. Returned their
+      full formal title. The question asked what they contain.
+
+  # ------------------------------------------------------------------ disputed --
+  - id: q063
+    verdict: disputed
+    why: >
+      Asked what the Credit Risk Management amendment is about. The system retrieved a
+      different document and quoted genuine, substantive text about Concentration Risk
+      Management policies -- single counterparty, interconnected groups, sectors. The
+      open question is whether concentration-risk management is the same amendment or
+      an adjacent one; if the same, this is a correct_answer under the corpus-wide
+      rule. Requires reading RBI/2025-26/182 and RBI/2025-26/185 against
+      RBI/DOR/2025-26/151. Counted as a failure until someone does.
+
+# ------------------------------------------------------------------- tally ----
+# correct_refusal   2
+# correct_answer    1   (q062 -- now reclassified answerable, so no longer scored
+#                        as refusal behaviour at all; eval.py applies verdicts only
+#                        to questions still marked unanswerable, so this drops out
+#                        of the tally on its own)
+# failure           9
+# disputed          1   (counted as failure)
+# superseded        1   (q008, excluded -- question no longer exists)
+#
+# Reviewed refusal behaviour: 3 of 13 acceptable, or 4 if q063 resolves favourably.
+# Strict, as the key was written:  2 of 14 -- across 14 because that run still
+# included the old q008.
+#
+# The review moves the number by one question, not by the several it first appeared
+# to. Two candidates for reclassification did not survive being checked against the
+# actual quotes -- which is the whole reason verdicts cite evidence here rather than
+# impressions.
+#
+# The set is now 67 answerable / 23 unanswerable (was 66 / 24): q008 moved columns
+# when it was rewritten. Any comparison against answers_e2e_k8.jsonl must account
+# for that -- it was generated against the older export.

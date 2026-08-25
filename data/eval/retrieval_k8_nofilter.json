@@ -1,0 +1,1583 @@
+{
+ "measured_at": "2026-08-25T04:01:26+00:00",
+ "k": 8,
+ "filtered": false,
+ "rows": [
+  {
+   "id": "q001",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DOR/2026-27/398"
+   ],
+   "retrieved": [
+    "RBI/2025-26/254",
+    "RBI/2025-26/211",
+    "RBI/2025-26/259",
+    "RBI/2025-26/216",
+    "RBI/2025-26/211",
+    "RBI/FIDD/2025-26/196",
+    "RBI/DOR/2026-27/398",
+    "RBI/2026-27/112"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 7,
+   "entity": [
+    "Commercial Banks"
+   ]
+  },
+  {
+   "id": "q002",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DCM/2026-27/394"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/412",
+    "RBI/DoS/2026-27/439",
+    "RBI/DoS/2026-27/430",
+    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/421",
+    "RBI/DoS/2026-27/451",
+    "RBI/DCM/2026-27/394",
+    "RBI/2026-27/220"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": false,
+   "first_rank": 7,
+   "entity": null
+  },
+  {
+   "id": "q004",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/456"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/470",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/419"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "All India Financial Institutions"
+   ]
+  },
+  {
+   "id": "q006",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/2025-26/134"
+   ],
+   "retrieved": [
+    "RBI/2025-26/134",
+    "RBI/2025-26/134",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/2025-26/132",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/143",
+    "RBI/DOR/2025-26/150"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": false,
+   "first_rank": 1,
+   "entity": null
+  },
+  {
+   "id": "q007",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DOR/2026-27/36"
+   ],
+   "retrieved": [
+    "RBI/DOR/2026-27/398",
+    "RBI/DOR/2026-27/36",
+    "RBI/DOR/2026-27/398",
+    "RBI/DOR/2025-26/150",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2026-27/398",
+    "RBI/DOR/2025-26/148",
+    "RBI/DoS/2026-27/415"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 2,
+   "entity": [
+    "Commercial Banks"
+   ]
+  },
+  {
+   "id": "q008",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/465"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/463",
+    "RBI/2026-27/165",
+    "RBI/DoS/2026-27/465",
+    "RBI/DoS/2026-27/468",
+    "RBI/2026-27/166",
+    "RBI/DoS/2026-27/468",
+    "RBI/2026-27/230",
+    "RBI/2026-27/43"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 3,
+   "entity": [
+    "Non-Banking Financial Companies"
+   ]
+  },
+  {
+   "id": "q009",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/2025-26/171"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/466",
+    "RBI/DoS/2026-27/424",
+    "RBI/DoS/2026-27/415",
+    "RBI/DoS/2026-27/458",
+    "RBI/DOR/2025-26/271",
+    "RBI/DOR/2025-26/151",
+    "RBI/DoS/2026-27/433",
+    "RBI/DoS/2026-27/458"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q010",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DPSS/2026-27/401"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/143",
+    "RBI/DPSS/2026-27/401",
+    "RBI/DPSS/2026-27/401",
+    "RBI/2025-26/180",
+    "RBI/2025-26/176",
+    "RBI/DOR/2025-26/143",
+    "RBI/2025-26/175",
+    "RBI/2025-26/173"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": false,
+   "first_rank": 2,
+   "entity": null
+  },
+  {
+   "id": "q011",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DOR/2025-26/151"
+   ],
+   "retrieved": [
+    "RBI/DOR/2026-27/397",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2026-27/397",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2026-27/397",
+    "RBI/DOR/2026-27/397",
+    "RBI/DOR/2025-26/151"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 2,
+   "entity": null
+  },
+  {
+   "id": "q012",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/446"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/430",
+    "RBI/DoS/2026-27/451",
+    "RBI/DoS/2026-27/439",
+    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/421",
+    "RBI/DoS/2026-27/430",
+    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/421"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 7,
+   "entity": null
+  },
+  {
+   "id": "q013",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DOR/2025-26/122"
+   ],
+   "retrieved": [
+    "RBI/2026-27/103",
+    "RBI/2026-27/102",
+    "RBI/2026-27/106",
+    "RBI/2026-27/40",
+    "RBI/2025-26/153",
+    "RBI/2025-26/152",
+    "RBI/2025-26/151",
+    "RBI/2025-26/150"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q014",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/431"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/151",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/426",
+    "RBI/DoS/2026-27/408",
+    "RBI/DoS/2026-27/417",
+    "RBI/DoS/2026-27/444",
+    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/461"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q015",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/460"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/460",
+    "RBI/DoS/2026-27/435",
+    "RBI/DoS/2026-27/408",
+    "RBI/DoS/2026-27/417",
+    "RBI/DoS/2026-27/444",
+    "RBI/DoS/2026-27/426",
+    "RBI/DoS/2026-27/460",
+    "RBI/DoS/2026-27/460"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Non-Banking Financial Companies"
+   ]
+  },
+  {
+   "id": "q016",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/431"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/440",
+    "RBI/DoS/2026-27/464",
+    "RBI/DoS/2026-27/464",
+    "RBI/DoS/2026-27/440",
+    "RBI/DOR/2025-26/151",
+    "RBI/DoS/2026-27/435",
+    "RBI/DoS/2026-27/460",
+    "RBI/DOR/2025-26/151"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": true,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q017",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/423"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/457",
+    "RBI/DoS/2026-27/414",
+    "RBI/DoS/2026-27/458",
+    "RBI/FMRD/2024-25/127",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/448",
+    "RBI/DoS/2026-27/459",
+    "RBI/DoS/2026-27/465"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": true,
+   "first_rank": null,
+   "entity": [
+    "All India Financial Institutions"
+   ]
+  },
+  {
+   "id": "q018",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/454"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/454",
+    "RBI/DoS/2026-27/451",
+    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/421",
+    "RBI/DoS/2026-27/439",
+    "RBI/DoS/2026-27/412",
+    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/455"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Regional Rural Banks"
+   ]
+  },
+  {
+   "id": "q019",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DOR/2025-26/147"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/296",
+    "RBI/DOR/2025-26/147",
+    "RBI/DOR/2025-26/271",
+    "RBI/DOR/2025-26/147",
+    "RBI/DOR/2025-26/147",
+    "RBI/DOR/2025-26/147",
+    "RBI/DOR/2025-26/147",
+    "RBI/DOR/2025-26/147"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 2,
+   "entity": null
+  },
+  {
+   "id": "q020",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DOR/2025-26/151"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": null
+  },
+  {
+   "id": "q021",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/432"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/425",
+    "RBI/DoS/2026-27/416",
+    "RBI/DoS/2026-27/427",
+    "RBI/DoS/2026-27/409",
+    "RBI/DoS/2026-27/445",
+    "RBI/DoS/2026-27/418",
+    "RBI/DoS/2026-27/434",
+    "RBI/DoS/2026-27/450"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q022",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/467"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/416",
+    "RBI/DoS/2026-27/467",
+    "RBI/DoS/2026-27/443",
+    "RBI/2026-27/123",
+    "RBI/2026-27/122",
+    "RBI/2026-27/122",
+    "RBI/2026-27/123",
+    "RBI/2026-27/123"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 2,
+   "entity": null
+  },
+  {
+   "id": "q023",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/423"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/319",
+    "RBI/DoS/2026-27/410",
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/419",
+    "RBI/DoS/2026-27/413",
+    "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/431"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q024",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/419"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/461",
+    "RBI/DoS/2026-27/470",
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/419",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/410",
+    "RBI/DoS/2026-27/461",
+    "RBI/DoS/2026-27/438"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 4,
+   "entity": null
+  },
+  {
+   "id": "q025",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/470"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/439",
+    "RBI/DoS/2026-27/412",
+    "RBI/DoS/2026-27/454",
+    "RBI/DoS/2026-27/451",
+    "RBI/DoS/2026-27/421",
+    "RBI/DoS/2026-27/443",
+    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/463"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q026",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/CEPD/2025-26/381"
+   ],
+   "retrieved": [
+    "RBI/CEPD/2025-26/386",
+    "RBI/CEPD/2025-26/384",
+    "RBI/CEPD/2025-26/386",
+    "RBI/CEPD/2025-26/383",
+    "RBI/CEPD/2025-26/382",
+    "RBI/CEPD/2025-26/384",
+    "RBI/CEPD/2025-26/386",
+    "RBI/CEPD/2025-26/386"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": true,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q027",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoR/2025-26/152"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/412",
+    "RBI/DoR/2025-26/146",
+    "RBI/DoS/2026-27/408",
+    "RBI/DoS/2026-27/415",
+    "RBI/DoS/2026-27/411",
+    "RBI/DOR/2025-26/150",
+    "RBI/DoS/2026-27/409",
+    "RBI/DoS/2026-27/413"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": [
+    "Commercial Banks"
+   ]
+  },
+  {
+   "id": "q028",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/DoS/2026-27/424"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/424",
+    "RBI/DoS/2026-27/415",
+    "RBI/DoS/2026-27/433",
+    "RBI/DoS/2026-27/449",
+    "RBI/DoS/2026-27/466",
+    "RBI/DoS/2026-27/442",
+    "RBI/DoS/2026-27/469",
+    "RBI/DoS/2026-27/458"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": null
+  },
+  {
+   "id": "q029",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/2026-27/150"
+   ],
+   "retrieved": [
+    "RBI/2026-27/150",
+    "RBI/DoS/2026-27/411",
+    "RBI/DoS/2026-27/420",
+    "RBI/DoS/2026-27/429",
+    "RBI/DoS/2026-27/429",
+    "RBI/DoS/2026-27/411",
+    "RBI/DoS/2026-27/420",
+    "RBI/DoS/2026-27/462"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": false,
+   "first_rank": 1,
+   "entity": null
+  },
+  {
+   "id": "q030",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/2025-26/391"
+   ],
+   "retrieved": [
+    "RBI/2025-26/388",
+    "RBI/2025-26/391",
+    "RBI/2025-26/390",
+    "RBI/2025-26/389",
+    "RBI/2025-26/387",
+    "RBI/2025-26/226",
+    "RBI/2026-27/80",
+    "RBI/2026-27/35"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 2,
+   "entity": null
+  },
+  {
+   "id": "q031",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/425"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/416",
+    "RBI/DoS/2026-27/425",
+    "RBI/DoS/2026-27/434",
+    "RBI/DoS/2026-27/425",
+    "RBI/DoS/2026-27/434",
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/416"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 3,
+   "entity": [
+    "Small Finance Banks"
+   ]
+  },
+  {
+   "id": "q032",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/446"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/296",
+    "RBI/DOR/2025-26/271",
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/412",
+    "RBI/DoS/2026-27/412",
+    "RBI/2026-27/168",
+    "RBI/DoS/2026-27/446",
+    "RBI/2026-27/167"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 7,
+   "entity": [
+    "Local Area Banks"
+   ]
+  },
+  {
+   "id": "q035",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/2026-27/106"
+   ],
+   "retrieved": [
+    "RBI/2026-27/99",
+    "RBI/2026-27/99",
+    "RBI/2026-27/102",
+    "RBI/2026-27/103",
+    "RBI/2026-27/104",
+    "RBI/2026-27/99",
+    "RBI/2026-27/106",
+    "RBI/2026-27/105"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 7,
+   "entity": null
+  },
+  {
+   "id": "q036",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/CEPD/2025-26/381"
+   ],
+   "retrieved": [
+    "RBI/CEPD/2025-26/381",
+    "RBI/CEPD/2025-26/383",
+    "RBI/CEPD/2025-26/382",
+    "RBI/CEPD/2025-26/384",
+    "RBI/CEPD/2025-26/386",
+    "RBI/DCM/2026-27/395",
+    "RBI/CEPD/2025-26/381",
+    "RBI/CEPD/2025-26/384"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Commercial Banks"
+   ]
+  },
+  {
+   "id": "q037",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/423"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/423",
+    "RBI/DoS/2026-27/448",
+    "RBI/DoS/2026-27/468",
+    "RBI/DoS/2026-27/451",
+    "RBI/DoS/2026-27/454",
+    "RBI/DoS/2026-27/421",
+    "RBI/DoS/2026-27/412",
+    "RBI/DoS/2026-27/421"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Small Finance Banks"
+   ]
+  },
+  {
+   "id": "q038",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/436"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/452",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/441",
+    "RBI/DoS/2026-27/432",
+    "RBI/DoS/2026-27/448"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Urban Co-operative Banks"
+   ]
+  },
+  {
+   "id": "q042",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/2026-27/124"
+   ],
+   "retrieved": [
+    "RBI/2026-27/124",
+    "RBI/2026-2027/231",
+    "RBI/2025-26/228",
+    "RBI/2025-26/180",
+    "RBI/2026-2027/231",
+    "RBI/2026-27/40",
+    "RBI/2026-27/124",
+    "RBI/DoS/2026-27/467"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Housing Finance Companies"
+   ]
+  },
+  {
+   "id": "q043",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/2026-2027/228"
+   ],
+   "retrieved": [
+    "RBI/2026-27/223",
+    "RBI/2026-2027/226",
+    "RBI/2026-2027/228",
+    "RBI/2026-27/223",
+    "RBI/2026-2027/228",
+    "RBI/2026-2027/226",
+    "RBI/2026-2027/224",
+    "RBI/2026-2027/228"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 3,
+   "entity": [
+    "Rural Co-operative Banks"
+   ]
+  },
+  {
+   "id": "q044",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/2025-26/388"
+   ],
+   "retrieved": [
+    "RBI/2025-26/388",
+    "RBI/2025-26/390",
+    "RBI/2025-26/389",
+    "RBI/2025-26/391",
+    "RBI/2025-26/387",
+    "RBI/2025-26/389",
+    "RBI/2025-26/391",
+    "RBI/2025-26/388"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": null
+  },
+  {
+   "id": "q045",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/450"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/410",
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/419",
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/437",
+    "RBI/DoS/2026-27/410",
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/419"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 4,
+   "entity": [
+    "Local Area Banks"
+   ]
+  },
+  {
+   "id": "q046",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/447"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/412",
+    "RBI/DoS/2026-27/452",
+    "RBI/DOR/2025-26/271",
+    "RBI/DOR/2025-26/296",
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/416",
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/425"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": [
+    "Local Area Banks"
+   ]
+  },
+  {
+   "id": "q047",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/450"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/437",
+    "RBI/DoS/2026-27/410",
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/470",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/461",
+    "RBI/DoS/2026-27/419"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Local Area Banks"
+   ]
+  },
+  {
+   "id": "q048",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/436"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/441",
+    "RBI/DoS/2026-27/440",
+    "RBI/DoS/2026-27/442",
+    "RBI/DoS/2026-27/435",
+    "RBI/DoS/2026-27/443",
+    "RBI/DOR/2025-26/120",
+    "RBI/DoS/2026-27/445"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Urban Co-operative Banks"
+   ]
+  },
+  {
+   "id": "q049",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/430"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/148",
+    "RBI/2026-27/177",
+    "RBI/2026-27/179",
+    "RBI/2026-27/178",
+    "RBI/DOR/2025-26/151",
+    "RBI/DoS/2026-27/412",
+    "RBI/DoS/2026-27/430",
+    "RBI/DoS/2026-27/451"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 7,
+   "entity": [
+    "Payments Banks"
+   ]
+  },
+  {
+   "id": "q050",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DOR/2025-26/296"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/296",
+    "RBI/DOR/2025-26/271",
+    "RBI/DoS/2026-27/451",
+    "RBI/DOR/2025-26/319",
+    "RBI/DoS/2026-27/453",
+    "RBI/DoS/2026-27/452",
+    "RBI/2026-27/121",
+    "RBI/FIDD/2026-27/405"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Rural Co-operative Banks"
+   ]
+  },
+  {
+   "id": "q051",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/463"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/462",
+    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/462"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Non-Banking Financial Companies"
+   ]
+  },
+  {
+   "id": "q052",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/440"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/440",
+    "RBI/DoS/2026-27/464",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/439",
+    "RBI/DoS/2026-27/439",
+    "RBI/DoS/2026-27/443",
+    "RBI/DoS/2026-27/440",
+    "RBI/DoS/2026-27/442"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Urban Co-operative Banks"
+   ]
+  },
+  {
+   "id": "q053",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/DoS/2026-27/470"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/461",
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/470",
+    "RBI/DoS/2026-27/419",
+    "RBI/DoS/2026-27/410",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/438"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 4,
+   "entity": [
+    "Credit Information Companies"
+   ]
+  },
+  {
+   "id": "q054",
+   "category": "entity_scoped",
+   "gold_docs": [
+    "RBI/2025-26/159"
+   ],
+   "retrieved": [
+    "RBI/2026-27/223",
+    "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/445",
+    "RBI/DoS/2026-27/449",
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/444",
+    "RBI/2026-27/194",
+    "RBI/2026-27/193"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": [
+    "Local Area Banks"
+   ]
+  },
+  {
+   "id": "q056",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/2025-26/263",
+    "RBI/FMRD/2025-26/392"
+   ],
+   "retrieved": [
+    "RBI/2025-26/263",
+    "RBI/2026-27/76",
+    "RBI/2026-27/77",
+    "RBI/2026-27/179",
+    "RBI/2025-26/194",
+    "RBI/DoS/2026-27/458",
+    "RBI/2026-27/16",
+    "RBI/DoS/2026-27/469"
+   ],
+   "hit": true,
+   "both_docs": false,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": null
+  },
+  {
+   "id": "q057",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/2026-27/70",
+    "RBI/2026-27/54"
+   ],
+   "retrieved": [
+    "RBI/2026-27/72",
+    "RBI/2026-27/44",
+    "RBI/2026-27/52",
+    "RBI/2026-27/56",
+    "RBI/2026-27/68",
+    "RBI/2026-27/75",
+    "RBI/2026-27/48",
+    "RBI/2025-26/180"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q058",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/2026-27/191",
+    "RBI/2026-27/187"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/416",
+    "RBI/DoS/2026-27/425",
+    "RBI/DoS/2026-27/450",
+    "RBI/DOR/2025-26/147",
+    "RBI/DOR/2025-26/296",
+    "RBI/DOR/2026-27/397",
+    "RBI/2026-27/109",
+    "RBI/DOR/2025-26/151"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q060",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/2026-27/124",
+    "RBI/2026-27/162"
+   ],
+   "retrieved": [
+    "RBI/2026-27/124",
+    "RBI/2026-27/124",
+    "RBI/2026-2027/231",
+    "RBI/2025-26/261",
+    "RBI/2026-27/48",
+    "RBI/2026-27/56",
+    "RBI/2026-27/68",
+    "RBI/DoR/2026-27/129"
+   ],
+   "hit": true,
+   "both_docs": false,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Housing Finance Companies"
+   ]
+  },
+  {
+   "id": "q061",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/CEPD/2025-26/384",
+    "RBI/CEPD/2025-26/385"
+   ],
+   "retrieved": [
+    "RBI/CEPD/2025-26/384",
+    "RBI/CEPD/2025-26/386",
+    "RBI/CEPD/2025-26/381",
+    "RBI/CEPD/2025-26/385",
+    "RBI/CEPD/2025-26/383",
+    "RBI/CEPD/2025-26/385",
+    "RBI/CEPD/2025-26/381",
+    "RBI/CEPD/2025-26/386"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Non-Banking Financial Companies"
+   ]
+  },
+  {
+   "id": "q062",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/FMRD/2024-25/127",
+    "RBI/2026-27/37"
+   ],
+   "retrieved": [
+    "RBI/2026-27/37",
+    "RBI/FMRD/2024-25/127",
+    "RBI/FMRD/2024-25/127",
+    "RBI/FMRD/2024-25/127",
+    "RBI/FMRD/2024-25/127",
+    "RBI/FMRD/2024-25/127",
+    "RBI/2026-27/37",
+    "RBI/FMRD/2024-25/127"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": null
+  },
+  {
+   "id": "q064",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/461"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/470",
+    "RBI/DoS/2026-27/461",
+    "RBI/DoS/2026-27/410",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/419",
+    "RBI/DoS/2026-27/437",
+    "RBI/DoS/2026-27/450"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Payments Banks",
+    "Non-Banking Financial Companies"
+   ]
+  },
+  {
+   "id": "q065",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/2026-27/120",
+    "RBI/2026-27/121"
+   ],
+   "retrieved": [
+    "RBI/DoS/2026-27/453",
+    "RBI/DOR/2025-26/319",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/452",
+    "RBI/DOR/2025-26/271",
+    "RBI/DoS/2026-27/451",
+    "RBI/DoS/2026-27/438",
+    "RBI/DoS/2026-27/439"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": [
+    "Urban Co-operative Banks",
+    "Rural Co-operative Banks"
+   ]
+  },
+  {
+   "id": "q067",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2026-27/204"
+   ],
+   "retrieved": [
+    "RBI/2026-27/204",
+    "RBI/2026-27/210",
+    "RBI/2026-27/204",
+    "RBI/2026-27/210",
+    "RBI/2026-27/210",
+    "RBI/2026-27/204",
+    "RBI/DOR/2025-26/151",
+    "RBI/2026-27/204"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": null
+  },
+  {
+   "id": "q068",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2026-27/123"
+   ],
+   "retrieved": [
+    "RBI/2026-27/123",
+    "RBI/2026-27/123",
+    "RBI/2026-27/123",
+    "RBI/2026-27/123",
+    "RBI/2026-27/123",
+    "RBI/2026-27/123",
+    "RBI/2026-27/123",
+    "RBI/2026-27/123"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Non-Banking Financial Companies"
+   ]
+  },
+  {
+   "id": "q069",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2025-26/125"
+   ],
+   "retrieved": [
+    "RBI/2025-26/124",
+    "RBI/2025-26/125",
+    "RBI/2025-26/125",
+    "RBI/2025-26/124",
+    "RBI/2025-26/124",
+    "RBI/2025-26/125",
+    "RBI/2025-26/211",
+    "RBI/DOR/2026-27/398"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 2,
+   "entity": null
+  },
+  {
+   "id": "q071",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2025-26/104"
+   ],
+   "retrieved": [
+    "RBI/2026-27/48",
+    "RBI/2025-26/104",
+    "RBI/2026-27/116",
+    "RBI/2026-27/168",
+    "RBI/2025-26/104",
+    "RBI/2026-27/116",
+    "RBI/2025-26/260",
+    "RBI/2025-26/217"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 2,
+   "entity": [
+    "Small Finance Banks"
+   ]
+  },
+  {
+   "id": "q073",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2026-27/191"
+   ],
+   "retrieved": [
+    "RBI/2026-27/99",
+    "RBI/2026-27/220",
+    "RBI/2025-26/143",
+    "RBI/DOR/2025-26/136",
+    "RBI/2026-27/114",
+    "RBI/DOR/2025-26/150",
+    "RBI/DoS/2026-27/442",
+    "RBI/2025-26/250"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q074",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2026-27/121"
+   ],
+   "retrieved": [
+    "RBI/2026-27/121",
+    "RBI/2026-27/64",
+    "RBI/2026-27/173",
+    "RBI/2026-27/119",
+    "RBI/2025-26/109",
+    "RBI/2026-2027/228",
+    "RBI/DoR/2026-27/130",
+    "RBI/2026-27/120"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Rural Co-operative Banks"
+   ]
+  },
+  {
+   "id": "q075",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2025-26/259"
+   ],
+   "retrieved": [
+    "RBI/2025-26/254",
+    "RBI/2025-26/259",
+    "RBI/2025-26/211",
+    "RBI/2025-26/259",
+    "RBI/2025-26/211",
+    "RBI/2025-26/216",
+    "RBI/2025-26/211",
+    "RBI/2025-26/254"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 2,
+   "entity": null
+  },
+  {
+   "id": "q076",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/DoR/2026-27/127"
+   ],
+   "retrieved": [
+    "RBI/2026-27/122",
+    "RBI/2026-27/118",
+    "RBI/2026-27/123",
+    "RBI/2026-27/117",
+    "RBI/2026-27/121",
+    "RBI/2026-27/120",
+    "RBI/2026-27/115",
+    "RBI/2026-27/116"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q077",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2025-26/180"
+   ],
+   "retrieved": [
+    "RBI/2025-26/180",
+    "RBI/2026-27/113",
+    "RBI/2026-27/113",
+    "RBI/2026-27/122",
+    "RBI/DoS/2026-27/457",
+    "RBI/DoS/2026-27/457",
+    "RBI/2025-26/180",
+    "RBI/DoS/2026-27/457"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "All India Financial Institutions"
+   ]
+  },
+  {
+   "id": "q078",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2026-27/188"
+   ],
+   "retrieved": [
+    "RBI/DOR/2025-26/135",
+    "RBI/DOR/2025-26/145",
+    "RBI/DOR/2025-26/151",
+    "RBI/2026-27/46",
+    "RBI/DOR/2025-26/319",
+    "RBI/2026-27/50",
+    "RBI/2026-27/62",
+    "RBI/DOR/2025-26/151"
+   ],
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "first_rank": null,
+   "entity": null
+  },
+  {
+   "id": "q079",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2025-26/259"
+   ],
+   "retrieved": [
+    "RBI/2025-26/211",
+    "RBI/2025-26/254",
+    "RBI/2025-26/216",
+    "RBI/2025-26/259",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/2025-26/217",
+    "RBI/2025-26/260"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 4,
+   "entity": null
+  },
+  {
+   "id": "q080",
+   "category": "amendment",
+   "gold_docs": [
+    "RBI/2026-27/118"
+   ],
+   "retrieved": [
+    "RBI/2026-27/118",
+    "RBI/2026-27/115",
+    "RBI/2026-27/117",
+    "RBI/2026-27/119",
+    "RBI/2026-27/116",
+    "RBI/2026-27/120",
+    "RBI/2026-27/121",
+    "RBI/2026-27/122"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "first_rank": 1,
+   "entity": [
+    "Local Area Banks"
+   ]
+  },
+  {
+   "id": "q083",
+   "category": "lookup",
+   "gold_docs": [
+    "RBI/2025-26/204"
+   ],
+   "retrieved": [
+    "RBI/2025-26/204",
+    "RBI/2025-26/250",
+    "RBI/DOR/2025-26/150",
+    "RBI/DGBA/2026-27/400",
+    "RBI/DOR/2025-26/147",
+    "RBI/DOR/2025-26/271",
+    "RBI/DOR/2025-26/271",
+    "RBI/DGBA/2026-27/400"
+   ],
+   "hit": true,
+   "both_docs": true,
+   "family_hit": false,
+   "first_rank": 1,
+   "entity": [
+    "Agency Banks"
+   ]
+  }
+ ]
+}

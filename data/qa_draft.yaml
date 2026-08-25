@@ -163,13 +163,16 @@
   #   section:  -
 - id: q008
   category: lookup
-  answerable: false
-  question: "What is RBI?"
+  answerable: true
+  question: "Which provisions of the National Housing Bank Act, 1987 does RBI rely on in issuing the NBFC Statutory Audit Directions, 2026?"
   answer: |
-    Not answerable from this source. The chunk is the opening preamble of the
-    NBFC Statutory Audit Directions, listing the statutes RBI is acting under.
-    It does not define what RBI is.
-  notes: ""
+    Sections 29A, 30A and 32 of the National Housing Bank Act, 1987
+  notes: "Tests attribute-binding, which nothing else in the set covers. The chunk
+    stacks three enabling statutes in one sentence, each with its own section
+    list; the natural failure is to return the RBI Act sections (45JA, 45K,
+    45L, 45M) because they come first, or to merge all nine sections into a
+    single list. RBI preambles almost always stack multiple statutes this way,
+    so the failure mode generalises across the corpus."
   gold_chunk_ids: [3084]
   gold_docs: ["RBI/DoS/2026-27/465"]
   source_text: |
@@ -1414,14 +1417,41 @@
   #   section:  -
 - id: q062
   category: cross_document
-  answerable: false
+  answerable: true
   question: "What is the access criteria for NDS-OM?"
   answer: |
-    Not answerable from this source. The chunk is the preamble of the NDS-OM
-    Master Direction, establishing authority and supersession. The access
-    criteria themselves are not in it.
-  notes: ""
-  gold_chunk_ids: [9231, 5291]
+    Any person or entity eligible to invest in Government securities may access
+    NDS-OM by one of three routes: direct access, indirect access, or Stock
+    Broker Connect.
+
+    Direct access is open to Banks, Standalone Primary Dealers, NBFCs including
+    Housing Finance Companies, All India Financial Institutions, Mutual Funds,
+    Provident Funds, Pension Funds, Insurance Companies, regulated Market
+    Infrastructure Institutions investing their settlement guarantee fund where
+    the Reserve Bank specifically permits, and any other entity the Reserve Bank
+    permits. Such entities must also hold an SGL account with the Reserve Bank,
+    a current account with the Reserve Bank or a Designated Settlement Bank, and
+    membership of the securities settlement segment of CCIL. Application is made
+    through the PRAVAAH portal to the Chief General Manager, Financial Markets
+    Regulation Department.
+
+    An entity that is not eligible for direct access, does not meet those
+    requirements, or is not granted direct access may use indirect access, which
+    runs through an entity that already has direct access and agrees to assume
+    responsibility for settling its transactions.
+  notes: |
+    Was answerable: false with gold_chunk_ids [9231, 5291]. Both of those are
+    document openings -- 9231 the Master Direction's preamble, 5291 a covering
+    circular stating that criteria exist without giving any -- so the question
+    genuinely could not be answered from them, and the oracle run scored it a
+    failure for producing only the route names.
+
+    The criteria are in the same Master Direction's body, which the end-to-end
+    run retrieved and quoted correctly. Corrected here to point at the chunks
+    that actually answer it. See data/qa_review.yaml for the full trace; the
+    lesson is that gold_chunk_ids recorded where a question was DRAFTED, which
+    is not always where it is ANSWERED.
+  gold_chunk_ids: [9236, 9237, 9238, 9239, 9242, 9231, 5291]
   gold_docs: ["RBI/FMRD/2024-25/127", "RBI/2026-27/37"]
   source_text: |
     RBI/FMRD/2024-25/127 FMRD.MIOD.13/11.01.051/2024-25

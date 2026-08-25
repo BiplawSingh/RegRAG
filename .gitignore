@@ -44,3 +44,10 @@ data/answers.jsonl
 # thing every eval number is measured against, so it belongs in version control.
 !data/qa_draft.yaml
 !data/qa.jsonl
+
+# Evaluation results ARE committed: they are the evidence behind every number in
+# the README, and a claim you cannot re-open is a claim nobody can check. They are
+# small (~350 KB) and append-only in practice.
+!data/eval/
+# Terminal captures from `tee` during a run are not results.
+data/eval/*.log

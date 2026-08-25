@@ -61,6 +61,28 @@ GEN_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 # providers, quota.
 TPM_LIMIT = int(os.getenv("GROQ_TPM_LIMIT", "8000"))
 
+# Output cap. Left unset, generation runs to the model's own default and a long
+# answer can be truncated mid-string -- which under strict JSON schema is not a
+# truncated answer but NO answer: the object never closes, the required fields
+# after it are never emitted, and Groq rejects the whole reply with a 400.
+#
+# Sized from the measured distribution rather than guessed, because guessing it
+# once already made things worse. Across a 69-question run: median 644 output
+# tokens, p90 1366, max 2254. A 1600 cap would have truncated the longest tenth.
+# gpt-oss is also a reasoning model and counts reasoning tokens against this same
+# budget, so the headroom has to cover thinking as well as the answer -- a cap set
+# near the answer length starves the answer entirely and yields an empty response.
+# 4096 leaves room for both and still sits under the 8,000/min ceiling alongside a
+# typical ~2,000-token prompt.
+MAX_OUTPUT_TOKENS = int(os.getenv("GROQ_MAX_OUTPUT_TOKENS", "4096"))
+
+# What a call is EXPECTED to spend, used only for rate-limit pacing. Distinct from
+# the cap above on purpose: pacing against the ceiling assumes every answer is the
+# longest possible one and burns the token budget in sleep. Set near the measured
+# p90 (1,366) so the occasional long answer overshoots slightly and the window
+# self-corrects from real usage on the next call.
+EST_OUTPUT_TOKENS = int(os.getenv("GROQ_EST_OUTPUT_TOKENS", "1400"))
+
 SYSTEM = """You answer questions about Indian banking regulation using ONLY the \
 numbered SOURCES provided. These are Reserve Bank of India circulars.
 
@@ -215,20 +237,33 @@ def generate(question, chunks, attempts=4):
     matters because a batch that keeps retrying an exhausted daily quota just
     burns the rest of the evening.
     """
-    from groq import APIConnectionError, InternalServerError, RateLimitError
+    from groq import (APIConnectionError, BadRequestError, InternalServerError,
+                      RateLimitError)
 
     client = llm_client()
     prompt = f"SOURCES\n\n{format_sources(chunks)}\n\nQUESTION\n{question}"
     schema = strict_schema(Answer)
 
-    t0 = time.time()
     for attempt in range(attempts):
-        _throttle(len(prompt) // 4 + 500)
+        # Reserve the TYPICAL output, not the hard cap. MAX_OUTPUT_TOKENS is a
+        # ceiling against a runaway generation; using it here reserved 4,096 tokens
+        # of an 8,000/min budget for calls that actually spend ~650, which paced
+        # every single call into a 60-second sleep and tripled the wall-clock of a
+        # 90-question run for no reason. The rolling window is corrected with real
+        # usage after each call, so a slight under-estimate self-heals; a gross
+        # over-estimate just wastes the day.
+        _throttle(len(prompt) // 4 + EST_OUTPUT_TOKENS)
+        # Timed from here, so the pacing sleep above is excluded: the number is
+        # meant to be how long the model takes, not how long the free tier makes
+        # us wait. Conflating them made median latency read 57.9s for calls the
+        # model served in about three.
+        t0 = time.time()
         try:
             resp = client.chat.completions.create(
                 model=GEN_MODEL,
                 messages=[{"role": "system", "content": SYSTEM},
                           {"role": "user", "content": prompt}],
+                max_completion_tokens=MAX_OUTPUT_TOKENS,
                 response_format={"type": "json_schema", "json_schema": {
                     "name": "grounded_answer", "strict": True, "schema": schema}},
             )
@@ -246,6 +281,22 @@ def generate(question, chunks, attempts=4):
                 raise
             wait = _retry_after(msg, default=2 ** attempt * 5)
             print(f"        rate limited, waiting {wait:.0f}s", flush=True)
+            time.sleep(wait)
+
+        except BadRequestError as e:
+            # A 400 is normally a malformed request and worth raising at once. One
+            # kind is not: json_validate_failed means the model's own output failed
+            # the strict schema, which happens when a long answer is cut off by the
+            # output cap mid-string -- the object never closes, so the required
+            # fields after it are never written and Groq discards the whole reply.
+            # That is a sampling accident, not a bad request, and it usually
+            # succeeds on a retry. Treating it as fatal cost two questions in the
+            # first full run.
+            if "json_validate_failed" not in str(e) or attempt == attempts - 1:
+                raise
+            wait = 2 ** attempt
+            print(f"        output failed its own schema (likely truncated), "
+                  f"retry {attempt + 1}/{attempts - 1} in {wait}s", flush=True)
             time.sleep(wait)
 
         except (InternalServerError, APIConnectionError) as e:
