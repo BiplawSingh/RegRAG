@@ -279,13 +279,47 @@ wrote these answers for the same reason a student is the wrong marker for their 
 exam. It also draws a separate free-tier allowance, so grading costs nothing from
 the generation budget.
 
-Paired on the 31 questions graded in both runs, **end-to-end scores 20/31 and
-oracle 31/31**, with every changed verdict moving the same direction. Eight of
-those eleven are questions where retrieval never found the document; the other
-three found the document but not the passage — which is what prompted the
-chunk-level metric above. (The oracle grading is incomplete at 32 of 68 and is
-weighted toward `lookup`, so its absolute figure is not yet quotable; the paired
-comparison is, because it is the same questions.)
+#### Given the right passage, generation is nearly perfect
+
+```
+=== ORACLE ===  66 answerable questions judged
+  correct              63  (95%)
+  partially_correct     2   (3%)
+  incorrect             1   (1%)
+```
+
+Paired on the 65 questions graded in both runs:
+
+| | correct |
+|---|---|
+| end-to-end | 43/65 (66%) |
+| **oracle** | **62/65 (95%)** |
+| fixed by supplying the right passage | **19** |
+| **broken by it** | **0** |
+
+Zero regressions is the check that makes this comparison trustworthy: a noisy
+judge or a flaky pipeline would have produced churn in both directions. It did
+not, so the 19 improvements are signal.
+
+**19 of the 22 end-to-end failures are retrieval's. Three are generation's** —
+q047 cited NIST SP 800-53r5 where the source says FSB Cyber Lexicon, and q048 and
+q051 each state the main rule but omit a material clause. Under oracle every
+category is perfect or close: `amendment` 12/12, `cross_document` 6/6,
+`lookup` 29/29, `entity_scoped` 16/19.
+
+This is the project's central finding, and it splits the system's weaknesses into
+two unrelated problems:
+
+- **On answerable questions, retrieval is the bottleneck.** Generation is 95%
+  correct when handed the right passage; 86% of end-to-end failure is upstream of
+  it. Closing the retrieval gap moves the end-to-end score toward 95%, while
+  prompt work on answerable questions has at most 3 questions to win.
+- **On unanswerable questions, generation is the bottleneck.** Eight are answered
+  anyway even with perfect evidence, and no retrieval work touches them.
+
+Put plainly: the pipeline is bad at finding the right passage, and bad at admitting
+when a passage does not support an answer. Reasoning correctly *from* a passage
+that does — the part that looked hardest — is the part that works.
 
 One caveat on oracle mode: **it is only as good as `gold_chunk_ids`.** Where a
 question was authored from a preamble, oracle feeds strictly *weaker* evidence than
@@ -307,9 +341,11 @@ is the only one of the eight with this problem, and it is documented in
   answer from.
 - **Citation verification checks that quotes are real, not that answers are
   complete, nor that attribution is correct.** See the 16% figure above.
-- **Retrieval loses the passage even when it finds the document** — 11 questions,
-  two with the document ranked first. Chunk-level recall (60%) is the number to
-  improve, not document-level (76%).
+- **Chunk-level retrieval recall (60%) is the single highest-value target.**
+  Generation scores 95% when handed the right passage, so retrieval is where 86%
+  of the end-to-end failure lives. Two distinct sub-problems: 11 questions
+  retrieve the right document but not the passage (two with the document ranked
+  first), and 16 never reach the right document at all.
 - **Deduplication before generation is unbuilt, and now clearly justified.** The
   entity filter cannot separate same-entity boilerplate: after filtering, up to ten
   near-identical copies of one rule still compete for eight slots. That noise costs
