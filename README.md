@@ -5,8 +5,9 @@ question about Indian banking regulation; get an answer with citations that are
 automatically verified against the source documents.
 
 **Status: end-to-end pipeline working and measured against a hand-written answer
-key, with each failure attributed to retrieval or to generation.** Retrieval and
-citation accuracy have numbers; answer faithfulness does not yet.
+key, with each failure attributed to retrieval or to generation.** 65% of
+answerable questions are answered fully correctly; every number below is
+reproducible from `data/eval/`.
 
 ## Why this corpus is harder than it looks
 
@@ -42,10 +43,13 @@ python qa.py draft                # add question stubs to data/qa_draft.yaml
 python qa.py validate             # what's incomplete or malformed
 python qa.py export               # -> data/qa.jsonl, the graded set
 python eval.py retrieval          # hit-rate@k -- local, free, unlimited
-python eval.py retrieval --sweep  # where the recall curve flattens
+python eval.py retrieval --sweep  # recall vs k, and the reranking headroom
 python eval.py answers            # end-to-end run (costs quota, resumable)
 python eval.py answers --oracle   # feed gold chunks, bypass retrieval
 python eval.py report             # scorecard from whatever has been run
+python judge.py calibrate         # validate the judge BEFORE trusting it
+python judge.py run [--oracle]    # grade answer quality against the key
+python judge.py report            # verdict breakdown
 ```
 
 ### Requirements to run generation
@@ -112,13 +116,21 @@ is a different thing from a judgement about whether an answer was right.
 
 ### Retrieval — `python eval.py retrieval`
 
-| | exact gold doc | gold doc or sibling |
-|---|---|---|
-| entity filter **on** | 52/68 (76%) | 54/68 (79%) |
-| entity filter **off** | 50/68 (73%) | 53/68 (77%) |
+| | gold document | doc or sibling | **answering chunk** |
+|---|---|---|---|
+| entity filter **on** | 52/68 (76%) | 54/68 (79%) | **41/68 (60%)** |
+| entity filter **off** | 50/68 (73%) | 53/68 (77%) | 39/68 (57%) |
 
 By category, filter on: `entity_scoped` **19/19**, `amendment` 9/12,
 `lookup` 19/29, `cross_document` 5/8 (both documents: 3/8).
+
+**The third column is the honest one.** The pipeline does not consume documents,
+it consumes eight chunks — and a document scores as "retrieved" when any of its
+chunks comes back, including one that does not answer the question. Measured
+directly: **11 questions retrieved the right document but not the passage**, two
+of them with the document at rank 1. Document hit-rate overstates retrieval by 16
+points, and the gap between the two columns is a distinct failure needing distinct
+work: "wrong document" and "right document, wrong passage" are not the same bug.
 
 Two things worth reading carefully here:
 
@@ -134,12 +146,26 @@ Two things worth reading carefully here:
   document appeared at all. Both numbers are real; neither substitutes for the
   other.
 
-When retrieval succeeds it succeeds decisively — **median rank of a hit is 1**.
-Failures are absolute rather than ranking problems: sweeping k from 1 to 20 lifts
-recall by a modest margin and then flattens, so a reranker over a wider candidate
-set has little left to recover. Chunk length shows no correlation with misses
-either. (The sweep numbers currently on record predate the latest key revision and
-should be re-run before being quoted.)
+When retrieval succeeds it succeeds decisively — **median rank of a hit is 1** at
+every k. Chunk length shows no correlation with misses.
+
+`--sweep` reports recall against k, and the reranking headroom that follows from
+it. A reranker fetches a wide candidate set and re-sorts it down to k, so the most
+it could ever recover is the recall a wider k already reaches:
+
+```
+ k      doc     family    chunk
+ 1    33/68     41/68     27/68
+ 8    52/68     54/68     41/68
+20    60/68     61/68     50/68
+
+a perfect reranker over the k=20 set recovers at most 9 questions; a real one, fewer.
+the other 18 never surface the right passage at k=20 at all, so no re-sorting reaches them.
+```
+
+The harness prints that headroom rather than a verdict about it, deliberately —
+an earlier version asserted "reranking won't help" in a print statement, which is
+the exact mistake this harness exists to prevent.
 
 ### Generation — `python eval.py answers`
 
@@ -211,6 +237,56 @@ the project that the near-duplicate structure — not the checker — is what ma
 citation verification weaker than its headline number. Remove the siblings and the
 ambiguity disappears entirely.
 
+### Answer quality — `python judge.py`
+
+Retrieval hit-rate and citation accuracy are both deterministic, and neither says
+whether the *answer* is any good. A verified citation supporting a shallow or
+evasive answer passes both. So a second model grades each answer against the
+hand-written reference:
+
+```
+=== END-TO-END ===  67 answerable questions judged
+  correct              44  (65%)
+  partially_correct     3   (4%)
+  incorrect             9  (13%)
+  unsupported_refusal  11  (16%)
+```
+
+**65% fully correct end-to-end.** The 22 unanswerable questions are excluded: they
+are already scored exactly by whether the pipeline set `insufficient_context`, and
+replacing a deterministic check with a model's opinion would be strictly worse.
+
+**The judge is validated before it is trusted, and `run` refuses to start without a
+calibration on file.** An unvalidated judge does not measure quality — it launders
+an opinion into something that looks like a measurement, which is worse than no
+number because people act on it. Two controls, neither needing a human label:
+
+| Control | Candidate answer is | Must return |
+|---|---|---|
+| Positive | the reference itself | `correct` |
+| Negative | a *different question's* reference | `incorrect` |
+
+The negative control is the load-bearing one: it is fluent, on-topic, regulatory
+in tone, and answers the wrong question. A judge that passes it is rewarding
+plausibility, which is precisely what makes model judges worthless. **Current
+result: 8/8 and 8/8.** `judge.py report` prints this above every score, so the
+number never travels without its warrant.
+
+The judge is `qwen/qwen3.6-27b` — a different vendor, not merely a different size.
+Model judges show self-preference, scoring their own family's output more
+generously, so `gpt-oss-20b` would be the wrong marker for the `gpt-oss-120b` that
+wrote these answers for the same reason a student is the wrong marker for their own
+exam. It also draws a separate free-tier allowance, so grading costs nothing from
+the generation budget.
+
+Paired on the 31 questions graded in both runs, **end-to-end scores 20/31 and
+oracle 31/31**, with every changed verdict moving the same direction. Eight of
+those eleven are questions where retrieval never found the document; the other
+three found the document but not the passage — which is what prompted the
+chunk-level metric above. (The oracle grading is incomplete at 32 of 68 and is
+weighted toward `lookup`, so its absolute figure is not yet quotable; the paired
+comparison is, because it is the same questions.)
+
 One caveat on oracle mode: **it is only as good as `gold_chunk_ids`.** Where a
 question was authored from a preamble, oracle feeds strictly *weaker* evidence than
 retrieval finds by itself, and a failure then indicts the key rather than the model.
@@ -231,8 +307,9 @@ is the only one of the eight with this problem, and it is documented in
   answer from.
 - **Citation verification checks that quotes are real, not that answers are
   complete, nor that attribution is correct.** See the 16% figure above.
-- **Answer faithfulness is unmeasured.** An LLM judge is the next addition; it will
-  run on a different Groq model so it draws on a separate token allowance.
+- **Retrieval loses the passage even when it finds the document** — 11 questions,
+  two with the document ranked first. Chunk-level recall (60%) is the number to
+  improve, not document-level (76%).
 - **Deduplication before generation is unbuilt, and now clearly justified.** The
   entity filter cannot separate same-entity boilerplate: after filtering, up to ten
   near-identical copies of one rule still compete for eight slots. That noise costs

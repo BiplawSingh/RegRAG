@@ -160,11 +160,21 @@ def score_retrieval(qa, k=8, use_filter=True, quiet=False):
         # match would score every unparseable document against every other one.
         gold_fams = {fam.get(g) for g in q["gold_docs"]} - {None, ""}
         got_fams = {fam.get(n) for n in got} - {None, ""}
+        # Chunk-level hit. Document-level hit-rate flatters retrieval, because the
+        # pipeline does not consume documents -- it consumes eight chunks. A
+        # document scores as retrieved when ANY of its chunks comes back, including
+        # one that does not answer the question. Measured after the fact: three
+        # questions retrieved the right document (one at rank 1) and still got the
+        # wrong answer, because the passage that answers them never arrived.
+        got_ids = [c.get("chunk_id") for c in chunks]
+        gold_ids = set(q.get("gold_chunk_ids") or [])
         rows.append({
             "id": q["id"], "category": q["category"],
             "gold_docs": q["gold_docs"], "retrieved": got,
             "hit": bool(found), "both_docs": len(found) == len(gold),
             "family_hit": bool(gold_fams & got_fams),
+            "chunk_hit": bool(gold_ids & set(got_ids)) if gold_ids else None,
+            "retrieved_chunk_ids": got_ids,
             "first_rank": rank, "entity": entity,
         })
         if not quiet and i % 10 == 0:
@@ -183,6 +193,26 @@ def summarize_retrieval(rows, k, label):
     if fam_hits > hits:
         print(f"                     {fam_hits - hits} question(s) found the right rule "
               f"for the wrong institution class")
+
+    # The stricter, more honest number: did the passage that answers the question
+    # actually arrive? Reported under the document figure so the gap between them
+    # is visible -- that gap is "right document, wrong passage", which needs
+    # different work from "wrong document entirely".
+    scored_c = [r for r in rows if r.get("chunk_hit") is not None]
+    if scored_c:
+        ch = sum(r["chunk_hit"] for r in scored_c)
+        m = len(scored_c)
+        print(f"  chunk-rate@{k}      {ch}/{m}  ({ch * 100 // m}%)   the answering "
+              f"chunk itself, not just its document")
+        doc_only = [r for r in scored_c if r["hit"] and not r["chunk_hit"]]
+        if doc_only:
+            print(f"                     {len(doc_only)} question(s) retrieved the right "
+                  f"document but not the passage:")
+            for r in doc_only[:8]:
+                print(f"                       {r['id']}  {r['category']}"
+                      f"  (doc at rank {r['first_rank']})")
+            if len(doc_only) > 8:
+                print(f"                       ... and {len(doc_only) - 8} more")
 
     multi = [r for r in rows if len(r["gold_docs"]) > 1]
     if multi:
@@ -235,16 +265,40 @@ def cmd_retrieval(k=8, use_filter=True, sweep=False):
         # The interesting question is not "what is hit-rate at 8" but "where does
         # the curve flatten" -- that is what tells you whether a reranker over a
         # wider candidate set has anything left to recover.
-        print("hit-rate as k grows:\n")
-        print(f"  {'k':>4}{'exact':>12}{'family':>12}{'median rank':>14}")
+        print("recall as k grows:\n")
+        print(f"  {'k':>4}{'doc':>12}{'family':>12}{'chunk':>12}{'median rank':>14}")
+        by_k = []
         for kk in (1, 3, 5, 8, 10, 20):
             rows = score_retrieval(qa, k=kk, use_filter=use_filter, quiet=True)
             hits = sum(r["hit"] for r in rows)
             fam = sum(bool(r["hit"] or r.get("family_hit")) for r in rows)
+            sc = [r for r in rows if r.get("chunk_hit") is not None]
+            ch = sum(r["chunk_hit"] for r in sc)
             ranks = [r["first_rank"] for r in rows if r["first_rank"]]
             med = int(statistics.median(ranks)) if ranks else "-"
             n = len(rows)
-            print(f"  {kk:>4}{f'{hits}/{n}':>12}{f'{fam}/{n}':>12}{med:>14}")
+            print(f"  {kk:>4}{f'{hits}/{n}':>12}{f'{fam}/{n}':>12}"
+                  f"{f'{ch}/{len(sc)}':>12}{med:>14}")
+            by_k.append((kk, {"doc": hits, "chunk": ch, "n": len(sc)}))
+        # Report the headroom rather than asserting a conclusion about it. A
+        # reranker fetches a wide candidate set and re-sorts it down to k, so what
+        # it could recover -- at absolute best, with perfect ranking -- is exactly
+        # the recall a wider k already reaches. Chunk recall is the number that
+        # matters here: the pipeline consumes passages, not documents.
+        # Baseline is the k actually in use, not k=1. A reranker replaces the
+        # current operating point, so the gain is measured against that -- not
+        # against a configuration nobody runs.
+        base = dict(by_k).get(k, dict(by_k)[by_k[0][0]])
+        k_base = k if k in dict(by_k) else by_k[0][0]
+        if len(by_k) > 1:
+            k_hi, hi = by_k[-1]
+            lo = base
+            print(f"\n  reranking headroom, chunk level: {hi['chunk']}/{hi['n']} at "
+                  f"k={k_hi} vs {lo['chunk']}/{lo['n']} at the operating k={k_base}")
+            print(f"    a perfect reranker over the k={k_hi} set recovers at most "
+                  f"{hi['chunk'] - lo['chunk']} question(s); a real one, fewer.")
+            print(f"    the other {hi['n'] - hi['chunk']} never surface the right "
+                  f"passage at k={k_hi} at all, so no re-sorting reaches them.")
         return
 
     label = "entity filter ON" if use_filter else "entity filter OFF (ablation)"

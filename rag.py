@@ -146,7 +146,18 @@ def retrieve(question, k=8, entity=None, use_filter=True):
         _RETRIEVER.update(client=client, where=where, model=iq.get_model())
     points = iq.query(_RETRIEVER["client"], _RETRIEVER["model"], question, k=k,
                       entity=entity if use_filter else None)
-    return [p.payload for p in points], _RETRIEVER["where"]
+    # Carry the point id through as chunk_id. index_qdrant.build assigns ids in
+    # chunks.jsonl row order, so this is the chunk's index in that file -- which is
+    # what gold_chunk_ids refers to. Without it the payload alone cannot say WHICH
+    # chunk came back, only which document, and those are different questions: a
+    # document counts as retrieved even when the passage that answers the question
+    # never arrived. Copied rather than mutated so the client's object is untouched.
+    out = []
+    for p in points:
+        c = dict(p.payload)
+        c["chunk_id"] = p.id
+        out.append(c)
+    return out, _RETRIEVER["where"]
 
 
 def format_sources(chunks):

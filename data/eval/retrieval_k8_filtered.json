@@ -1,5 +1,5 @@
 {
- "measured_at": "2026-08-25T04:00:02+00:00",
+ "measured_at": "2026-08-25T08:06:30+00:00",
  "k": 8,
  "filtered": true,
  "rows": [
@@ -22,6 +22,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    6500,
+    6157,
+    6514,
+    6570,
+    5309,
+    4795,
+    8253,
+    6159
+   ],
    "first_rank": 5,
    "entity": [
     "Commercial Banks"
@@ -46,6 +57,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    546,
+    2026,
+    1597,
+    2290,
+    1068,
+    2541,
+    5931,
+    247
+   ],
    "first_rank": 7,
    "entity": null
   },
@@ -68,6 +90,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2664,
+    2679,
+    2754,
+    2686,
+    2742,
+    2687,
+    2680,
+    2736
+   ],
    "first_rank": 1,
    "entity": [
     "All India Financial Institutions"
@@ -92,6 +125,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": false,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    7354,
+    7355,
+    8962,
+    9213,
+    7357,
+    9199,
+    7800,
+    8219
+   ],
    "first_rank": 1,
    "entity": null
   },
@@ -114,6 +158,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    5447,
+    5663,
+    5297,
+    8245,
+    9159,
+    5294,
+    8078,
+    696
+   ],
    "first_rank": 2,
    "entity": [
     "Commercial Banks"
@@ -138,6 +193,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2974,
+    3888,
+    3084,
+    3206,
+    3880,
+    3208,
+    87,
+    5228
+   ],
    "first_rank": 3,
    "entity": [
     "Non-Banking Financial Companies"
@@ -162,6 +228,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    3137,
+    1203,
+    686,
+    2826,
+    7453,
+    8503,
+    1682,
+    2825
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -184,6 +261,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": false,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    7769,
+    4325,
+    4326,
+    6884,
+    6964,
+    7770,
+    6943,
+    7007
+   ],
    "first_rank": 2,
    "entity": null
   },
@@ -206,6 +294,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    5472,
+    8505,
+    8504,
+    5477,
+    8510,
+    5473,
+    5580,
+    8568
+   ],
    "first_rank": 2,
    "entity": null
   },
@@ -228,6 +327,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    1590,
+    2539,
+    2020,
+    3000,
+    1060,
+    1589,
+    2281,
+    1059
+   ],
    "first_rank": 7,
    "entity": null
   },
@@ -250,6 +360,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    4827,
+    4823,
+    4813,
+    5269,
+    7121,
+    7138,
+    7143,
+    7152
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -272,6 +393,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    8941,
+    1801,
+    1311,
+    282,
+    807,
+    2166,
+    2293,
+    2917
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -294,6 +426,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2861,
+    2860,
+    2863,
+    2862,
+    2902,
+    2864,
+    2859,
+    2994
+   ],
    "first_rank": 1,
    "entity": [
     "Non-Banking Financial Companies"
@@ -318,6 +461,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    2084,
+    3189,
+    3192,
+    2087,
+    8930,
+    1762,
+    2865,
+    8941
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -340,6 +494,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    2763,
+    2812,
+    9233,
+    2651,
+    2840,
+    9237,
+    6652,
+    6653
+   ],
    "first_rank": null,
    "entity": [
     "All India Financial Institutions"
@@ -364,6 +529,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2588,
+    2645,
+    2563,
+    2562,
+    3721,
+    2553,
+    3707,
+    2554
+   ],
    "first_rank": 1,
    "entity": [
     "Regional Rural Banks"
@@ -388,6 +564,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    7387,
+    7961,
+    7465,
+    7962,
+    7960,
+    7967,
+    7891,
+    7965
+   ],
    "first_rank": 2,
    "entity": null
   },
@@ -410,6 +597,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    8987,
+    9189,
+    9195,
+    9212,
+    9168,
+    9215,
+    9188,
+    9162
+   ],
    "first_rank": 1,
    "entity": null
   },
@@ -432,6 +630,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    1230,
+    724,
+    1328,
+    299,
+    2183,
+    944,
+    1704,
+    2447
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -454,6 +663,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    707,
+    3162,
+    2206,
+    4497,
+    4475,
+    4458,
+    4514,
+    4516
+   ],
    "first_rank": 2,
    "entity": null
   },
@@ -476,6 +696,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    9057,
+    7509,
+    404,
+    1432,
+    909,
+    567,
+    2321,
+    1554
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -498,6 +729,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    2957,
+    3338,
+    1431,
+    908,
+    2725,
+    403,
+    2956,
+    1949
+   ],
    "first_rank": 4,
    "entity": null
   },
@@ -520,6 +762,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    2028,
+    548,
+    2585,
+    2543,
+    1070,
+    2217,
+    2292,
+    3009
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -542,6 +795,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    6624,
+    6687,
+    6621,
+    6721,
+    6755,
+    6686,
+    6620,
+    6628
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -564,6 +828,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    509,
+    7853,
+    253,
+    667,
+    440,
+    8187,
+    300,
+    560
+   ],
    "first_rank": null,
    "entity": [
     "Commercial Banks"
@@ -588,6 +863,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    1186,
+    669,
+    1671,
+    2408,
+    3125,
+    2110,
+    3233,
+    2814
+   ],
    "first_rank": 1,
    "entity": null
   },
@@ -610,6 +896,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": false,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    4218,
+    477,
+    1000,
+    1505,
+    1477,
+    449,
+    972,
+    3027
+   ],
    "first_rank": 1,
    "entity": null
   },
@@ -632,6 +929,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6325,
+    6256,
+    6274,
+    6301,
+    6346,
+    6382,
+    4917,
+    5679
+   ],
    "first_rank": 2,
    "entity": null
   },
@@ -654,6 +962,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    1265,
+    1260,
+    1261,
+    1080,
+    1249,
+    1248,
+    1108,
+    1262
+   ],
    "first_rank": 1,
    "entity": [
     "Small Finance Banks"
@@ -678,6 +997,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    2477,
+    2252,
+    2290,
+    2406,
+    2138,
+    2435,
+    2184,
+    2304
+   ],
    "first_rank": 2,
    "entity": [
     "Local Area Banks"
@@ -702,6 +1032,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    4835,
+    4836,
+    4820,
+    4824,
+    4817,
+    4840,
+    4810,
+    4814
+   ],
    "first_rank": 7,
    "entity": null
   },
@@ -724,6 +1065,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    6790,
+    6785,
+    6784,
+    6792,
+    6680,
+    6818,
+    2219,
+    8113
+   ],
    "first_rank": 1,
    "entity": [
     "Commercial Banks"
@@ -748,6 +1100,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    1148,
+    1050,
+    1049,
+    3410,
+    1242,
+    4694,
+    1064,
+    7162
+   ],
    "first_rank": 1,
    "entity": [
     "Small Finance Banks"
@@ -772,6 +1135,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    1800,
+    1786,
+    1787,
+    1799,
+    2064,
+    1779,
+    2063,
+    1785
+   ],
    "first_rank": 1,
    "entity": [
     "Urban Co-operative Banks"
@@ -796,6 +1170,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    4406,
+    28,
+    6383,
+    30,
+    4408,
+    6585,
+    2245,
+    4903
+   ],
    "first_rank": 1,
    "entity": [
     "Housing Finance Companies"
@@ -820,6 +1205,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    2,
+    1,
+    0,
+    24,
+    2598,
+    26,
+    20,
+    2513
+   ],
    "first_rank": 1,
    "entity": [
     "Rural Co-operative Banks"
@@ -844,6 +1240,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6326,
+    6275,
+    6302,
+    6257,
+    6347,
+    6303,
+    6258,
+    6327
+   ],
    "first_rank": 1,
    "entity": null
   },
@@ -866,6 +1273,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2497,
+    2271,
+    2337,
+    2498,
+    2447,
+    2303,
+    2399,
+    2477
+   ],
    "first_rank": 1,
    "entity": [
     "Local Area Banks"
@@ -890,6 +1308,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    2477,
+    2447,
+    2253,
+    2320,
+    2252,
+    2300,
+    2187,
+    2450
+   ],
    "first_rank": 4,
    "entity": [
     "Local Area Banks"
@@ -914,6 +1343,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2436,
+    2253,
+    2303,
+    2481,
+    2252,
+    2338,
+    2337,
+    2497
+   ],
    "first_rank": 1,
    "entity": [
     "Local Area Banks"
@@ -938,6 +1378,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    1802,
+    2070,
+    2102,
+    2132,
+    1773,
+    2247,
+    7582,
+    1994
+   ],
    "first_rank": 1,
    "entity": [
     "Urban Co-operative Banks"
@@ -962,6 +1413,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    3562,
+    1575,
+    1285,
+    1581,
+    1558,
+    1579,
+    1612,
+    1367
+   ],
    "first_rank": 2,
    "entity": [
     "Payments Banks"
@@ -986,6 +1448,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    7363,
+    2513,
+    7478,
+    2630,
+    2598,
+    4409,
+    4061,
+    7360
+   ],
    "first_rank": 1,
    "entity": [
     "Rural Co-operative Banks"
@@ -1010,6 +1483,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2990,
+    3009,
+    3010,
+    3063,
+    2992,
+    2983,
+    3001,
+    3053
+   ],
    "first_rank": 1,
    "entity": [
     "Non-Banking Financial Companies"
@@ -1034,6 +1518,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2089,
+    1785,
+    2011,
+    2029,
+    2211,
+    2099,
+    2112,
+    2003
+   ],
    "first_rank": 1,
    "entity": [
     "Urban Co-operative Banks"
@@ -1058,6 +1553,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    3267,
+    3269,
+    3266,
+    3265,
+    3352,
+    3350,
+    3348,
+    3296
+   ],
    "first_rank": 1,
    "entity": [
     "Credit Information Companies"
@@ -1082,6 +1588,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    2304,
+    2184,
+    2406,
+    2435,
+    2138,
+    3475,
+    7104,
+    6300
+   ],
    "first_rank": 7,
    "entity": [
     "Local Area Banks"
@@ -1107,6 +1624,17 @@
    "hit": true,
    "both_docs": false,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6055,
+    5087,
+    5065,
+    3559,
+    6596,
+    2810,
+    5779,
+    3229
+   ],
    "first_rank": 1,
    "entity": null
   },
@@ -1130,6 +1658,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    5037,
+    5249,
+    5202,
+    5155,
+    5122,
+    5026,
+    5186,
+    6901
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -1153,6 +1692,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    730,
+    1236,
+    2450,
+    7914,
+    7388,
+    5517,
+    4782,
+    8502
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -1176,6 +1726,17 @@
    "hit": true,
    "both_docs": false,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    4408,
+    4406,
+    30,
+    6383,
+    28,
+    6597,
+    29,
+    4407
+   ],
    "first_rank": 1,
    "entity": [
     "Housing Finance Companies"
@@ -1201,6 +1762,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6681,
+    6647,
+    6648,
+    6682,
+    87,
+    6714,
+    6680,
+    3888
+   ],
    "first_rank": 1,
    "entity": [
     "Non-Banking Financial Companies"
@@ -1226,6 +1798,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    5291,
+    9239,
+    9242,
+    9238,
+    9240,
+    9236,
+    5292,
+    9237
+   ],
    "first_rank": 1,
    "entity": null
   },
@@ -1249,6 +1832,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    1347,
+    2879,
+    3040,
+    3057,
+    3037,
+    3060,
+    3019,
+    3048
+   ],
    "first_rank": 1,
    "entity": [
     "Payments Banks",
@@ -1275,6 +1869,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    2630,
+    7478,
+    1782,
+    2598,
+    7407,
+    2513,
+    1926,
+    1994
+   ],
    "first_rank": null,
    "entity": [
     "Urban Co-operative Banks",
@@ -1300,6 +1905,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    3437,
+    3406,
+    3435,
+    3404,
+    3403,
+    3434,
+    9055,
+    3432
+   ],
    "first_rank": 1,
    "entity": null
   },
@@ -1322,6 +1938,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    4495,
+    4499,
+    4505,
+    4496,
+    4488,
+    4504,
+    4506,
+    4494
+   ],
    "first_rank": 1,
    "entity": [
     "Non-Banking Financial Companies"
@@ -1346,6 +1973,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    7570,
+    7559,
+    7560,
+    7571,
+    7576,
+    7565,
+    6505,
+    5380
+   ],
    "first_rank": 2,
    "entity": null
   },
@@ -1368,6 +2006,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    5201,
+    7694,
+    4670,
+    3811,
+    7693,
+    4671,
+    6081,
+    6437
+   ],
    "first_rank": 2,
    "entity": [
     "Small Finance Banks"
@@ -1392,6 +2041,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    4839,
+    249,
+    7197,
+    7353,
+    4745,
+    8216,
+    2129,
+    6207
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -1414,6 +2074,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    4409,
+    5121,
+    3639,
+    7645,
+    0,
+    4358,
+    4410,
+    4359
+   ],
    "first_rank": 1,
    "entity": [
     "Rural Co-operative Banks"
@@ -1438,6 +2109,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6162,
+    6093,
+    6504,
+    6085,
+    6486,
+    6441,
+    6506,
+    6164
+   ],
    "first_rank": 2,
    "entity": null
   },
@@ -1460,6 +2142,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    4451,
+    4564,
+    4488,
+    4638,
+    4414,
+    4527,
+    4713,
+    4675
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -1482,6 +2175,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6890,
+    4750,
+    4751,
+    4471,
+    2766,
+    2784,
+    6899,
+    2796
+   ],
    "first_rank": 1,
    "entity": [
     "All India Financial Institutions"
@@ -1506,6 +2210,17 @@
    "hit": false,
    "both_docs": false,
    "family_hit": false,
+   "chunk_hit": false,
+   "retrieved_chunk_ids": [
+    7332,
+    7839,
+    8629,
+    5220,
+    7525,
+    5170,
+    5059,
+    8414
+   ],
    "first_rank": null,
    "entity": null
   },
@@ -1528,6 +2243,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6483,
+    6136,
+    6439,
+    6083,
+    8745,
+    8283,
+    6425,
+    6068
+   ],
    "first_rank": 4,
    "entity": null
   },
@@ -1550,6 +2276,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    4560,
+    4559,
+    5217,
+    3475,
+    3742,
+    6959,
+    7188,
+    7673
+   ],
    "first_rank": 1,
    "entity": [
     "Local Area Banks"
@@ -1574,6 +2311,17 @@
    "hit": true,
    "both_docs": true,
    "family_hit": false,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6539,
+    6207,
+    4969,
+    4936,
+    4933,
+    4953,
+    4928,
+    3631
+   ],
    "first_rank": 1,
    "entity": [
     "Agency Banks"
