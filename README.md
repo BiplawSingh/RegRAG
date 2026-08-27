@@ -97,12 +97,17 @@ write a key the system passes.
 | `cross_document` | 10 | Needs evidence from two circulars at once |
 | `unanswerable` | 9 | Correct behaviour is to refuse |
 
-68 are answerable, 22 are not. Note that only 9 sit in the `unanswerable`
-*category*: the other 13 were written as ordinary questions and turned out to have
+69 are answerable, 21 are not. Note that only 9 sit in the `unanswerable`
+*category*: the other 12 were written as ordinary questions and turned out to have
 no answer in the corpus, discovered only when going to the source to write the
 answer down. That makes them refusal tests in disguise — they look perfectly
 answerable, and a system that always produces something confident fails them while
 passing everything else.
+
+The key has been revised twice since the answer runs below were scored, so their
+denominators reflect the export in force at the time. Each run's rows store their
+own `answerable` flag rather than re-deriving it, so old results stay
+interpretable instead of silently re-scoring themselves.
 
 `gold_chunk_ids` records which chunks a question was drafted against. That is
 usually also where it is answered, but not always: a question drafted from a
@@ -118,11 +123,11 @@ is a different thing from a judgement about whether an answer was right.
 
 | | gold document | doc or sibling | **answering chunk** |
 |---|---|---|---|
-| entity filter **on** | 52/68 (76%) | 54/68 (79%) | **41/68 (60%)** |
-| entity filter **off** | 50/68 (73%) | 53/68 (77%) | 39/68 (57%) |
+| entity filter **on** | 53/69 (76%) | 55/69 (79%) | **42/69 (60%)** |
+| entity filter **off** | 51/69 (73%) | 54/69 (78%) | 40/69 (57%) |
 
 By category, filter on: `entity_scoped` **19/19**, `amendment` 9/12,
-`lookup` 19/29, `cross_document` 5/8 (both documents: 3/8).
+`lookup` 19/29, `cross_document` 6/9.
 
 **The third column is the honest one.** The pipeline does not consume documents,
 it consumes eight chunks — and a document scores as "retrieved" when any of its

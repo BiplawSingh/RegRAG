@@ -225,15 +225,39 @@ verdicts:
 
   # ------------------------------------------------------------------ disputed --
   - id: q063
-    verdict: disputed
+    verdict: superseded          # was: disputed. Resolved, then the question rewritten.
     why: >
       Asked what the Credit Risk Management amendment is about. The system retrieved a
       different document and quoted genuine, substantive text about Concentration Risk
       Management policies -- single counterparty, interconnected groups, sectors. The
-      open question is whether concentration-risk management is the same amendment or
-      an adjacent one; if the same, this is a correct_answer under the corpus-wide
-      rule. Requires reading RBI/2025-26/182 and RBI/2025-26/185 against
-      RBI/DOR/2025-26/151. Counted as a failure until someone does.
+      open question was whether that is the same amendment or an adjacent one.
+
+      RESOLVED: an adjacent one, and not even for the same institutions. Reading the
+      preamble of RBI/2025-26/182 in full, it says "consequent to the issuance of the
+      Reserve Bank of India (Small Finance Banks - Credit Risk Management) - Amendment
+      Directions, 2026" -- Small Finance Banks, credit risk. The text the pipeline
+      quoted is Urban Co-operative Banks, concentration risk, which is what q072
+      references. Wrong subject and wrong entity class, so the answer was incorrect,
+      not correct.
+
+      But the question was the larger defect. "What is Credit Risk Management amendment
+      about?" is unanswerable by construction: 23 documents in this corpus carry
+      'Credit Risk Management' in their subject, one per entity class and several per
+      class across first, second and third amendments. Nothing in the question selects
+      among them, so the retriever had no way to know which was meant, and marking the
+      pipeline wrong for guessing measures the question rather than the system.
+
+      The referenced amendment is RBI/2025-26/174 (January 05, 2026), the same date as
+      the referring circular, distinct from RBI/2025-26/142 ("Amendment Directions,
+      2025", December 11, 2025). Its substance is a related-party lending overhaul:
+      new definitions in Chapter I, and in Chapter IV paragraph 15 deleted for a new
+      15A under Section 20(4) of the Banking Regulation Act, 1949.
+
+      The question has been rewritten as a genuine cross-document question -- which
+      amendment prompted the disclosure amendment, and what did it change -- needing
+      RBI/2025-26/182 to identify it and RBI/2025-26/174 to answer it. Marked
+      superseded rather than resolved because this verdict now describes wording that
+      is no longer in the key; the run it applied to still contains the old question.
 
 # ------------------------------------------------------------------- tally ----
 # correct_refusal   2

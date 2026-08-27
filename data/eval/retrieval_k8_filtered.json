@@ -1,5 +1,5 @@
 {
- "measured_at": "2026-08-25T08:06:30+00:00",
+ "measured_at": "2026-08-27T06:01:25+00:00",
  "k": 8,
  "filtered": true,
  "rows": [
@@ -1811,6 +1811,42 @@
    ],
    "first_rank": 1,
    "entity": null
+  },
+  {
+   "id": "q063",
+   "category": "cross_document",
+   "gold_docs": [
+    "RBI/2025-26/182",
+    "RBI/2025-26/174"
+   ],
+   "retrieved": [
+    "RBI/2025-26/182",
+    "RBI/2025-26/219",
+    "RBI/DOR/2026-27/213",
+    "RBI/2025-26/262",
+    "RBI/2026-27/196",
+    "RBI/2026-27/51",
+    "RBI/2025-26/262",
+    "RBI/2026-27/48"
+   ],
+   "hit": true,
+   "both_docs": false,
+   "family_hit": true,
+   "chunk_hit": true,
+   "retrieved_chunk_ids": [
+    6873,
+    6415,
+    3389,
+    6059,
+    3471,
+    5147,
+    6063,
+    5201
+   ],
+   "first_rank": 1,
+   "entity": [
+    "Small Finance Banks"
+   ]
   },
   {
    "id": "q064",

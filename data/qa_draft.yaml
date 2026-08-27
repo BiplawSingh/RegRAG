@@ -1481,15 +1481,50 @@
   #   section:  -
 - id: q063
   category: cross_document
-  answerable: false
-  question: "What is Credit Risk Management amendment about?"
+  answerable: true
+  question: "Which amendment prompted the Small Finance Banks disclosure amendment
+    of January 2026, and what did that amendment change?"
   answer: |
-    Not answerable from this source. Preamble noting that the disclosure
-    amendment follows from a Credit Risk Management amendment, without
-    describing what either changed.
-  notes: ""
-  gold_chunk_ids: [6873, 6857]
-  gold_docs: ["RBI/2025-26/182", "RBI/2025-26/185"]
+    It was prompted by the Reserve Bank of India (Small Finance Banks - Credit
+    Risk Management) Amendment Directions, 2026, issued the same day.
+
+    That amendment overhauls the related-party lending framework. In Chapter I it
+    inserts definitions for 'Committee on lending to related parties', 'Key
+    Managerial Personnel' (per Section 2(51) of the Companies Act, 2013),
+    'Promoter' (Section 2(69)), 'Reciprocally Related Person', and the person
+    tests for 'related party' -- promoter, director or KMP of the bank, or holding
+    more than five per cent of paid-up equity or voting rights. It also replaces
+    the definition of 'Relative' with the meaning in Section 2(77) of the
+    Companies Act, 2013.
+
+    In Chapter IV, 'Statutory Restriction', it deletes paragraph 15 and inserts a
+    new paragraph 15A made under clause (a) of the Explanation to Section 20(4) of
+    the Banking Regulation Act, 1949.
+  notes: |
+    RESOLVED. Was answerable: false and marked `disputed` in qa_review.yaml.
+
+    The old question was "What is Credit Risk Management amendment about?", which
+    no corpus could answer: 23 documents carry 'Credit Risk Management' in their
+    subject, one per entity class and several per class across first, second and
+    third amendments. The pipeline answered it with Urban Co-operative Banks
+    Concentration Risk Management text -- wrong subject AND wrong entity -- and
+    the question gave it no way to know better. The vagueness was the defect.
+
+    Reading the preamble in full settles what it points at: "consequent to the
+    issuance of the Reserve Bank of India (Small Finance Banks - Credit Risk
+    Management) - Amendment Directions, 2026". That is RBI/2025-26/174, dated
+    January 05, 2026, the same day as the referring circular, and distinct from
+    RBI/2025-26/142 (December 11, 2025, "Amendment Directions, 2025"). It is also
+    a different amendment from the one in q072, which references Urban
+    Co-operative Banks - Concentration Risk Management.
+
+    Rewritten as a genuine cross-document question rather than deleted: it now
+    needs RBI/2025-26/182 to learn WHICH amendment is referenced, and
+    RBI/2025-26/174 to learn what it says. Neither document answers it alone,
+    which is what the category is for. RBI/2025-26/185 was dropped -- it is the
+    Urban Co-operative Banks counterpart and belongs to a different entity class.
+  gold_chunk_ids: [6873, 7029, 7030, 7034, 7035, 7036]
+  gold_docs: ["RBI/2025-26/182", "RBI/2025-26/174"]
   source_text: |
     RBI/2025-26/182 DOR.CRE.REC.383/21.04.018/2025-26
     January 05, 2026
