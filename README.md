@@ -160,9 +160,9 @@ it could ever recover is the recall a wider k already reaches:
 
 ```
  k      doc     family    chunk
- 1    33/68     41/68     27/68
- 8    52/68     54/68     41/68
-20    60/68     61/68     50/68
+ 1    34/69     42/69     28/69
+ 8    53/69     55/69     42/69
+20    61/69     62/69     51/69
 
 a perfect reranker over the k=20 set recovers at most 9 questions; a real one, fewer.
 the other 18 never surface the right passage at k=20 at all, so no re-sorting reaches them.
