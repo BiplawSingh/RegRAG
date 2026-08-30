@@ -28,7 +28,7 @@ import unicodedata
 from collections import Counter
 from pathlib import Path
 
-from bs4 import BeautifulSoup, NavigableString
+from bs4 import BeautifulSoup
 
 ROOT = Path("data")
 DB_PATH = ROOT / "manifest.db"

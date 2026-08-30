@@ -25,6 +25,57 @@ carries an `applies_to` tag for exactly this reason.
 This one property shapes every design decision below, and it is also why several
 obvious-looking metrics turn out to measure less than they appear to.
 
+## Architecture
+
+```mermaid
+flowchart TB
+    subgraph build ["build — offline, run once"]
+        direction LR
+        S["rbi_scraper.py<br/>506 circulars, HTML"]
+        C["chunker.py<br/>9,278 chunks<br/>+ applies_to tag"]
+        E["embed.py<br/>BGE-small, 384d"]
+        Q[("Qdrant<br/>payload-indexed<br/>on applies_to")]
+        S --> C --> E --> Q
+    end
+
+    subgraph ask ["ask — per question"]
+        direction TB
+        QU["question"]
+        DE["detect_entity<br/>which classes does it name?"]
+        subgraph fetch ["hybrid fetch, 50 each — retrieval.py"]
+            direction LR
+            DN["dense<br/>cosine over BGE"]
+            BM["lexical<br/>BM25, in-process"]
+        end
+        RRF["RRF fuse → 50 candidates"]
+        RR["cross-encoder rerank<br/>shown subject + section<br/>→ top 8"]
+        GN["generate — gpt-oss-120b<br/>strict JSON schema"]
+        VF["verify<br/>is each quote really there?"]
+        QU --> DE --> fetch --> RRF --> RR --> GN --> VF
+    end
+
+    Q -. "entity filter runs<br/>INSIDE the search" .-> DN
+    DE -. "applies_to ∈ classes<br/>OR applies_to empty" .-> DN
+    DE -. same mask .-> BM
+    VF --> OUT["answer + verified citations<br/>→ data/log.jsonl"]
+
+    subgraph eval ["measure — separate track"]
+        direction LR
+        EV["eval.py<br/>hit-rate, citations"]
+        LB["retrieval_lab.py<br/>ranking variants, offline"]
+        JD["judge.py<br/>answer quality, calibrated"]
+    end
+
+    OUT -.-> eval
+```
+
+The one structural decision worth reading off this diagram: **the entity filter
+runs inside the vector search, not after it.** Filtering a top-k after the fact
+would mean discarding most of what came back and padding with whatever was left,
+because ~74% of this corpus is near-duplicates and an unfiltered top-8 fills with
+other institutions' copies of the same rule. That is why `applies_to` lives on
+every chunk rather than in a table you join against.
+
 ## Pipeline
 
 Each stage is a standalone script, run in order:
@@ -192,6 +243,34 @@ The harness prints the numbers rather than a verdict about them, deliberately �
 an earlier version asserted "reranking won't help" in a print statement. Reranking
 turned out to be worth 12 questions, which is exactly why that assertion had no
 business being in the code.
+
+#### The ablation, v0 → v4
+
+Each row is one change, measured on the same 69 answerable questions, same answer
+key, same k=8. Chunk recall is the column that matters — the pipeline consumes
+passages, not documents.
+
+| | change | doc | **chunk** | Δ chunk |
+|---|---|---|---|---|
+| **v0** | dense top-k, no filter | 51/69 (73%) | 40/69 (57%) | — |
+| **v1** | + entity pre-filter inside the search | 53/69 (76%) | 42/69 (60%) | +2 |
+| **v2** | + BM25 channel, RRF-fused | 52/69 (75%) | 43/69 (62%) | +1 |
+| **v3** | + cross-encoder over the fused top-50 | 57/69 (83%) | 48/69 (69%) | +5 |
+| **v4** | + document subject & section shown to it | 60/69 (87%) | **54/69 (78%)** | **+6** |
+
+Two honest notes on this table:
+
+- **Structure-aware chunking has no row, and cannot be given one.** It shipped in
+  Week 1, before any measurement existed, so there is no dense-only-over-naive-chunks
+  number to compare against — and one cannot be produced retroactively, because
+  `gold_chunk_ids` indexes *these* chunks. Re-chunking invalidates every pointer in
+  the answer key, so the comparison would need the key re-authored against the new
+  chunking to mean anything. Listing it with a fabricated or borrowed delta would
+  be worse than admitting the gap.
+- **v2 loses a document while gaining a chunk.** Adding BM25 drops document
+  hit-rate 53 → 52 and raises chunk recall 42 → 43. That is not noise to be
+  smoothed over: it is the two metrics disagreeing, and the chunk column is the one
+  that reflects what the generator actually receives.
 
 #### How the 60% → 78% was found — `python retrieval_lab.py`
 
@@ -468,6 +547,35 @@ is the only one of the eight with this problem, and it is documented in
   necessarily the chunk that answers it.** For most questions those coincide; for
   ones drafted from a preamble they do not, which distorts oracle-mode results.
   q062 is the known instance.
+
+## Tests — `pytest tests/`
+
+31 tests, no corpus, no model, no API key, ~1 second. They cover the machinery
+underneath the measurements: BM25 scoring, RRF fusion, `top_k` under a filter, the
+entity mask, citation verification, and answer-key validation. CI runs them plus
+`ruff check --select F` on every push.
+
+**What CI deliberately does not do is run the eval.** Whether the reranker is
+worth twelve questions is a measurement against the answer key, on a machine with
+the corpus and an embedding model — and making it a merge gate would turn "the
+numbers changed" into a build failure, which is the wrong response to a number
+changing. Measurement is a decision, not a gate.
+
+The tests that earn their place are the ones guarding silent failures:
+
+- **the entity mask's OR-empty clause** — drop it and 41 circulars that bind no
+  particular institution become unreachable for *every* filtered query. A recall
+  hole with no error message.
+- **`top_k` returning fewer than k under a narrow filter** — padding the list with
+  disqualified rows would be invisible to every caller that trusts `len()`.
+- **an empty citation quote never verifying** — the empty string is a substring of
+  everything, so without the guard a model could earn a verified citation by
+  quoting nothing at all.
+- **`qa.py validate` rejecting a refusal in an `answer` field** — the q008 gap,
+  found by hand during review: an entry sat at `answerable: true` with an answer
+  reading *"Not answerable from this source"*, passed validation because the field
+  was non-empty, and exported into the graded set as an answerable question whose
+  gold answer was a refusal.
 
 ## Every question is logged, automatically
 

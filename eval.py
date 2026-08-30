@@ -38,7 +38,6 @@ import json
 import os
 import statistics
 import sys
-import time
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -298,12 +297,12 @@ def cmd_retrieval(k=8, use_filter=True, sweep=False):
             lo = base
             print(f"\n  chunk recall: {lo['chunk']}/{lo['n']} at the operating k={k_base}, "
                   f"{hi['chunk']}/{hi['n']} at k={k_hi}")
-            print(f"    k is now how many reranked passages reach the generator, not how "
-                  f"deep the fetch goes.")
+            print("    k is now how many reranked passages reach the generator, not how "
+                  "deep the fetch goes.")
             print(f"    widening it to {k_hi} recovers {hi['chunk'] - lo['chunk']} more "
                   f"question(s), at {k_hi // k_base}x the prompt tokens.")
-            print(f"    the pool the reranker sorts is the real ceiling -- measure it with "
-                  f"`python retrieval_lab.py compare`.")
+            print("    the pool the reranker sorts is the real ceiling -- measure it with "
+                  "`python retrieval_lab.py compare`.")
         return
 
     label = "entity filter ON" if use_filter else "entity filter OFF (ablation)"

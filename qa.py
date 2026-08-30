@@ -354,6 +354,27 @@ def cmd_stats():
         print(f"{cat:<18}{d:>6}{n:>9}{TARGET.get(cat, '-'):>8}")
 
 
+# Phrases that mean "there is no answer here", written into an `answer` field.
+# Deliberately narrow: the test is whether the WHOLE field is a refusal, not
+# whether it contains one of these anywhere. A real answer may well say "the
+# circular does not specify a deadline, but requires..." and that is a finding,
+# not an empty entry -- matching it would train the author to work around the
+# validator, which is worse than not having one.
+_REFUSAL_RES = [
+    re.compile(r"^(not|no)\s+answer(able)?\b", re.I),
+    re.compile(r"^not\s+(in|available|present|stated|specified|found)\b", re.I),
+    re.compile(r"^(n/?a|tbd|todo|\?+)\.?$", re.I),
+    re.compile(r"^the\s+(source|chunk|corpus|document)\s+does\s+not\b", re.I),
+    re.compile(r"^cannot\s+be\s+answered\b", re.I),
+]
+
+
+def _is_refusal_text(answer: str) -> bool:
+    """True when an `answer` field is really a note that there is no answer."""
+    a = answer.strip().strip('"\'')
+    return any(rx.match(a) for rx in _REFUSAL_RES)
+
+
 def cmd_validate():
     entries = read_draft()
     if not entries:
@@ -381,6 +402,19 @@ def cmd_validate():
         else:
             if not a:
                 problems.append(f"{qid}: no answer")
+            elif _is_refusal_text(a):
+                # The gap that let q008 through: it sat at answerable=true with an
+                # answer field reading "Not answerable from this source", and
+                # validation passed, because the only test was that the field was
+                # non-empty. That entry then exported into the graded set as an
+                # answerable question whose gold answer was a refusal -- so the
+                # pipeline was scored against text no correct answer could match.
+                #
+                # Caught by hand during the review in data/qa_review.yaml, which is
+                # exactly the kind of catch a validator exists to make unnecessary.
+                problems.append(
+                    f"{qid}: answerable=true but the answer is a refusal -- {a[:60]!r}. "
+                    f"Set answerable: false, or write the real answer.")
             if not e.get("gold_docs"):
                 problems.append(f"{qid}: answerable but no gold_docs")
 

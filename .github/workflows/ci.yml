@@ -1,0 +1,48 @@
+# CI for the parts that can be checked without a corpus, a model, or an API key.
+#
+# WHAT THIS DELIBERATELY DOES NOT DO
+# It does not run the eval. Retrieval quality is measured against the answer key
+# by `eval.py` and `retrieval_lab.py`, on a machine with the 9,278-chunk corpus
+# and an embedding model -- neither of which belongs in CI, and both of which
+# would make a green tick mean "the numbers have not changed", which is not a
+# thing a pull request should be blocked on. Measurement is a decision, not a
+# gate. What CI checks is that the deterministic machinery underneath still
+# behaves: BM25, RRF, the entity mask, citation verification, answer-key
+# validation.
+#
+# ruff runs with --select F (pyflakes) rather than the full default rule set:
+# undefined names, unused imports, and shadowed definitions are real defects in
+# any style, whereas line-length and quote-style opinions would turn the first
+# run red for reasons unrelated to correctness.
+
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install what the tests actually import
+        # Not requirements.txt: that pulls torch and sentence-transformers, which
+        # are ~2GB and are only needed to embed or rerank -- neither of which any
+        # test does. The tested modules import numpy, scipy and pydantic, and
+        # retrieval.py defers the heavy imports to the functions that need them,
+        # which is what makes this split possible.
+        run: pip install numpy scipy pydantic pytest ruff pyyaml
+
+      - name: Lint for real errors
+        run: ruff check --select F .
+
+      - name: Tests
+        run: pytest tests/ -q
