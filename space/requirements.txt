@@ -1,0 +1,24 @@
+# Hugging Face Space runtime. Deliberately smaller than the repo's
+# requirements.txt: the Space never scrapes, chunks, embeds the corpus or talks to
+# Qdrant -- it loads embeddings.npy and searches it with a dot product.
+#
+# torch comes in as a sentence-transformers dependency and is the bulk of the
+# image. Both models are small (bge-small-en-v1.5 at 33M for queries,
+# ms-marco-MiniLM-L-6-v2 at 22M for reranking), so this fits the free CPU tier
+# with room to spare.
+
+gradio>=6.0
+
+# retrieval: query embedding + the cross-encoder reranker
+sentence-transformers>=5.2
+torch>=2.10
+numpy>=2.4
+scipy>=1.17          # BM25's sparse term-document matrix
+
+# generation + strict JSON-schema output
+groq>=1.6
+pydantic>=2.12
+
+# rbi_scraper.scan_entities() is the entity detector; these are its imports
+httpx>=0.28
+beautifulsoup4>=4.15
