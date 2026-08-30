@@ -142,6 +142,28 @@ python judge.py report            # verdict breakdown
 - **9,278 chunks**, each carrying its document's number, date, department, and the
   regulated-entity classes it binds
 
+### Where these documents come from
+
+The 506 documents in `data/html/` are **circulars, notifications and Master
+Directions published by the Reserve Bank of India** on <https://rbi.org.in>, cached
+here as they were served. They are the RBI's own regulatory publications, not
+anything written for this project; each chunk keeps its `source_url`, circular
+number and issue date, so every passage the pipeline quotes can be traced back to
+the page it came from.
+
+They are committed rather than fetched on demand for a specific reason: RBI's PDF
+host sits behind a WAF that returns challenge pages to automated requests, so the
+corpus is assembled from the circulars' HTML detail pages instead (see the design
+note at the top of `rbi_scraper.py`). Without the cache, none of the numbers in this
+README could be reproduced by anyone who cloned the repo. The harvest ran once, in
+August 2026, over public pages, with a contact address in the User-Agent —
+`SCRAPER_CONTACT` in `.env`, kept out of committed source for exactly that reason.
+
+Nothing here is an official or authoritative copy. Anyone acting on Indian banking
+regulation should read the circular at `source_url`, not this cache — and certainly
+not this pipeline's answer, which is a measured 78%-recall research system and says
+so in numbers above.
+
 ## The answer key
 
 **90 questions written by hand, before any pipeline output was looked at.** That
