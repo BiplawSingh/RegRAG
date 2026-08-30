@@ -5,9 +5,12 @@ question about Indian banking regulation; get an answer with citations that are
 automatically verified against the source documents.
 
 **Status: end-to-end pipeline working and measured against a hand-written answer
-key, with each failure attributed to retrieval or to generation.** 65% of
-answerable questions are answered fully correctly; every number below is
-reproducible from `data/eval/`.
+key, with each failure attributed to retrieval or to generation.** That attribution
+identified retrieval as the bottleneck, and the current work is closing it: chunk
+recall is **78%, up from 60%**, via a lexical channel and a cross-encoder over the
+same embeddings. The end-to-end answer score of 65% was measured *before* that
+change and has not yet been re-run — see the note in **Generation** below. Every
+number here is reproducible from `data/eval/`.
 
 ## Why this corpus is harder than it looks
 
@@ -32,6 +35,7 @@ python rbi_scraper.py text        # cache each circular's full body -> data/html
 python chunker.py                 # split into retrieval-sized chunks -> chunks.jsonl
 python embed.py build             # embed every chunk (BGE-small)   -> embeddings.npy
 python index_qdrant.py build      # load into Qdrant (needs Docker) -> local vector index
+python retrieval.py ask "..."     # retrieval only: hybrid fetch + rerank, no LLM
 python rag.py ask "..."           # ask a question
 python rag.py history             # everything ever asked, all-time
 ```
@@ -43,7 +47,11 @@ python qa.py draft                # add question stubs to data/qa_draft.yaml
 python qa.py validate             # what's incomplete or malformed
 python qa.py export               # -> data/qa.jsonl, the graded set
 python eval.py retrieval          # hit-rate@k -- local, free, unlimited
-python eval.py retrieval --sweep  # recall vs k, and the reranking headroom
+python eval.py retrieval --sweep  # recall vs k
+python retrieval_lab.py baseline  # check the offline bench matches the pipeline
+python retrieval_lab.py run <v>   # score a retrieval variant, resumable
+python retrieval_lab.py compare   # every variant scored so far, side by side
+python retrieval_lab.py inspect q017   # one question, every variant, in full
 python eval.py answers            # end-to-end run (costs quota, resumable)
 python eval.py answers --oracle   # feed gold chunks, bypass retrieval
 python eval.py report             # scorecard from whatever has been run
@@ -123,19 +131,25 @@ is a different thing from a judgement about whether an answer was right.
 
 | | gold document | doc or sibling | **answering chunk** |
 |---|---|---|---|
-| entity filter **on** | 53/69 (76%) | 55/69 (79%) | **42/69 (60%)** |
-| entity filter **off** | 51/69 (73%) | 54/69 (78%) | 40/69 (57%) |
+| entity filter **on** | 60/69 (86%) | 61/69 (88%) | **54/69 (78%)** |
+| entity filter **off** | 60/69 (86%) | 61/69 (88%) | 51/69 (73%) |
+| *dense-only baseline, filter on* | *53/69 (76%)* | *55/69 (79%)* | *42/69 (60%)* |
 
-By category, filter on: `entity_scoped` **19/19**, `amendment` 9/12,
-`lookup` 19/29, `cross_document` 6/9.
+By category, filter on: `entity_scoped` 18/19, `cross_document` 8/9,
+`amendment` 10/12, `lookup` 24/29.
 
 **The third column is the honest one.** The pipeline does not consume documents,
 it consumes eight chunks — and a document scores as "retrieved" when any of its
-chunks comes back, including one that does not answer the question. Measured
-directly: **11 questions retrieved the right document but not the passage**, two
-of them with the document at rank 1. Document hit-rate overstates retrieval by 16
-points, and the gap between the two columns is a distinct failure needing distinct
-work: "wrong document" and "right document, wrong passage" are not the same bug.
+chunks comes back, including one that does not answer the question. That gap is
+what the retrieval work below was aimed at: **11 questions used to retrieve the
+right document but not the passage; 6 still do.** "Wrong document" and "right
+document, wrong passage" are not the same bug, and the second one turned out to be
+the cheaper of the two to fix.
+
+The third row is the previous pipeline, kept because the delta is the result:
+chunk recall 60% → 78%, from a lexical channel and a cross-encoder, over the same
+embeddings and the same filter. `data/eval/retrieval_k8_filtered_prererank.json`
+is that run, retained so the comparison is auditable rather than remembered.
 
 Two things worth reading carefully here:
 
@@ -149,30 +163,119 @@ Two things worth reading carefully here:
   above suggests.** Those measure different things: precision asks whether the
   *other* seven slots are the right entity's, hit-rate only asks whether the gold
   document appeared at all. Both numbers are real; neither substitutes for the
-  other.
+  other. Note that the filter is now worth nothing at all at the *document* level
+  and 3 questions at the chunk level — another way of saying that document
+  hit-rate was never the metric that could see what the filter does.
 
 When retrieval succeeds it succeeds decisively — **median rank of a hit is 1** at
 every k. Chunk length shows no correlation with misses.
 
-`--sweep` reports recall against k, and the reranking headroom that follows from
-it. A reranker fetches a wide candidate set and re-sorts it down to k, so the most
-it could ever recover is the recall a wider k already reaches:
+`--sweep` reports recall against k. What k *means* changed when the reranker
+shipped, and the curve has to be read accordingly: the fetch is now always 50
+candidates per channel, so k is no longer the fetch depth but how many reranked
+passages reach the generator.
 
 ```
  k      doc     family    chunk
- 1    34/69     42/69     28/69
- 8    53/69     55/69     42/69
-20    61/69     62/69     51/69
+ 1    40/69     47/69     36/69
+ 8    60/69     61/69     54/69
+20    62/69     62/69     56/69
 
-a perfect reranker over the k=20 set recovers at most 9 questions; a real one, fewer.
-the other 18 never surface the right passage at k=20 at all, so no re-sorting reaches them.
+widening k to 20 recovers 2 more questions, at 2x the prompt tokens.
 ```
 
-The harness prints that headroom rather than a verdict about it, deliberately —
-an earlier version asserted "reranking won't help" in a print statement, which is
-the exact mistake this harness exists to prevent.
+The curve is nearly flat past k=8, which it was not before — recall@1 alone went
+from 28/69 to 36/69. That flatness is the sign the reranker is doing its job:
+there is little left in slots 9–20 for a wider window to pick up.
+
+The harness prints the numbers rather than a verdict about them, deliberately —
+an earlier version asserted "reranking won't help" in a print statement. Reranking
+turned out to be worth 12 questions, which is exactly why that assertion had no
+business being in the code.
+
+#### How the 60% → 78% was found — `python retrieval_lab.py`
+
+Retrieval variants are measured offline, against the raw arrays, with no Qdrant
+round-trip and no LLM: `retrieval_lab.py baseline` first proves the bench
+reproduces the deployed pipeline question-for-question, and every variant after
+that is one function. Eight ideas were measured; three worked.
+
+| variant | chunk | doc | wrong-entity |
+|---|---|---|---|
+| dense only *(what shipped before)* | 42/69 (60%) | 53/69 | 0% |
+| BM25 only | 39/69 (56%) | 53/69 | 0% |
+| RRF(dense, BM25) | 43/69 (62%) | 52/69 | 0% |
+| dense over context-prefixed embeddings | 39/69 (56%) | 52/69 | 0% |
+| dense + neighbour expansion | 37/69 (53%) | 45/69 | 0% |
+| cross-encoder over the hybrid top-50 | 48/69 (69%) | 57/69 | 0% |
+| **+ shown the document subject and section** | **54/69 (78%)** | **60/69** | **0%** |
+| + entity filter relaxed to a preference | 55/69 (79%) | 61/69 | **27%** |
+
+Five things in that table are worth more than the winning row:
+
+- **Fusing the two channels is worth one question. The cross-encoder is worth
+  eleven more.** BM25 alone is *worse* than dense alone, and the obvious reading —
+  "the lexical channel doesn't help" — is wrong. Its value is in what it puts in
+  the *pool*, not where it ranks: dense finds the answering chunk for 59 of 69
+  questions at depth 50, BM25 for 50, and between them 61. They miss different
+  questions. Reranking a dense-only pool scores 47, so the channel that ranks
+  badly on its own still carries five questions into the set that gets re-sorted.
+
+- **The same idea won in one place and lost in another.** Prepending the document
+  subject and section heading to the *passage embeddings* made dense retrieval
+  worse (42 → 39). Prepending it to what the *cross-encoder* reads was worth six
+  questions (48 → 54) — two-thirds of the total gain. A bi-encoder given a header
+  produces a blurrier passage vector; a cross-encoder given a header gets evidence
+  it can weigh against the question. Testing it in only one place would have
+  produced a confident and wrong conclusion either way.
+
+- **Neighbour expansion looked well-motivated and lost badly.** Of the 11 questions
+  that found the right document and missed the passage, 5 had a gold chunk within
+  two positions of something already retrieved — so spending slots on the passages
+  either side should have been nearly free. It cost five questions. At a fixed k
+  every slot given to a neighbour is a slot taken from the next-best independent
+  hit, and that trade is worse than it looks.
+
+- **The last row is a rejection, and the fourth column is why.** Relaxing the
+  entity filter from a hard constraint to a preference buys exactly one question
+  (q017) and readmits wrong-entity chunks into 27% of the entity-scoped slots —
+  the near-duplicate noise this whole corpus is organised against, which the oracle
+  comparison below shows costs 4 refusal failures and nearly all of the citation
+  ambiguity. One question is not worth that, so it did not ship. It is in the
+  registry so the next person does not have to re-derive why not.
+
+  q017 also stopped being a real miss on its own: asked live, the pipeline answers
+  it correctly out of `RBI/DoS/2026-27/459`, a document that genuinely binds AIFIs
+  and states the definition. The answer key names a different circular, so it
+  scores as a chunk miss. This is the corpus-wide rule from `data/qa_review.yaml`
+  again — finding better evidence than the question was drafted against is correct
+  behaviour, and the key is not edited to match.
+
+- **The reranker that shipped is the 22M-parameter one.** `bge-reranker-base`
+  (278M) and `ms-marco-MiniLM-L-6-v2` (22M) both score 54/69 — identical recall,
+  the same questions fixed — and the small one is ~7x faster on CPU: 11.0s per
+  question against 1.5s. Reranking 50 candidates is the slowest stage in the
+  pipeline either way, so the larger model had to earn its latency with recall,
+  and it did not. Cutting the pool from 50 to 20 candidates instead would halve
+  the cost again and lose 3 questions, so the pool stayed at 50.
+
+**Cost of the change:** retrieval goes from ~0.1s to ~1.6s per question, against a
+generation stage that takes 2.0s. Nothing else moved — same embeddings, same
+index, same entity filter, no re-embedding of the corpus, no Qdrant rebuild.
 
 ### Generation — `python eval.py answers`
+
+> **These answer-quality numbers predate the retrieval change above and have not
+> been re-run.** Every figure from here to the end of this section was measured
+> against dense-only retrieval at 60% chunk recall. They are left exactly as
+> measured rather than adjusted or deleted: the oracle comparison below is what
+> identified retrieval as the bottleneck in the first place, and it only reads
+> that way because these were taken before the fix. A full re-run costs a day's
+> token allowance (`eval.py answers` then `judge.py run`), and the honest
+> prediction — 19 of the 22 end-to-end failures were retrieval's, and retrieval
+> now surfaces the answering passage for 12 more questions — is that the
+> end-to-end score rises toward the 95% oracle ceiling. That prediction is
+> written down here *before* the run, so it can be wrong in public.
 
 Complete run, all 90 questions, no errors:
 
@@ -346,11 +449,17 @@ is the only one of the eight with this problem, and it is documented in
   answer from.
 - **Citation verification checks that quotes are real, not that answers are
   complete, nor that attribution is correct.** See the 16% figure above.
-- **Chunk-level retrieval recall (60%) is the single highest-value target.**
-  Generation scores 95% when handed the right passage, so retrieval is where 86%
-  of the end-to-end failure lives. Two distinct sub-problems: 11 questions
-  retrieve the right document but not the passage (two with the document ranked
-  first), and 16 never reach the right document at all.
+- **Chunk-level retrieval recall is now 78%, up from 60% — the remaining 15
+  questions are the harder half.** The sub-problem that yielded was "right
+  document, wrong passage": 11 questions, now 6. The other one barely moved —
+  8 questions still never reach the right document, and they are mostly questions
+  that under-specify what they want (*"What replaced what, and when?"*, *"Do banks
+  normally deal in property?"*), where no ranking function can recover an intent
+  the question never expressed. Those need query rewriting, or an answer key that
+  admits the question is the defect; `data/qa_review.yaml` has precedent for both.
+- **The end-to-end and judge numbers need re-running against the new retrieval.**
+  Until then the headline 65% describes a pipeline that no longer exists. This is
+  the single most misleading thing in this README and it is called out in place.
 - **Deduplication before generation is unbuilt, and now clearly justified.** The
   entity filter cannot separate same-entity boilerplate: after filtering, up to ten
   near-identical copies of one rule still compete for eight slots. That noise costs

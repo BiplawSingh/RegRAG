@@ -45,6 +45,15 @@ LOG = ROOT / "log.jsonl"          # every question ever asked -- append-only, ne
 
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 
+# RBI text is full of characters cp1252 cannot encode -- non-breaking hyphens in
+# "non-banking", the rupee sign, curly quotes. On a Windows console that makes
+# `print(answer)` raise UnicodeEncodeError and take down the CLI *after* the model
+# has already been called and the answer written to log.jsonl: the work is done and
+# paid for, and the only thing that fails is showing it. Replace rather than raise.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(errors="replace")
+
 # Groq, not Gemini. Gemini's free tier metered ~20 requests per day per model, which
 # a single 20-question batch exhausted -- Week 2 needs ~360 calls (90 questions x
 # baseline + judge + ablations), so that was five days per run.
@@ -140,24 +149,36 @@ _RETRIEVER = {}
 
 
 def retrieve(question, k=8, entity=None, use_filter=True):
+    """Hybrid fetch, then cross-encoder rerank. See retrieval.py for the why.
+
+    This used to be a dense top-k out of Qdrant and nothing else, which found the
+    passage that answers the question 42 times out of 69. Adding a lexical channel
+    and a cross-encoder over the fused pool takes that to 54, with the entity
+    filter and the embeddings unchanged -- the recall was already in the candidate
+    set and nothing was sorting it.
+
+    The signature is deliberately unchanged, so eval.py measures the new path
+    without knowing it moved. Set RETRIEVAL_RERANK=0 to get the old behaviour back
+    for an ablation.
+
+    Every returned chunk still carries `chunk_id`, its row index in chunks.jsonl
+    and its point id in Qdrant -- which is what gold_chunk_ids refers to, and the
+    only reason chunk-level recall can be measured at all.
+    """
     iq = _load("index_qdrant", "index_qdrant.py")
     if not _RETRIEVER:                       # client + embedding model are expensive
         client, where = iq.connect(QDRANT_URL)
         _RETRIEVER.update(client=client, where=where, model=iq.get_model())
-    points = iq.query(_RETRIEVER["client"], _RETRIEVER["model"], question, k=k,
-                      entity=entity if use_filter else None)
-    # Carry the point id through as chunk_id. index_qdrant.build assigns ids in
-    # chunks.jsonl row order, so this is the chunk's index in that file -- which is
-    # what gold_chunk_ids refers to. Without it the payload alone cannot say WHICH
-    # chunk came back, only which document, and those are different questions: a
-    # document counts as retrieved even when the passage that answers the question
-    # never arrived. Copied rather than mutated so the client's object is untouched.
-    out = []
-    for p in points:
-        c = dict(p.payload)
-        c["chunk_id"] = p.id
-        out.append(c)
-    return out, _RETRIEVER["where"]
+
+    import retrieval
+
+    # The dense channel is fetched deep, not at k: the reranker can only re-sort
+    # what the fetch surfaced, so the pool is the ceiling on everything after it.
+    points = iq.query(_RETRIEVER["client"], _RETRIEVER["model"], question,
+                      k=retrieval.DEPTH, entity=entity if use_filter else None)
+    hits = retrieval.search(question, k=k, entity=entity, use_filter=use_filter,
+                            dense_ids=[int(p.id) for p in points])
+    return hits, _RETRIEVER["where"]
 
 
 def format_sources(chunks):

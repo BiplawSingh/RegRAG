@@ -15,6 +15,12 @@ numpy>=2.4
 # index_qdrant.py -- vector store client (needs a running Qdrant; see README)
 qdrant-client>=1.19,<2
 
+# retrieval.py -- the lexical channel's sparse term-document matrix. BM25 itself
+# is written out rather than pulled in (rank_bm25 et al): it is forty lines, and
+# the sparse matmul is the only part worth a dependency. The cross-encoder comes
+# from sentence-transformers, already required above.
+scipy>=1.17
+
 # rag.py -- generation + structured output. Groq's free tier allows ~50x the
 # daily requests Gemini's did, and gpt-oss-* support strict JSON schema.
 groq>=1.6

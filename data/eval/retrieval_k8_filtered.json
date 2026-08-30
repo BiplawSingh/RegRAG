@@ -1,5 +1,5 @@
 {
- "measured_at": "2026-08-27T06:01:25+00:00",
+ "measured_at": "2026-08-30T05:04:00+00:00",
  "k": 8,
  "filtered": true,
  "rows": [
@@ -10,30 +10,30 @@
     "RBI/DOR/2026-27/398"
    ],
    "retrieved": [
+    "RBI/DOR/2026-27/397",
     "RBI/2025-26/211",
     "RBI/2025-26/254",
-    "RBI/2025-26/211",
-    "RBI/FIDD/2025-26/196",
-    "RBI/DOR/2026-27/398",
     "RBI/2026-27/109",
-    "RBI/DoR/2025-26/152",
-    "RBI/2025-26/254"
+    "RBI/2025-26/255",
+    "RBI/2026-27/109",
+    "RBI/DOR/2026-27/398",
+    "RBI/2025-26/211"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
-   "chunk_hit": false,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
+    5534,
     6500,
     6157,
-    6514,
-    6570,
-    5309,
     4795,
-    8253,
-    6159
+    6130,
+    4784,
+    5391,
+    6501
    ],
-   "first_rank": 5,
+   "first_rank": 7,
    "entity": [
     "Commercial Banks"
    ]
@@ -45,30 +45,30 @@
     "RBI/DCM/2026-27/394"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/412",
+    "RBI/2026-27/220",
+    "RBI/2026-27/220",
+    "RBI/DCM/2026-27/395",
+    "RBI/DCM/2026-27/394",
+    "RBI/DoS/2026-27/421",
     "RBI/DoS/2026-27/439",
     "RBI/DoS/2026-27/430",
-    "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/421",
-    "RBI/DoS/2026-27/451",
-    "RBI/DCM/2026-27/394",
-    "RBI/2026-27/220"
+    "RBI/DoS/2026-27/446"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": false,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    546,
+    247,
+    246,
+    5900,
+    5931,
+    1068,
     2026,
     1597,
-    2290,
-    1068,
-    2541,
-    5931,
-    247
+    2290
    ],
-   "first_rank": 7,
+   "first_rank": 4,
    "entity": null
   },
   {
@@ -93,13 +93,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     2664,
-    2679,
     2754,
-    2686,
-    2742,
-    2687,
     2680,
-    2736
+    2679,
+    2682,
+    2674,
+    2728,
+    2708
    ],
    "first_rank": 1,
    "entity": [
@@ -117,10 +117,10 @@
     "RBI/2025-26/134",
     "RBI/DOR/2025-26/151",
     "RBI/DOR/2025-26/151",
-    "RBI/2025-26/132",
     "RBI/DOR/2025-26/151",
-    "RBI/DOR/2025-26/143",
-    "RBI/DOR/2025-26/150"
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151",
+    "RBI/2025-26/132"
    ],
    "hit": true,
    "both_docs": true,
@@ -129,12 +129,12 @@
    "retrieved_chunk_ids": [
     7354,
     7355,
-    8962,
     9213,
-    7357,
+    8873,
+    8962,
     9199,
-    7800,
-    8219
+    8875,
+    7357
    ],
    "first_rank": 1,
    "entity": null
@@ -146,30 +146,30 @@
     "RBI/DOR/2026-27/36"
    ],
    "retrieved": [
+    "RBI/DOR/2026-27/36",
     "RBI/DOR/2026-27/398",
     "RBI/DOR/2026-27/36",
     "RBI/DOR/2026-27/398",
-    "RBI/DOR/2025-26/150",
+    "RBI/2025-26/126",
+    "RBI/DoS/2026-27/415",
     "RBI/DOR/2025-26/151",
-    "RBI/DOR/2026-27/398",
-    "RBI/DOR/2025-26/148",
-    "RBI/DoS/2026-27/415"
+    "RBI/2025-26/387"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    5447,
     5663,
+    5447,
+    5662,
     5297,
-    8245,
+    7554,
+    696,
     9159,
-    5294,
-    8078,
-    696
+    6357
    ],
-   "first_rank": 2,
+   "first_rank": 1,
    "entity": [
     "Commercial Banks"
    ]
@@ -182,29 +182,29 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/463",
-    "RBI/2026-27/165",
     "RBI/DoS/2026-27/465",
-    "RBI/DoS/2026-27/468",
-    "RBI/2026-27/166",
-    "RBI/DoS/2026-27/468",
-    "RBI/2026-27/230",
-    "RBI/2026-27/43"
+    "RBI/DoS/2026-27/464",
+    "RBI/2026-2027/11",
+    "RBI/DoS/2026-27/464",
+    "RBI/DoS/2026-27/461",
+    "RBI/2026-27/165",
+    "RBI/2026-27/164"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    2974,
-    3888,
+    2971,
     3084,
-    3206,
-    3880,
-    3208,
-    87,
-    5228
+    3182,
+    5812,
+    3180,
+    2880,
+    3889,
+    3884
    ],
-   "first_rank": 3,
+   "first_rank": 2,
    "entity": [
     "Non-Banking Financial Companies"
    ]
@@ -216,13 +216,13 @@
     "RBI/2025-26/171"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/466",
+    "RBI/DoS/2026-27/449",
     "RBI/DoS/2026-27/424",
     "RBI/DoS/2026-27/415",
-    "RBI/DoS/2026-27/458",
-    "RBI/DOR/2025-26/271",
-    "RBI/DOR/2025-26/151",
     "RBI/DoS/2026-27/433",
+    "RBI/DoS/2026-27/466",
+    "RBI/DoS/2026-27/442",
+    "RBI/DoS/2026-27/469",
     "RBI/DoS/2026-27/458"
    ],
    "hit": false,
@@ -230,14 +230,14 @@
    "family_hit": false,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    3137,
-    1203,
-    686,
-    2826,
-    7453,
-    8503,
-    1682,
-    2825
+    2424,
+    1207,
+    691,
+    1685,
+    3142,
+    2127,
+    3244,
+    2829
    ],
    "first_rank": null,
    "entity": null
@@ -249,30 +249,30 @@
     "RBI/DPSS/2026-27/401"
    ],
    "retrieved": [
+    "RBI/DPSS/2026-27/401",
+    "RBI/DPSS/2026-27/401",
     "RBI/DOR/2025-26/143",
     "RBI/DPSS/2026-27/401",
     "RBI/DPSS/2026-27/401",
-    "RBI/2025-26/180",
+    "RBI/DOR/2025-26/143",
     "RBI/2025-26/176",
-    "RBI/DOR/2025-26/143",
-    "RBI/2025-26/175",
-    "RBI/2025-26/173"
+    "RBI/2025-26/175"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": false,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    7769,
-    4325,
     4326,
-    6884,
-    6964,
+    4327,
+    7769,
+    4328,
+    4325,
     7770,
-    6943,
-    7007
+    6964,
+    6943
    ],
-   "first_rank": 2,
+   "first_rank": 1,
    "entity": null
   },
   {
@@ -284,26 +284,26 @@
    "retrieved": [
     "RBI/DOR/2026-27/397",
     "RBI/DOR/2025-26/151",
+    "RBI/DOR/2026-27/397",
+    "RBI/2026-27/164",
     "RBI/DOR/2025-26/151",
-    "RBI/DOR/2026-27/397",
     "RBI/DOR/2025-26/151",
-    "RBI/DOR/2026-27/397",
-    "RBI/DOR/2026-27/397",
-    "RBI/DOR/2025-26/151"
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2026-27/397"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
-   "chunk_hit": false,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
     5472,
     8505,
+    5657,
+    3886,
     8504,
-    5477,
-    8510,
-    5473,
-    5580,
-    8568
+    8806,
+    8792,
+    5580
    ],
    "first_rank": 2,
    "entity": null
@@ -316,29 +316,29 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/430",
-    "RBI/DoS/2026-27/451",
-    "RBI/DoS/2026-27/439",
-    "RBI/DoS/2026-27/463",
+    "RBI/DoS/2026-27/457",
     "RBI/DoS/2026-27/421",
-    "RBI/DoS/2026-27/430",
+    "RBI/DoS/2026-27/454",
     "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/421"
+    "RBI/DoS/2026-27/412",
+    "RBI/DoS/2026-27/439",
+    "RBI/DoS/2026-27/451"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
-   "chunk_hit": false,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
     1590,
-    2539,
-    2020,
-    3000,
+    2791,
     1060,
-    1589,
-    2281,
-    1059
+    2581,
+    2282,
+    537,
+    2020,
+    2539
    ],
-   "first_rank": 7,
+   "first_rank": 5,
    "entity": null
   },
   {
@@ -348,28 +348,28 @@
     "RBI/DOR/2025-26/122"
    ],
    "retrieved": [
-    "RBI/2026-27/103",
-    "RBI/2026-27/102",
-    "RBI/2026-27/106",
+    "RBI/FMRD/2026-27/407",
+    "RBI/DOR/2025-26/151",
     "RBI/2026-27/40",
+    "RBI/DOR/2025-26/151",
+    "RBI/2025-26/149",
+    "RBI/2025-26/150",
     "RBI/2025-26/153",
-    "RBI/2025-26/152",
-    "RBI/2025-26/151",
-    "RBI/2025-26/150"
+    "RBI/2025-26/149"
    ],
    "hit": false,
    "both_docs": false,
    "family_hit": false,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    4827,
-    4823,
-    4813,
+    3594,
+    8322,
     5269,
+    8345,
+    7165,
+    7156,
     7121,
-    7138,
-    7143,
-    7152
+    7161
    ],
    "first_rank": null,
    "entity": null
@@ -381,30 +381,30 @@
     "RBI/DoS/2026-27/431"
    ],
    "retrieved": [
-    "RBI/DOR/2025-26/151",
-    "RBI/DoS/2026-27/436",
-    "RBI/DoS/2026-27/426",
-    "RBI/DoS/2026-27/408",
-    "RBI/DoS/2026-27/417",
-    "RBI/DoS/2026-27/444",
-    "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/461"
+    "RBI/DoS/2026-27/422",
+    "RBI/DoS/2026-27/431",
+    "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/464",
+    "RBI/DoS/2026-27/464",
+    "RBI/DoS/2026-27/440",
+    "RBI/DoS/2026-27/413",
+    "RBI/DoS/2026-27/440"
    ],
-   "hit": false,
-   "both_docs": false,
-   "family_hit": false,
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    8941,
-    1801,
-    1311,
-    282,
-    807,
-    2166,
-    2293,
-    2917
+    1085,
+    1540,
+    2307,
+    3185,
+    3192,
+    2080,
+    562,
+    2087
    ],
-   "first_rank": null,
+   "first_rank": 2,
    "entity": null
   },
   {
@@ -418,10 +418,10 @@
     "RBI/DoS/2026-27/460",
     "RBI/DoS/2026-27/460",
     "RBI/DoS/2026-27/460",
-    "RBI/DoS/2026-27/461",
     "RBI/DoS/2026-27/460",
     "RBI/DoS/2026-27/460",
-    "RBI/DoS/2026-27/463"
+    "RBI/DoS/2026-27/460",
+    "RBI/DoS/2026-27/460"
    ],
    "hit": true,
    "both_docs": true,
@@ -429,13 +429,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     2861,
-    2860,
     2863,
-    2862,
-    2902,
     2864,
+    2860,
     2859,
-    2994
+    2870,
+    2858,
+    2871
    ],
    "first_rank": 1,
    "entity": [
@@ -449,28 +449,28 @@
     "RBI/DoS/2026-27/431"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/440",
-    "RBI/DoS/2026-27/464",
     "RBI/DoS/2026-27/464",
     "RBI/DoS/2026-27/440",
-    "RBI/DOR/2025-26/151",
-    "RBI/DoS/2026-27/435",
-    "RBI/DoS/2026-27/460",
-    "RBI/DOR/2025-26/151"
+    "RBI/DoS/2026-27/464",
+    "RBI/DoS/2026-27/440",
+    "RBI/DoS/2026-27/422",
+    "RBI/DoS/2026-27/464",
+    "RBI/DoS/2026-27/413",
+    "RBI/DoS/2026-27/447"
    ],
    "hit": false,
    "both_docs": false,
    "family_hit": true,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    2084,
-    3189,
     3192,
     2087,
-    8930,
-    1762,
-    2865,
-    8941
+    3193,
+    2088,
+    1087,
+    3195,
+    564,
+    2309
    ],
    "first_rank": null,
    "entity": null
@@ -482,28 +482,28 @@
     "RBI/DoS/2026-27/423"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/457",
+    "RBI/DoS/2026-27/459",
+    "RBI/DoS/2026-27/456",
     "RBI/DoS/2026-27/458",
-    "RBI/FMRD/2024-25/127",
+    "RBI/DoS/2026-27/457",
     "RBI/DoS/2026-27/456",
     "RBI/DoS/2026-27/459",
-    "RBI/FMRD/2024-25/127",
-    "RBI/CEPD/2025-26/385",
-    "RBI/CEPD/2025-26/385"
+    "RBI/DoS/2026-27/457",
+    "RBI/DoS/2026-27/458"
    ],
    "hit": false,
    "both_docs": false,
    "family_hit": false,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    2763,
-    2812,
-    9233,
-    2651,
     2840,
-    9237,
-    6652,
-    6653
+    2651,
+    2812,
+    2763,
+    2650,
+    2839,
+    2762,
+    2811
    ],
    "first_rank": null,
    "entity": [
@@ -518,13 +518,13 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/454",
+    "RBI/DoS/2026-27/454",
+    "RBI/2026-27/77",
     "RBI/DoS/2026-27/455",
     "RBI/DoS/2026-27/454",
     "RBI/DoS/2026-27/454",
-    "RBI/2026-27/171",
     "RBI/DoS/2026-27/454",
-    "RBI/2026-27/171",
-    "RBI/DoS/2026-27/454"
+    "RBI/2025-26/390"
    ],
    "hit": true,
    "both_docs": true,
@@ -532,13 +532,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     2588,
+    2593,
+    5066,
     2645,
-    2563,
-    2562,
-    3721,
+    2578,
+    2555,
     2553,
-    3707,
-    2554
+    6283
    ],
    "first_rank": 1,
    "entity": [
@@ -569,11 +569,11 @@
     7387,
     7961,
     7465,
-    7962,
-    7960,
     7967,
+    7960,
+    7962,
     7891,
-    7965
+    7966
    ],
    "first_rank": 2,
    "entity": null
@@ -599,14 +599,14 @@
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    8987,
-    9189,
-    9195,
+    9220,
     9212,
-    9168,
+    9198,
+    9200,
+    9182,
+    9167,
     9215,
-    9188,
-    9162
+    9168
    ],
    "first_rank": 1,
    "entity": null
@@ -618,30 +618,30 @@
     "RBI/DoS/2026-27/432"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/425",
-    "RBI/DoS/2026-27/416",
-    "RBI/DoS/2026-27/427",
-    "RBI/DoS/2026-27/409",
-    "RBI/DoS/2026-27/445",
-    "RBI/DoS/2026-27/418",
-    "RBI/DoS/2026-27/434",
-    "RBI/DoS/2026-27/450"
+    "RBI/DoS/2026-27/432",
+    "RBI/DoS/2026-27/448",
+    "RBI/DoS/2026-27/423",
+    "RBI/DoS/2026-27/441",
+    "RBI/DoS/2026-27/432",
+    "RBI/DoS/2026-27/414",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/423"
    ],
-   "hit": false,
-   "both_docs": false,
-   "family_hit": false,
-   "chunk_hit": false,
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
-    1230,
-    724,
-    1328,
-    299,
-    2183,
-    944,
-    1704,
-    2447
+    1633,
+    2365,
+    1142,
+    2065,
+    1616,
+    607,
+    1788,
+    1123
    ],
-   "first_rank": null,
+   "first_rank": 1,
    "entity": null
   },
   {
@@ -654,11 +654,11 @@
     "RBI/DoS/2026-27/416",
     "RBI/DoS/2026-27/467",
     "RBI/DoS/2026-27/443",
-    "RBI/2026-27/123",
-    "RBI/2026-27/122",
-    "RBI/2026-27/122",
-    "RBI/2026-27/123",
-    "RBI/2026-27/123"
+    "RBI/DoS/2026-27/416",
+    "RBI/DoS/2026-27/443",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/145",
+    "RBI/DoS/2026-27/461"
    ],
    "hit": true,
    "both_docs": true,
@@ -668,11 +668,11 @@
     707,
     3162,
     2206,
-    4497,
-    4475,
-    4458,
-    4514,
-    4516
+    708,
+    2208,
+    8912,
+    7844,
+    2916
    ],
    "first_rank": 2,
    "entity": null
@@ -684,30 +684,30 @@
     "RBI/DoS/2026-27/423"
    ],
    "retrieved": [
-    "RBI/DOR/2025-26/151",
     "RBI/DOR/2025-26/319",
-    "RBI/DoS/2026-27/410",
-    "RBI/DoS/2026-27/428",
-    "RBI/DoS/2026-27/419",
-    "RBI/DoS/2026-27/413",
-    "RBI/DoS/2026-27/447",
-    "RBI/DoS/2026-27/431"
+    "RBI/DoS/2026-27/432",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/423",
+    "RBI/DOR/2025-26/148",
+    "RBI/DoS/2026-27/448",
+    "RBI/DoS/2026-27/414",
+    "RBI/DOR/2025-26/148"
    ],
-   "hit": false,
-   "both_docs": false,
-   "family_hit": false,
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    9057,
     7509,
-    404,
-    1432,
-    909,
-    567,
-    2321,
-    1554
+    1647,
+    1799,
+    1160,
+    8053,
+    2383,
+    644,
+    8052
    ],
-   "first_rank": null,
+   "first_rank": 4,
    "entity": null
   },
   {
@@ -718,12 +718,12 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/461",
-    "RBI/DoS/2026-27/470",
-    "RBI/DoS/2026-27/428",
     "RBI/DoS/2026-27/419",
+    "RBI/DoS/2026-27/470",
+    "RBI/DoS/2026-27/437",
     "RBI/DoS/2026-27/456",
     "RBI/DoS/2026-27/410",
-    "RBI/DoS/2026-27/461",
+    "RBI/DoS/2026-27/428",
     "RBI/DoS/2026-27/438"
    ],
    "hit": true,
@@ -731,16 +731,16 @@
    "family_hit": true,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    2957,
-    3338,
-    1431,
-    908,
-    2725,
-    403,
-    2956,
-    1949
+    2959,
+    872,
+    3311,
+    1883,
+    2698,
+    367,
+    1395,
+    1951
    ],
-   "first_rank": 4,
+   "first_rank": 2,
    "entity": null
   },
   {
@@ -750,28 +750,28 @@
     "RBI/DoS/2026-27/470"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/439",
-    "RBI/DoS/2026-27/412",
-    "RBI/DoS/2026-27/454",
-    "RBI/DoS/2026-27/451",
-    "RBI/DoS/2026-27/421",
-    "RBI/DoS/2026-27/443",
-    "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/463"
+    "RBI/DOR/2026-27/398",
+    "RBI/DoS/2026-27/455",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/453",
+    "RBI/DoS/2026-27/467",
+    "RBI/DoS/2026-27/416",
+    "RBI/DoS/2026-27/425",
+    "RBI/DoS/2026-27/450"
    ],
    "hit": false,
    "both_docs": false,
    "family_hit": false,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    2028,
-    548,
-    2585,
-    2543,
-    1070,
-    2217,
-    2292,
-    3009
+    5441,
+    2642,
+    1794,
+    2632,
+    3158,
+    717,
+    1223,
+    2442
    ],
    "first_rank": null,
    "entity": null
@@ -783,30 +783,30 @@
     "RBI/CEPD/2025-26/381"
    ],
    "retrieved": [
-    "RBI/CEPD/2025-26/386",
+    "RBI/CEPD/2025-26/381",
+    "RBI/CEPD/2025-26/382",
+    "RBI/CEPD/2025-26/385",
     "RBI/CEPD/2025-26/384",
     "RBI/CEPD/2025-26/386",
     "RBI/CEPD/2025-26/383",
-    "RBI/CEPD/2025-26/382",
     "RBI/CEPD/2025-26/384",
-    "RBI/CEPD/2025-26/386",
     "RBI/CEPD/2025-26/386"
    ],
-   "hit": false,
-   "both_docs": false,
+   "hit": true,
+   "both_docs": true,
    "family_hit": true,
-   "chunk_hit": false,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
-    6624,
-    6687,
-    6621,
-    6721,
-    6755,
-    6686,
-    6620,
-    6628
+    6792,
+    6757,
+    6654,
+    6688,
+    6622,
+    6723,
+    6689,
+    6623
    ],
-   "first_rank": null,
+   "first_rank": 1,
    "entity": null
   },
   {
@@ -817,29 +817,29 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/412",
+    "RBI/DoR/2025-26/152",
+    "RBI/DoS/2026-27/410",
     "RBI/DoR/2025-26/146",
-    "RBI/DoS/2026-27/408",
+    "RBI/DoS/2026-27/414",
     "RBI/DoS/2026-27/415",
-    "RBI/DoS/2026-27/411",
-    "RBI/DOR/2025-26/150",
-    "RBI/DoS/2026-27/409",
-    "RBI/DoS/2026-27/413"
+    "RBI/DoS/2026-27/408",
+    "RBI/DOR/2025-26/149"
    ],
-   "hit": false,
-   "both_docs": false,
-   "family_hit": false,
-   "chunk_hit": false,
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
     509,
+    8252,
+    318,
     7853,
-    253,
+    593,
     667,
-    440,
-    8187,
-    300,
-    560
+    253,
+    8086
    ],
-   "first_rank": null,
+   "first_rank": 2,
    "entity": [
     "Commercial Banks"
    ]
@@ -852,13 +852,13 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/424",
-    "RBI/DoS/2026-27/415",
     "RBI/DoS/2026-27/433",
     "RBI/DoS/2026-27/449",
-    "RBI/DoS/2026-27/466",
-    "RBI/DoS/2026-27/442",
-    "RBI/DoS/2026-27/469",
-    "RBI/DoS/2026-27/458"
+    "RBI/DoS/2026-27/415",
+    "RBI/DoS/2026-27/458",
+    "RBI/DoS/2026-27/419",
+    "RBI/DoS/2026-27/428",
+    "RBI/DoS/2026-27/410"
    ],
    "hit": true,
    "both_docs": true,
@@ -866,13 +866,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     1186,
-    669,
     1671,
     2408,
-    3125,
-    2110,
-    3233,
-    2814
+    669,
+    2814,
+    854,
+    1377,
+    349
    ],
    "first_rank": 1,
    "entity": null
@@ -885,13 +885,13 @@
    ],
    "retrieved": [
     "RBI/2026-27/150",
+    "RBI/DPSS/2026-27/396",
+    "RBI/DoS/2026-27/429",
     "RBI/DoS/2026-27/411",
     "RBI/DoS/2026-27/420",
     "RBI/DoS/2026-27/429",
     "RBI/DoS/2026-27/429",
-    "RBI/DoS/2026-27/411",
-    "RBI/DoS/2026-27/420",
-    "RBI/DoS/2026-27/462"
+    "RBI/DoS/2026-27/411"
    ],
    "hit": true,
    "both_docs": true,
@@ -899,13 +899,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     4218,
-    477,
-    1000,
-    1505,
+    5784,
+    1508,
+    480,
+    1003,
+    1475,
     1477,
-    449,
-    972,
-    3027
+    447
    ],
    "first_rank": 1,
    "entity": null
@@ -917,30 +917,30 @@
     "RBI/2025-26/391"
    ],
    "retrieved": [
-    "RBI/2025-26/388",
-    "RBI/2025-26/391",
     "RBI/2025-26/390",
-    "RBI/2025-26/389",
     "RBI/2025-26/387",
-    "RBI/2025-26/226",
-    "RBI/2026-27/80",
-    "RBI/2026-27/35"
+    "RBI/2025-26/391",
+    "RBI/2025-26/389",
+    "RBI/2025-26/388",
+    "RBI/2025-26/387",
+    "RBI/2025-26/389",
+    "RBI/2025-26/388"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    6325,
-    6256,
     6274,
-    6301,
     6346,
-    6382,
-    4917,
-    5679
+    6256,
+    6301,
+    6325,
+    6348,
+    6303,
+    6327
    ],
-   "first_rank": 2,
+   "first_rank": 3,
    "entity": null
   },
   {
@@ -953,11 +953,11 @@
     "RBI/DoS/2026-27/425",
     "RBI/DoS/2026-27/425",
     "RBI/DoS/2026-27/425",
-    "RBI/DoS/2026-27/422",
     "RBI/DoS/2026-27/425",
     "RBI/DoS/2026-27/425",
+    "RBI/DoS/2026-27/425",
     "RBI/DoS/2026-27/422",
-    "RBI/DoS/2026-27/425"
+    "RBI/DoS/2026-27/418"
    ],
    "hit": true,
    "both_docs": true,
@@ -965,13 +965,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     1265,
+    1268,
+    1262,
     1260,
-    1261,
-    1080,
     1249,
-    1248,
+    1261,
     1108,
-    1262
+    944
    ],
    "first_rank": 1,
    "entity": [
@@ -985,30 +985,30 @@
     "RBI/DoS/2026-27/446"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/450",
-    "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/446",
     "RBI/DoS/2026-27/449",
-    "RBI/DoS/2026-27/444",
-    "RBI/DoS/2026-27/450",
-    "RBI/DoS/2026-27/445",
-    "RBI/DoS/2026-27/447"
+    "RBI/DoS/2026-27/449",
+    "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/446",
+    "RBI/2026-27/170",
+    "RBI/DoS/2026-27/446"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    2477,
+    2409,
+    2411,
+    2328,
     2252,
     2290,
-    2406,
-    2138,
-    2435,
-    2184,
-    2304
+    2282,
+    3752,
+    2283
    ],
-   "first_rank": 2,
+   "first_rank": 4,
    "entity": [
     "Local Area Banks"
    ]
@@ -1022,11 +1022,11 @@
    "retrieved": [
     "RBI/2026-27/99",
     "RBI/2026-27/99",
-    "RBI/2026-27/102",
-    "RBI/2026-27/103",
-    "RBI/2026-27/104",
     "RBI/2026-27/99",
+    "RBI/2026-27/103",
     "RBI/2026-27/106",
+    "RBI/2026-27/102",
+    "RBI/2026-27/104",
     "RBI/2026-27/105"
    ],
    "hit": true,
@@ -1036,14 +1036,14 @@
    "retrieved_chunk_ids": [
     4835,
     4836,
-    4820,
-    4824,
-    4817,
     4840,
+    4824,
     4810,
+    4820,
+    4817,
     4814
    ],
-   "first_rank": 7,
+   "first_rank": 5,
    "entity": null
   },
   {
@@ -1057,24 +1057,24 @@
     "RBI/CEPD/2025-26/381",
     "RBI/CEPD/2025-26/381",
     "RBI/CEPD/2025-26/381",
+    "RBI/CEPD/2025-26/381",
     "RBI/CEPD/2025-26/385",
     "RBI/CEPD/2025-26/381",
-    "RBI/DoS/2026-27/443",
-    "RBI/DOR/2025-26/149"
+    "RBI/CEPD/2025-26/381"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
-   "chunk_hit": false,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
-    6790,
-    6785,
-    6784,
+    6795,
     6792,
-    6680,
-    6818,
-    2219,
-    8113
+    6802,
+    6790,
+    6805,
+    6654,
+    6808,
+    6785
    ],
    "first_rank": 1,
    "entity": [
@@ -1089,13 +1089,13 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/423",
-    "RBI/DoS/2026-27/421",
-    "RBI/DoS/2026-27/421",
-    "RBI/2026-27/210",
+    "RBI/DoS/2026-27/423",
+    "RBI/DoS/2026-27/423",
+    "RBI/DoS/2026-27/423",
     "RBI/DoS/2026-27/425",
-    "RBI/2026-27/116",
     "RBI/DoS/2026-27/421",
-    "RBI/2025-26/149"
+    "RBI/DoS/2026-27/417",
+    "RBI/DoS/2026-27/421"
    ],
    "hit": true,
    "both_docs": true,
@@ -1103,13 +1103,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     1148,
-    1050,
-    1049,
-    3410,
+    1158,
+    1170,
+    1165,
     1242,
-    4694,
-    1064,
-    7162
+    1050,
+    816,
+    1049
    ],
    "first_rank": 1,
    "entity": [
@@ -1124,13 +1124,13 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/436",
-    "RBI/DoS/2026-27/436",
-    "RBI/DoS/2026-27/436",
-    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/441",
+    "RBI/DoS/2026-27/441",
     "RBI/DoS/2026-27/441",
     "RBI/DoS/2026-27/436",
     "RBI/DoS/2026-27/441",
-    "RBI/DoS/2026-27/436"
+    "RBI/DoS/2026-27/441",
+    "RBI/DoS/2026-27/441"
    ],
    "hit": true,
    "both_docs": true,
@@ -1138,13 +1138,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     1800,
-    1786,
-    1787,
-    1799,
     2064,
-    1779,
     2063,
-    1785
+    2046,
+    1796,
+    2057,
+    2058,
+    2062
    ],
    "first_rank": 1,
    "entity": [
@@ -1163,9 +1163,9 @@
     "RBI/2025-26/228",
     "RBI/2026-2027/231",
     "RBI/2026-27/124",
-    "RBI/FIDD/2025-26/196",
-    "RBI/DoS/2026-27/443",
-    "RBI/2026-27/82"
+    "RBI/2026-2027/231",
+    "RBI/2026-27/124",
+    "RBI/2025-26/228"
    ],
    "hit": true,
    "both_docs": true,
@@ -1174,12 +1174,12 @@
    "retrieved_chunk_ids": [
     4406,
     28,
-    6383,
+    6384,
     30,
     4408,
-    6585,
-    2245,
-    4903
+    29,
+    4407,
+    6383
    ],
    "first_rank": 1,
    "entity": [
@@ -1197,24 +1197,24 @@
     "RBI/2026-2027/228",
     "RBI/2026-2027/228",
     "RBI/2026-2027/228",
-    "RBI/DoS/2026-27/452",
     "RBI/2026-2027/228",
     "RBI/2026-2027/228",
-    "RBI/DoS/2026-27/451"
+    "RBI/2026-2027/228",
+    "RBI/2026-2027/228"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
-   "chunk_hit": false,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
-    2,
-    1,
-    0,
+    21,
+    23,
     24,
-    2598,
-    26,
     20,
-    2513
+    2,
+    5,
+    9,
+    7
    ],
    "first_rank": 1,
    "entity": [
@@ -1229,12 +1229,12 @@
    ],
    "retrieved": [
     "RBI/2025-26/388",
+    "RBI/2025-26/391",
+    "RBI/2025-26/389",
     "RBI/2025-26/390",
-    "RBI/2025-26/389",
-    "RBI/2025-26/391",
     "RBI/2025-26/387",
-    "RBI/2025-26/389",
     "RBI/2025-26/391",
+    "RBI/2025-26/390",
     "RBI/2025-26/388"
    ],
    "hit": true,
@@ -1243,12 +1243,12 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     6326,
-    6275,
-    6302,
     6257,
+    6302,
+    6275,
     6347,
-    6303,
     6258,
+    6276,
     6327
    ],
    "first_rank": 1,
@@ -1262,13 +1262,13 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/450",
-    "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/448",
-    "RBI/DoS/2026-27/450",
     "RBI/DoS/2026-27/450",
     "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/445",
     "RBI/DoS/2026-27/448",
-    "RBI/DoS/2026-27/450"
+    "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/448",
+    "RBI/DoS/2026-27/448"
    ],
    "hit": true,
    "both_docs": true,
@@ -1276,13 +1276,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     2497,
-    2271,
-    2337,
     2498,
-    2447,
-    2303,
+    2304,
+    2184,
     2399,
-    2477
+    2303,
+    2389,
+    2381
    ],
    "first_rank": 1,
    "entity": [
@@ -1296,30 +1296,30 @@
     "RBI/DoS/2026-27/447"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/450",
-    "RBI/DoS/2026-27/450",
-    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/445",
+    "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/447",
+    "RBI/DoS/2026-27/445",
     "RBI/DoS/2026-27/447",
     "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/445",
-    "RBI/DoS/2026-27/450"
+    "RBI/DoS/2026-27/448"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
-   "chunk_hit": false,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
-    2477,
-    2447,
-    2253,
-    2320,
-    2252,
-    2300,
+    2325,
     2187,
-    2450
+    2316,
+    2317,
+    2195,
+    2320,
+    2293,
+    2398
    ],
-   "first_rank": 4,
+   "first_rank": 1,
    "entity": [
     "Local Area Banks"
    ]
@@ -1332,12 +1332,12 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/450",
-    "RBI/DoS/2026-27/446",
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/450",
+    "RBI/DoS/2026-27/448",
     "RBI/DoS/2026-27/447",
     "RBI/DoS/2026-27/450",
-    "RBI/DoS/2026-27/446",
-    "RBI/DoS/2026-27/448",
-    "RBI/DoS/2026-27/448",
+    "RBI/DoS/2026-27/445",
     "RBI/DoS/2026-27/450"
    ],
    "hit": true,
@@ -1346,13 +1346,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     2436,
-    2253,
-    2303,
-    2481,
-    2252,
-    2338,
-    2337,
-    2497
+    2497,
+    2437,
+    2396,
+    2304,
+    2498,
+    2184,
+    2490
    ],
    "first_rank": 1,
    "entity": [
@@ -1371,9 +1371,9 @@
     "RBI/DoS/2026-27/440",
     "RBI/DoS/2026-27/442",
     "RBI/DoS/2026-27/435",
-    "RBI/DoS/2026-27/443",
-    "RBI/DOR/2025-26/120",
-    "RBI/DoS/2026-27/439"
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/436",
+    "RBI/DoS/2026-27/438"
    ],
    "hit": true,
    "both_docs": true,
@@ -1385,9 +1385,9 @@
     2102,
     2132,
     1773,
-    2247,
-    7582,
-    1994
+    1782,
+    1796,
+    1987
    ],
    "first_rank": 1,
    "entity": [
@@ -1402,13 +1402,13 @@
    ],
    "retrieved": [
     "RBI/2026-27/179",
+    "RBI/2026-27/179",
+    "RBI/DoS/2026-27/430",
+    "RBI/DoS/2026-27/430",
     "RBI/DoS/2026-27/430",
     "RBI/DoS/2026-27/426",
     "RBI/DoS/2026-27/430",
-    "RBI/DoS/2026-27/431",
-    "RBI/DoS/2026-27/430",
-    "RBI/DoS/2026-27/432",
-    "RBI/DoS/2026-27/428"
+    "RBI/DoS/2026-27/433"
    ],
    "hit": true,
    "both_docs": true,
@@ -1416,15 +1416,15 @@
    "chunk_hit": false,
    "retrieved_chunk_ids": [
     3562,
-    1575,
-    1285,
+    3563,
     1581,
-    1558,
+    1575,
     1579,
-    1612,
-    1367
+    1285,
+    1580,
+    1671
    ],
-   "first_rank": 2,
+   "first_rank": 3,
    "entity": [
     "Payments Banks"
    ]
@@ -1437,13 +1437,13 @@
    ],
    "retrieved": [
     "RBI/DOR/2025-26/296",
-    "RBI/DoS/2026-27/451",
-    "RBI/DOR/2025-26/319",
-    "RBI/DoS/2026-27/453",
+    "RBI/DOR/2025-26/296",
+    "RBI/DOR/2025-26/296",
+    "RBI/DOR/2025-26/296",
     "RBI/DoS/2026-27/452",
+    "RBI/2026-27/173",
     "RBI/2026-27/121",
-    "RBI/FIDD/2026-27/405",
-    "RBI/DOR/2025-26/296"
+    "RBI/2025-26/109"
    ],
    "hit": true,
    "both_docs": true,
@@ -1451,13 +1451,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     7363,
-    2513,
-    7478,
-    2630,
-    2598,
+    7364,
+    7375,
+    7369,
+    2595,
+    3639,
     4409,
-    4061,
-    7360
+    7646
    ],
    "first_rank": 1,
    "entity": [
@@ -1486,13 +1486,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     2990,
-    3009,
-    3010,
-    3063,
+    2991,
     2992,
-    2983,
-    3001,
-    3053
+    3053,
+    3009,
+    2984,
+    2978,
+    3055
    ],
    "first_rank": 1,
    "entity": [
@@ -1507,13 +1507,13 @@
    ],
    "retrieved": [
     "RBI/DoS/2026-27/440",
+    "RBI/DoS/2026-27/435",
     "RBI/DoS/2026-27/436",
-    "RBI/DoS/2026-27/439",
-    "RBI/DoS/2026-27/439",
-    "RBI/DoS/2026-27/443",
     "RBI/DoS/2026-27/440",
-    "RBI/DoS/2026-27/442",
-    "RBI/DoS/2026-27/439"
+    "RBI/DoS/2026-27/435",
+    "RBI/DoS/2026-27/440",
+    "RBI/DoS/2026-27/437",
+    "RBI/DoS/2026-27/435"
    ],
    "hit": true,
    "both_docs": true,
@@ -1521,13 +1521,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     2089,
-    1785,
-    2011,
-    2029,
-    2211,
-    2099,
-    2112,
-    2003
+    1758,
+    1779,
+    2090,
+    1753,
+    2085,
+    1919,
+    1760
    ],
    "first_rank": 1,
    "entity": [
@@ -1556,13 +1556,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     3267,
-    3269,
-    3266,
-    3265,
-    3352,
-    3350,
     3348,
-    3296
+    3266,
+    3277,
+    3269,
+    3352,
+    3343,
+    3346
    ],
    "first_rank": 1,
    "entity": [
@@ -1576,30 +1576,30 @@
     "RBI/2025-26/159"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/447",
-    "RBI/DoS/2026-27/445",
-    "RBI/DoS/2026-27/449",
     "RBI/DoS/2026-27/450",
-    "RBI/DoS/2026-27/444",
-    "RBI/2026-27/194",
-    "RBI/2025-26/159",
-    "RBI/2025-26/389"
+    "RBI/2026-27/180",
+    "RBI/2025-26/106",
+    "RBI/2026-27/118",
+    "RBI/2026-27/170",
+    "RBI/2026-27/53",
+    "RBI/2026-27/86",
+    "RBI/2026-27/194"
    ],
-   "hit": true,
-   "both_docs": true,
-   "family_hit": true,
-   "chunk_hit": true,
+   "hit": false,
+   "both_docs": false,
+   "family_hit": false,
+   "chunk_hit": false,
    "retrieved_chunk_ids": [
-    2304,
-    2184,
-    2406,
-    2435,
-    2138,
-    3475,
-    7104,
-    6300
+    2444,
+    3554,
+    7673,
+    4559,
+    3742,
+    5174,
+    4893,
+    3475
    ],
-   "first_rank": 7,
+   "first_rank": null,
    "entity": [
     "Local Area Banks"
    ]
@@ -1613,13 +1613,13 @@
    ],
    "retrieved": [
     "RBI/2025-26/263",
-    "RBI/2026-27/76",
-    "RBI/2026-27/77",
-    "RBI/2026-27/179",
-    "RBI/2025-26/194",
-    "RBI/DoS/2026-27/458",
-    "RBI/2026-27/16",
-    "RBI/DoS/2026-27/469"
+    "RBI/2026-27/68",
+    "RBI/2026-27/52",
+    "RBI/2026-27/72",
+    "RBI/2026-27/64",
+    "RBI/2026-27/48",
+    "RBI/2026-27/56",
+    "RBI/2026-27/44"
    ],
    "hit": true,
    "both_docs": false,
@@ -1627,13 +1627,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     6055,
-    5087,
-    5065,
-    3559,
-    6596,
-    2810,
-    5779,
-    3229
+    5125,
+    5205,
+    5040,
+    5109,
+    5189,
+    5158,
+    5252
    ],
    "first_rank": 1,
    "entity": null
@@ -1646,30 +1646,30 @@
     "RBI/2026-27/54"
    ],
    "retrieved": [
+    "RBI/2026-27/70",
+    "RBI/2026-27/71",
     "RBI/2026-27/72",
-    "RBI/2026-27/44",
-    "RBI/2026-27/52",
-    "RBI/2026-27/56",
     "RBI/2026-27/68",
     "RBI/2026-27/75",
     "RBI/2026-27/48",
-    "RBI/2025-26/180"
+    "RBI/2026-27/64",
+    "RBI/2026-27/44"
    ],
-   "hit": false,
+   "hit": true,
    "both_docs": false,
-   "family_hit": false,
-   "chunk_hit": false,
+   "family_hit": true,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
+    5068,
+    5055,
     5037,
-    5249,
-    5202,
-    5155,
     5122,
     5026,
     5186,
-    6901
+    5106,
+    5249
    ],
-   "first_rank": null,
+   "first_rank": 1,
    "entity": null
   },
   {
@@ -1680,28 +1680,28 @@
     "RBI/2026-27/187"
    ],
    "retrieved": [
-    "RBI/DoS/2026-27/416",
-    "RBI/DoS/2026-27/425",
-    "RBI/DoS/2026-27/450",
-    "RBI/DOR/2025-26/147",
-    "RBI/DOR/2025-26/296",
     "RBI/DOR/2026-27/397",
-    "RBI/2026-27/109",
-    "RBI/DOR/2025-26/151"
+    "RBI/DoS/2026-27/425",
+    "RBI/DoS/2026-27/416",
+    "RBI/DoS/2026-27/450",
+    "RBI/DOR/2026-27/397",
+    "RBI/DOR/2025-26/151",
+    "RBI/DoR/2026-27/126",
+    "RBI/DoR/2026-27/127"
    ],
    "hit": false,
    "both_docs": false,
    "family_hit": false,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    730,
+    5524,
     1236,
+    730,
     2450,
-    7914,
-    7388,
-    5517,
-    4782,
-    8502
+    5518,
+    8300,
+    4395,
+    4388
    ],
    "first_rank": null,
    "entity": null
@@ -1716,26 +1716,26 @@
    "retrieved": [
     "RBI/2026-27/124",
     "RBI/2026-27/124",
+    "RBI/2026-27/124",
+    "RBI/2026-2027/231",
+    "RBI/2026-2027/231",
     "RBI/2026-2027/231",
     "RBI/2025-26/228",
-    "RBI/2026-2027/231",
-    "RBI/2025-26/194",
-    "RBI/2026-2027/231",
-    "RBI/2026-27/124"
+    "RBI/2025-26/228"
    ],
    "hit": true,
    "both_docs": false,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
+    4407,
     4408,
     4406,
-    30,
-    6383,
-    28,
-    6597,
     29,
-    4407
+    30,
+    28,
+    6383,
+    6385
    ],
    "first_rank": 1,
    "entity": [
@@ -1751,13 +1751,13 @@
    ],
    "retrieved": [
     "RBI/CEPD/2025-26/384",
-    "RBI/CEPD/2025-26/385",
-    "RBI/CEPD/2025-26/385",
     "RBI/CEPD/2025-26/384",
-    "RBI/2026-27/230",
     "RBI/CEPD/2025-26/384",
     "RBI/CEPD/2025-26/385",
-    "RBI/2026-27/165"
+    "RBI/CEPD/2025-26/384",
+    "RBI/CEPD/2025-26/384",
+    "RBI/CEPD/2025-26/384",
+    "RBI/CEPD/2025-26/385"
    ],
    "hit": true,
    "both_docs": true,
@@ -1765,13 +1765,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     6681,
+    6699,
+    6707,
     6647,
-    6648,
-    6682,
-    87,
+    6710,
+    6708,
     6714,
-    6680,
-    3888
+    6680
    ],
    "first_rank": 1,
    "entity": [
@@ -1786,28 +1786,28 @@
     "RBI/2026-27/37"
    ],
    "retrieved": [
-    "RBI/2026-27/37",
     "RBI/FMRD/2024-25/127",
     "RBI/FMRD/2024-25/127",
     "RBI/FMRD/2024-25/127",
     "RBI/FMRD/2024-25/127",
     "RBI/FMRD/2024-25/127",
-    "RBI/2026-27/37",
-    "RBI/FMRD/2024-25/127"
+    "RBI/FMRD/2024-25/127",
+    "RBI/FMRD/2024-25/127",
+    "RBI/2026-27/37"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    5291,
-    9239,
-    9242,
     9238,
-    9240,
+    9237,
     9236,
-    5292,
-    9237
+    9242,
+    9239,
+    9232,
+    9240,
+    5291
    ],
    "first_rank": 1,
    "entity": null
@@ -1820,30 +1820,30 @@
     "RBI/2025-26/174"
    ],
    "retrieved": [
-    "RBI/2025-26/182",
-    "RBI/2025-26/219",
+    "RBI/2025-26/127",
+    "RBI/2025-26/198",
     "RBI/DOR/2026-27/213",
     "RBI/2025-26/262",
-    "RBI/2026-27/196",
-    "RBI/2026-27/51",
-    "RBI/2025-26/262",
-    "RBI/2026-27/48"
+    "RBI/2025-26/219",
+    "RBI/2025-26/261",
+    "RBI/2025-26/182",
+    "RBI/2025-26/262"
    ],
    "hit": true,
    "both_docs": false,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    6873,
-    6415,
-    3389,
-    6059,
-    3471,
-    5147,
+    7557,
+    6561,
+    3390,
     6063,
-    5201
+    6419,
+    6066,
+    6873,
+    6059
    ],
-   "first_rank": 1,
+   "first_rank": 7,
    "entity": [
     "Small Finance Banks"
    ]
@@ -1856,8 +1856,8 @@
     "RBI/DoS/2026-27/461"
    ],
    "retrieved": [
+    "RBI/DoS/2026-27/429",
     "RBI/DoS/2026-27/428",
-    "RBI/DoS/2026-27/461",
     "RBI/DoS/2026-27/462",
     "RBI/DoS/2026-27/462",
     "RBI/DoS/2026-27/462",
@@ -1866,20 +1866,20 @@
     "RBI/DoS/2026-27/462"
    ],
    "hit": true,
-   "both_docs": true,
+   "both_docs": false,
    "family_hit": true,
-   "chunk_hit": false,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
-    1347,
-    2879,
-    3040,
-    3057,
-    3037,
-    3060,
-    3019,
-    3048
+    1470,
+    1349,
+    3022,
+    3021,
+    3032,
+    3048,
+    3020,
+    3075
    ],
-   "first_rank": 1,
+   "first_rank": 2,
    "entity": [
     "Payments Banks",
     "Non-Banking Financial Companies"
@@ -1893,30 +1893,30 @@
     "RBI/2026-27/121"
    ],
    "retrieved": [
+    "RBI/2026-27/121",
+    "RBI/2026-27/120",
+    "RBI/2026-2027/228",
     "RBI/DoS/2026-27/453",
     "RBI/DOR/2025-26/319",
-    "RBI/DoS/2026-27/436",
-    "RBI/DoS/2026-27/452",
-    "RBI/DOR/2025-26/271",
-    "RBI/DoS/2026-27/451",
-    "RBI/DoS/2026-27/438",
-    "RBI/DoS/2026-27/439"
+    "RBI/2026-27/173",
+    "RBI/DoS/2026-27/435",
+    "RBI/2026-27/227"
    ],
-   "hit": false,
-   "both_docs": false,
-   "family_hit": false,
-   "chunk_hit": false,
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
-    2630,
-    7478,
-    1782,
-    2598,
-    7407,
-    2513,
-    1926,
-    1994
+    4409,
+    4522,
+    0,
+    2634,
+    7533,
+    3639,
+    1773,
+    144
    ],
-   "first_rank": null,
+   "first_rank": 1,
    "entity": [
     "Urban Co-operative Banks",
     "Rural Co-operative Banks"
@@ -1929,30 +1929,30 @@
     "RBI/2026-27/204"
    ],
    "retrieved": [
-    "RBI/2026-27/204",
     "RBI/2026-27/210",
     "RBI/2026-27/204",
-    "RBI/2026-27/210",
+    "RBI/2026-27/204",
+    "RBI/2026-27/204",
     "RBI/2026-27/210",
     "RBI/2026-27/204",
     "RBI/DOR/2025-26/151",
-    "RBI/2026-27/204"
+    "RBI/DOR/2025-26/151"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    3437,
     3406,
-    3435,
-    3404,
-    3403,
-    3434,
-    9055,
-    3432
+    3437,
+    3440,
+    3438,
+    3408,
+    3439,
+    9061,
+    9157
    ],
-   "first_rank": 1,
+   "first_rank": 2,
    "entity": null
   },
   {
@@ -1977,13 +1977,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     4495,
-    4499,
-    4505,
-    4496,
-    4488,
-    4504,
     4506,
-    4494
+    4499,
+    4504,
+    4496,
+    4507,
+    4488,
+    4501
    ],
    "first_rank": 1,
    "entity": [
@@ -1997,30 +1997,30 @@
     "RBI/2025-26/125"
    ],
    "retrieved": [
-    "RBI/2025-26/124",
-    "RBI/2025-26/125",
     "RBI/2025-26/125",
     "RBI/2025-26/124",
+    "RBI/2025-26/125",
+    "RBI/2025-26/124",
     "RBI/2025-26/124",
     "RBI/2025-26/125",
-    "RBI/2025-26/211",
-    "RBI/DOR/2026-27/398"
+    "RBI/2025-26/124",
+    "RBI/2025-26/125"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
+    7565,
+    7576,
+    7566,
+    7577,
     7570,
     7559,
-    7560,
     7571,
-    7576,
-    7565,
-    6505,
-    5380
+    7560
    ],
-   "first_rank": 2,
+   "first_rank": 1,
    "entity": null
   },
   {
@@ -2030,30 +2030,30 @@
     "RBI/2025-26/104"
    ],
    "retrieved": [
-    "RBI/2026-27/48",
     "RBI/2025-26/104",
+    "RBI/2026-27/116",
+    "RBI/2025-26/104",
+    "RBI/2026-2027/224",
     "RBI/2026-27/116",
     "RBI/2026-27/168",
     "RBI/2025-26/104",
-    "RBI/2026-27/116",
-    "RBI/2025-26/260",
-    "RBI/2025-26/217"
+    "RBI/2026-27/168"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    5201,
     7694,
-    4670,
-    3811,
-    7693,
     4671,
-    6081,
-    6437
+    7693,
+    60,
+    4670,
+    3812,
+    7692,
+    3811
    ],
-   "first_rank": 2,
+   "first_rank": 1,
    "entity": [
     "Small Finance Banks"
    ]
@@ -2065,30 +2065,30 @@
     "RBI/2026-27/191"
    ],
    "retrieved": [
-    "RBI/2026-27/99",
-    "RBI/2026-27/220",
-    "RBI/2025-26/143",
-    "RBI/DOR/2025-26/136",
-    "RBI/2026-27/114",
-    "RBI/DOR/2025-26/150",
-    "RBI/DoS/2026-27/442",
-    "RBI/2025-26/250"
+    "RBI/2026-27/194",
+    "RBI/2026-27/193",
+    "RBI/2026-27/190",
+    "RBI/2026-27/188",
+    "RBI/2026-27/187",
+    "RBI/2026-27/192",
+    "RBI/2026-27/191",
+    "RBI/2026-27/189"
    ],
-   "hit": false,
-   "both_docs": false,
-   "family_hit": false,
-   "chunk_hit": false,
+   "hit": true,
+   "both_docs": true,
+   "family_hit": true,
+   "chunk_hit": true,
    "retrieved_chunk_ids": [
-    4839,
-    249,
-    7197,
-    7353,
-    4745,
-    8216,
-    2129,
-    6207
+    3478,
+    3486,
+    3510,
+    3526,
+    3534,
+    3494,
+    3502,
+    3518
    ],
-   "first_rank": null,
+   "first_rank": 7,
    "entity": null
   },
   {
@@ -2099,27 +2099,27 @@
    ],
    "retrieved": [
     "RBI/2026-27/121",
-    "RBI/2026-27/64",
+    "RBI/2026-27/121",
     "RBI/2026-27/173",
     "RBI/2025-26/109",
     "RBI/2026-2027/228",
     "RBI/DoR/2026-27/130",
-    "RBI/2026-27/121",
-    "RBI/DoR/2026-27/130"
+    "RBI/2026-27/105",
+    "RBI/2026-27/64"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    4409,
-    5121,
-    3639,
-    7645,
-    0,
-    4358,
     4410,
-    4359
+    4409,
+    3639,
+    7646,
+    1,
+    4359,
+    4815,
+    5121
    ],
    "first_rank": 1,
    "entity": [
@@ -2133,30 +2133,30 @@
     "RBI/2025-26/259"
    ],
    "retrieved": [
+    "RBI/2025-26/259",
     "RBI/2025-26/254",
-    "RBI/2025-26/259",
-    "RBI/2025-26/211",
-    "RBI/2025-26/259",
-    "RBI/2025-26/211",
     "RBI/2025-26/216",
     "RBI/2025-26/211",
-    "RBI/2025-26/254"
+    "RBI/2025-26/259",
+    "RBI/2025-26/259",
+    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2025-26/151"
    ],
    "hit": true,
    "both_docs": true,
    "family_hit": true,
    "chunk_hit": true,
    "retrieved_chunk_ids": [
-    6162,
     6093,
+    6162,
+    6448,
     6504,
-    6085,
-    6486,
-    6441,
-    6506,
-    6164
+    6095,
+    6098,
+    8544,
+    8541
    ],
-   "first_rank": 2,
+   "first_rank": 1,
    "entity": null
   },
   {
@@ -2168,12 +2168,12 @@
    "retrieved": [
     "RBI/2026-27/122",
     "RBI/2026-27/118",
-    "RBI/2026-27/123",
-    "RBI/2026-27/117",
-    "RBI/2026-27/121",
-    "RBI/2026-27/120",
     "RBI/2026-27/115",
-    "RBI/2026-27/116"
+    "RBI/2026-27/117",
+    "RBI/2026-27/119",
+    "RBI/2026-27/116",
+    "RBI/2026-27/120",
+    "RBI/2026-27/121"
    ],
    "hit": false,
    "both_docs": false,
@@ -2182,12 +2182,12 @@
    "retrieved_chunk_ids": [
     4451,
     4564,
-    4488,
-    4638,
-    4414,
-    4527,
     4713,
-    4675
+    4638,
+    4601,
+    4675,
+    4527,
+    4414
    ],
    "first_rank": null,
    "entity": null
@@ -2201,12 +2201,12 @@
    "retrieved": [
     "RBI/2025-26/180",
     "RBI/2026-27/113",
-    "RBI/2026-27/113",
-    "RBI/2026-27/122",
+    "RBI/DoS/2026-27/456",
+    "RBI/DoS/2026-27/458",
+    "RBI/DoS/2026-27/456",
     "RBI/DoS/2026-27/457",
     "RBI/DoS/2026-27/457",
-    "RBI/2025-26/180",
-    "RBI/DoS/2026-27/457"
+    "RBI/DoS/2026-27/456"
    ],
    "hit": true,
    "both_docs": true,
@@ -2214,13 +2214,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     6890,
-    4750,
     4751,
-    4471,
-    2766,
+    2715,
+    2832,
+    2713,
     2784,
-    6899,
-    2796
+    2791,
+    2696
    ],
    "first_rank": 1,
    "entity": [
@@ -2234,28 +2234,28 @@
     "RBI/2026-27/188"
    ],
    "retrieved": [
-    "RBI/DOR/2025-26/135",
-    "RBI/DOR/2025-26/145",
-    "RBI/DOR/2025-26/151",
-    "RBI/2026-27/46",
-    "RBI/DOR/2025-26/319",
-    "RBI/2026-27/50",
-    "RBI/2026-27/62",
-    "RBI/DOR/2025-26/151"
+    "RBI/2026-27/115",
+    "RBI/2026-27/117",
+    "RBI/2026-27/123",
+    "RBI/2026-27/118",
+    "RBI/2026-27/120",
+    "RBI/2026-27/116",
+    "RBI/2026-27/121",
+    "RBI/2026-27/119"
    ],
    "hit": false,
    "both_docs": false,
    "family_hit": false,
    "chunk_hit": false,
    "retrieved_chunk_ids": [
-    7332,
-    7839,
-    8629,
-    5220,
-    7525,
-    5170,
-    5059,
-    8414
+    4732,
+    4657,
+    4509,
+    4583,
+    4546,
+    4694,
+    4433,
+    4620
    ],
    "first_rank": null,
    "entity": null
@@ -2268,13 +2268,13 @@
    ],
    "retrieved": [
     "RBI/2025-26/211",
-    "RBI/2025-26/254",
     "RBI/2025-26/216",
+    "RBI/2025-26/254",
     "RBI/2025-26/259",
-    "RBI/DOR/2025-26/151",
-    "RBI/DOR/2025-26/151",
+    "RBI/DOR/2026-27/397",
+    "RBI/2025-26/260",
     "RBI/2025-26/217",
-    "RBI/2025-26/260"
+    "RBI/FIDD/2026-27/402"
    ],
    "hit": true,
    "both_docs": true,
@@ -2282,13 +2282,13 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     6483,
-    6136,
     6439,
+    6136,
     6083,
-    8745,
-    8283,
+    5623,
+    6068,
     6425,
-    6068
+    4248
    ],
    "first_rank": 4,
    "entity": null
@@ -2302,11 +2302,11 @@
    "retrieved": [
     "RBI/2026-27/118",
     "RBI/2026-27/118",
-    "RBI/2026-27/52",
-    "RBI/2026-27/194",
+    "RBI/2026-27/225",
     "RBI/2026-27/170",
-    "RBI/2025-26/175",
-    "RBI/2025-26/144",
+    "RBI/2026-27/118",
+    "RBI/2025-26/106",
+    "RBI/2026-27/170",
     "RBI/2025-26/106"
    ],
    "hit": true,
@@ -2315,12 +2315,12 @@
    "chunk_hit": true,
    "retrieved_chunk_ids": [
     4560,
+    4580,
+    173,
+    3743,
     4559,
-    5217,
-    3475,
+    7674,
     3742,
-    6959,
-    7188,
     7673
    ],
    "first_rank": 1,
@@ -2342,7 +2342,7 @@
     "RBI/DGBA/2026-27/400",
     "RBI/DGBA/2026-27/400",
     "RBI/DGBA/2026-27/400",
-    "RBI/FMRD/2026-27/407"
+    "RBI/DGBA/2026-27/400"
    ],
    "hit": true,
    "both_docs": true,
@@ -2352,11 +2352,11 @@
     6539,
     6207,
     4969,
+    4978,
+    4940,
     4936,
-    4933,
-    4953,
-    4928,
-    3631
+    4937,
+    4965
    ],
    "first_rank": 1,
    "entity": [

@@ -280,25 +280,30 @@ def cmd_retrieval(k=8, use_filter=True, sweep=False):
             print(f"  {kk:>4}{f'{hits}/{n}':>12}{f'{fam}/{n}':>12}"
                   f"{f'{ch}/{len(sc)}':>12}{med:>14}")
             by_k.append((kk, {"doc": hits, "chunk": ch, "n": len(sc)}))
-        # Report the headroom rather than asserting a conclusion about it. A
-        # reranker fetches a wide candidate set and re-sorts it down to k, so what
-        # it could recover -- at absolute best, with perfect ranking -- is exactly
-        # the recall a wider k already reaches. Chunk recall is the number that
-        # matters here: the pipeline consumes passages, not documents.
-        # Baseline is the k actually in use, not k=1. A reranker replaces the
-        # current operating point, so the gain is measured against that -- not
-        # against a configuration nobody runs.
+        # What this curve means CHANGED when the reranker shipped, and reading it
+        # the old way would now be wrong. Before, k was the fetch depth, so the
+        # curve answered "how much recall is a wider fetch worth" and the gap
+        # between k=8 and k=20 was reranking headroom. Now the fetch is always
+        # RETRIEVAL_DEPTH candidates from both channels and k is only how many
+        # survive the re-sort, so the curve answers a different question: how many
+        # slots the generator needs before the reranker has put the answering
+        # passage in one of them.
+        #
+        # The ceiling is no longer at the far end of this table. It is the recall
+        # of the candidate pool itself, which no amount of re-sorting can exceed.
         base = dict(by_k).get(k, dict(by_k)[by_k[0][0]])
         k_base = k if k in dict(by_k) else by_k[0][0]
         if len(by_k) > 1:
             k_hi, hi = by_k[-1]
             lo = base
-            print(f"\n  reranking headroom, chunk level: {hi['chunk']}/{hi['n']} at "
-                  f"k={k_hi} vs {lo['chunk']}/{lo['n']} at the operating k={k_base}")
-            print(f"    a perfect reranker over the k={k_hi} set recovers at most "
-                  f"{hi['chunk'] - lo['chunk']} question(s); a real one, fewer.")
-            print(f"    the other {hi['n'] - hi['chunk']} never surface the right "
-                  f"passage at k={k_hi} at all, so no re-sorting reaches them.")
+            print(f"\n  chunk recall: {lo['chunk']}/{lo['n']} at the operating k={k_base}, "
+                  f"{hi['chunk']}/{hi['n']} at k={k_hi}")
+            print(f"    k is now how many reranked passages reach the generator, not how "
+                  f"deep the fetch goes.")
+            print(f"    widening it to {k_hi} recovers {hi['chunk'] - lo['chunk']} more "
+                  f"question(s), at {k_hi // k_base}x the prompt tokens.")
+            print(f"    the pool the reranker sorts is the real ceiling -- measure it with "
+                  f"`python retrieval_lab.py compare`.")
         return
 
     label = "entity filter ON" if use_filter else "entity filter OFF (ablation)"

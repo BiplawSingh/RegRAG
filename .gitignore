@@ -28,6 +28,12 @@ data/chunks.jsonl
 data/embeddings.npy
 data/qdrant/
 
+# Context-prefixed embeddings, for the `dense-ctx` retrieval experiment only.
+# That variant lost (see README), so nothing in the pipeline reads this -- but
+# `retrieval_lab.py build-context-vectors` regenerates it if the result is ever
+# worth re-checking.
+data/embeddings_ctx.npy
+
 # PDF downloads: rbidocs.rbi.org.in sits behind a WAF that returns challenge
 # pages, so this stays empty. The corpus comes from data/html/ instead.
 data/circulars/
