@@ -231,6 +231,22 @@ with gr.Blocks(title="RegRAG") as demo:
         trigger(ask, inputs=[q, k, f, rr], outputs=[answer, meta, cites, srcs])
 
 
+# Warm the caches while the Space is still starting up, not on the first visitor's
+# click. Cold, the first question pays for two model downloads and a 27MB load --
+# about a minute of a blank screen for whoever arrives first, which on a demo is
+# usually the person you most wanted to impress.
+#
+# Guarded, and deliberately not fatal: if the warm-up fails the Space should still
+# come up and let `ask` retry and report the error properly, rather than dying at
+# import with a stack trace no visitor can see.
+try:
+    boot()
+    R.bm25()          # ~2s to build; do it here rather than mid-question
+    R.get_reranker()  # downloads once, then cached in the container
+except Exception as exc:                                  # noqa: BLE001
+    print(f"warm-up failed ({exc.__class__.__name__}: {exc}); "
+          f"falling back to loading on first request")
+
 if __name__ == "__main__":
     # theme goes to launch(), not to Blocks(): Gradio 6 moved it, and passing it to
     # the constructor warns on 6 and would break the layout on a future major.
