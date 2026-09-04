@@ -1,0 +1,106 @@
+{
+ "model": "qwen/qwen3.6-27b",
+ "seed": 0,
+ "positive_pass": 8,
+ "positive_n": 8,
+ "negative_pass": 8,
+ "negative_n": 8,
+ "rows": [
+  {
+   "kind": "positive",
+   "id": "q058",
+   "verdict": "correct",
+   "pass": true
+  },
+  {
+   "kind": "negative",
+   "id": "q058",
+   "verdict": "incorrect",
+   "pass": true
+  },
+  {
+   "kind": "positive",
+   "id": "q064",
+   "verdict": "correct",
+   "pass": true
+  },
+  {
+   "kind": "negative",
+   "id": "q064",
+   "verdict": "incorrect",
+   "pass": true
+  },
+  {
+   "kind": "positive",
+   "id": "q008",
+   "verdict": "correct",
+   "pass": true
+  },
+  {
+   "kind": "negative",
+   "id": "q008",
+   "verdict": "incorrect",
+   "pass": true
+  },
+  {
+   "kind": "positive",
+   "id": "q038",
+   "verdict": "correct",
+   "pass": true
+  },
+  {
+   "kind": "negative",
+   "id": "q038",
+   "verdict": "incorrect",
+   "pass": true
+  },
+  {
+   "kind": "positive",
+   "id": "q076",
+   "verdict": "correct",
+   "pass": true
+  },
+  {
+   "kind": "negative",
+   "id": "q076",
+   "verdict": "incorrect",
+   "pass": true
+  },
+  {
+   "kind": "positive",
+   "id": "q028",
+   "verdict": "correct",
+   "pass": true
+  },
+  {
+   "kind": "negative",
+   "id": "q028",
+   "verdict": "incorrect",
+   "pass": true
+  },
+  {
+   "kind": "positive",
+   "id": "q071",
+   "verdict": "correct",
+   "pass": true
+  },
+  {
+   "kind": "negative",
+   "id": "q071",
+   "verdict": "incorrect",
+   "pass": true
+  },
+  {
+   "kind": "positive",
+   "id": "q060",
+   "verdict": "correct",
+   "pass": true
+  },
+  {
+   "kind": "negative",
+   "id": "q060",
+   "verdict": "incorrect",
+   "pass": true
+  }
+ ]
+}

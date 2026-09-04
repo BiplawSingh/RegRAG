@@ -20,13 +20,13 @@
   },
   {
    "kind": "positive",
-   "id": "q064",
+   "id": "q063",
    "verdict": "correct",
    "pass": true
   },
   {
    "kind": "negative",
-   "id": "q064",
+   "id": "q063",
    "verdict": "incorrect",
    "pass": true
   },
@@ -56,37 +56,37 @@
   },
   {
    "kind": "positive",
-   "id": "q076",
+   "id": "q075",
    "verdict": "correct",
    "pass": true
   },
   {
    "kind": "negative",
-   "id": "q076",
+   "id": "q075",
    "verdict": "incorrect",
    "pass": true
   },
   {
    "kind": "positive",
-   "id": "q028",
+   "id": "q061",
    "verdict": "correct",
    "pass": true
   },
   {
    "kind": "negative",
-   "id": "q028",
+   "id": "q061",
    "verdict": "incorrect",
    "pass": true
   },
   {
    "kind": "positive",
-   "id": "q071",
+   "id": "q069",
    "verdict": "correct",
    "pass": true
   },
   {
    "kind": "negative",
-   "id": "q071",
+   "id": "q069",
    "verdict": "incorrect",
    "pass": true
   },

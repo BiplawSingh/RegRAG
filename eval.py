@@ -359,11 +359,20 @@ def cmd_answers(k=8, use_filter=True, oracle=False, limit=None):
     RUNS.mkdir(parents=True, exist_ok=True)
     path = answers_path(oracle, k)
 
-    done = set()
+    # Resume past what SUCCEEDED, not past what was attempted -- a row that errored
+    # is work still owed. Treating it as done means one transient failure quietly
+    # removes a question from the run for good, and the only trace is a denominator
+    # that is smaller than it should be. Same fix as judge.py, same reason.
+    done, failed = set(), 0
     if path.exists():
         for line in open(path, encoding="utf-8"):
-            done.add(json.loads(line)["id"])
-        print(f"resuming: {len(done)} already answered in {path.name}")
+            row = json.loads(line)
+            if "error" in row:
+                failed += 1
+            else:
+                done.add(row["id"])
+        print(f"resuming: {len(done)} already answered in {path.name}"
+              + (f", retrying {failed} that failed" if failed else ""))
 
     todo = [q for q in qa if q["id"] not in done]
     if limit:

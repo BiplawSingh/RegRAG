@@ -6,11 +6,9 @@ automatically verified against the source documents.
 
 **Status: end-to-end pipeline working and measured against a hand-written answer
 key, with each failure attributed to retrieval or to generation.** That attribution
-identified retrieval as the bottleneck, and the current work is closing it: chunk
-recall is **78%, up from 60%**, via a lexical channel and a cross-encoder over the
-same embeddings. The end-to-end answer score of 65% was measured *before* that
-change and has not yet been re-run — see the note in **Generation** below. Every
-number here is reproducible from `data/eval/`.
+identified retrieval as the bottleneck, and closing it moved the end-to-end score:
+chunk recall **60% → 78%**, and answers fully correct **65% → 69%** (71% on the
+questions graded in both runs). Every number here is reproducible from `data/eval/`.
 
 ## Why this corpus is harder than it looks
 
@@ -361,46 +359,54 @@ Five things in that table are worth more than the winning row:
   the cost again and lose 3 questions, so the pool stayed at 50.
 
 **Cost of the change:** retrieval goes from ~0.1s to ~1.6s per question, against a
-generation stage that takes 2.0s. Nothing else moved — same embeddings, same
+generation stage whose own median is 2.6s. Nothing else moved — same embeddings, same
 index, same entity filter, no re-embedding of the corpus, no Qdrant rebuild.
 
 ### Generation — `python eval.py answers`
 
-> **These answer-quality numbers predate the retrieval change above and have not
-> been re-run.** Every figure from here to the end of this section was measured
-> against dense-only retrieval at 60% chunk recall. They are left exactly as
-> measured rather than adjusted or deleted: the oracle comparison below is what
-> identified retrieval as the bottleneck in the first place, and it only reads
-> that way because these were taken before the fix. A full re-run costs a day's
-> token allowance (`eval.py answers` then `judge.py run`), and the honest
-> prediction — 19 of the 22 end-to-end failures were retrieval's, and retrieval
-> now surfaces the answering passage for 12 more questions — is that the
-> end-to-end score rises toward the 95% oracle ceiling. That prediction is
-> written down here *before* the run, so it can be wrong in public.
+Complete run, all 90 questions, no errors. The previous run — same questions, same
+model, dense-only retrieval — is kept alongside as `*_prererank.jsonl`, so the
+comparison below is auditable rather than remembered:
 
-Complete run, all 90 questions, no errors:
+- **Citations verified: 195/205 (95%)**, up from 121/129 (93%) — 0 misattributed,
+  10 not present in any retrieved source. Half again as many citations, because the
+  answers got more substantive, not merely more confident.
+- **Of those verified, 22% are unfalsifiable — and that got *worse*, from 19%.**
+  When ten sibling circulars carry the same sentence, a quote lifted from the NBFC
+  copy is genuinely a substring of the Payments Banks copy too, so the check returns
+  `ok` and *cannot* detect misattribution. One quote now appears in 8 of the 8
+  retrieved documents.
 
-- **Citations verified: 121/129 (93%)** — 0 misattributed, 8 not present in any
-  retrieved source.
-- **Of those verified, 19% are unfalsifiable.** When ten sibling circulars carry
-  the same sentence, a quote lifted from the NBFC copy is genuinely a substring of
-  the Payments Banks copy too, so the check returns `ok` and *cannot* detect
-  misattribution. One quote was found in 5 of the 8 retrieved documents. This is
-  why "0 misattributed" is partly good behaviour and partly a blind spot.
-- **Refusal: 10/23 overall** — but the aggregate hides the finding that matters.
+  This is the one number better retrieval made worse, and it is not a regression to
+  fix so much as the same phenomenon seen from the other end: surfacing more
+  relevant passages in a corpus that is 74% near-duplicates means surfacing more
+  *siblings* of the right passage. Retrieval quality and citation falsifiability
+  pull against each other here, and only deduplication breaks the tie.
+- **Wrongful refusals: 11/67 → 4/69.** Questions the corpus answers, declined
+  because the evidence never surfaced. This is where the retrieval work paid out
+  most directly.
 
 #### Refusal splits cleanly, and not in the flattering direction
 
-| Kind of unanswerable question | Refused correctly |
-|---|---|
-| Explicitly out of scope (`unanswerable` category) | **8/9** |
-| Disguised — reads like regulation, drawn from a real circular | **2/14** |
+| Kind of unanswerable question | before | after |
+|---|---|---|
+| Explicitly out of scope (`unanswerable` category) | 8/9 | **7/9** |
+| Disguised — reads like regulation, drawn from a real circular | 2/14 | **3/12** |
+
+(The denominators move because two questions were reclassified `answerable` when
+the key was corrected — q008 rewritten, q062 repointed. Both changes are recorded
+in `data/qa_review.yaml`, and neither was made to improve a score.)
+
+**Better retrieval barely touched this, which is the point.** Wrongful refusals
+fell by seven; refusal on genuinely unsupported questions moved by one, in a
+denominator that also moved. The two failures are independent, and only one of
+them was ever a retrieval problem.
 
 **The system detects *off-topic* reliably and *on-topic but unsupported* almost
 never.** Asked the RBI governor's name or what time banks break for lunch, it
 declines. Asked something that sounds exactly like a regulatory question, sourced
 from a genuine circular that happens not to contain the answer, it answers anyway
-in 12 of 14 cases — fluently, with citations that verify.
+in 9 of 12 cases — fluently, with citations that verify.
 
 That second row is the one that matters for a regulatory tool, and it is the
 weakest result in the project. It is also invisible to every other metric here: a
@@ -421,18 +427,24 @@ two runs attributes each failure to a stage instead of guessing.
 
 | | end-to-end | oracle |
 |---|---|---|
-| Refused, explicit out-of-scope | 8/9 | **9/9** |
-| Refused, disguised unanswerable | 2/14 | **6/14** |
-| Refused when it *shouldn't* have | 11/67 | **1/67** |
-| Citations verified | 121/129 (93%) | 115/120 (95%) |
-| — of those, unfalsifiable | 24 (19%) | **2 (1%)** |
-| Median latency | 2.0s | 2.1s |
+| Refused, explicit out-of-scope | 7/9 | **9/9** |
+| Refused, disguised unanswerable | 3/12 | **6/14** |
+| Refused when it *shouldn't* have | **4/69** | 1/67 |
+| Citations verified | 195/205 (95%) | 115/120 (95%) |
+| — of those, unfalsifiable | 43 (22%) | **2 (1%)** |
+| Median latency | 2.6s | 2.1s |
+
+The oracle run is the one measured *before* the retrieval change and deliberately
+not re-run: it bypasses retrieval entirely, feeding gold chunks straight to the
+model, so nothing this week could have altered it. Keeping it fixed is what makes
+it a stable ceiling to measure against rather than a second moving number.
 
 Three conclusions, each attributable:
 
-- **Ten wrongful refusals were retrieval's fault.** Questions the corpus answers,
-  declined only because the evidence never surfaced. `report` lists them by id.
-  Hit-rate@8 alone never revealed this.
+- **Ten wrongful refusals were retrieval's fault — and seven of them are now
+  fixed.** Questions the corpus answers, declined only because the evidence never
+  surfaced. Hit-rate@8 alone never revealed this; `eval.py report` now lists only
+  four questions answered under oracle but refused end-to-end, down from ten.
 - **Four refusal failures were retrieval's fault too.** q033, q063, q070 and q072
   refuse correctly the moment the near-duplicate distractors are removed.
   Surrounded by ten variants of one rule the model feels informed enough to answer;
@@ -441,10 +453,11 @@ Three conclusions, each attributable:
   chunk the question was written from, the system still answers. No retrieval work
   will touch these; they need the prompt or the output contract.
 
-The **19% → 1% collapse in unfalsifiable citations** is the cleanest evidence in
+The **22% → 1% collapse in unfalsifiable citations** is the cleanest evidence in
 the project that the near-duplicate structure — not the checker — is what makes
 citation verification weaker than its headline number. Remove the siblings and the
-ambiguity disappears entirely.
+ambiguity disappears entirely. The gap widened this week rather than narrowing,
+because better retrieval brings back more siblings, not fewer.
 
 ### Answer quality — `python judge.py`
 
@@ -454,16 +467,39 @@ evasive answer passes both. So a second model grades each answer against the
 hand-written reference:
 
 ```
-=== END-TO-END ===  67 answerable questions judged
-  correct              44  (65%)
-  partially_correct     3   (4%)
-  incorrect             9  (13%)
-  unsupported_refusal  11  (16%)
+=== END-TO-END ===  69 answerable questions judged
+  correct              48  (69%)
+  partially_correct     7  (10%)
+  incorrect            10  (14%)
+  unsupported_refusal   4   (5%)
 ```
 
-**65% fully correct end-to-end.** The 22 unanswerable questions are excluded: they
-are already scored exactly by whether the pipeline set `insufficient_context`, and
-replacing a deterministic check with a model's opinion would be strictly worse.
+**69% fully correct end-to-end, up from 65%.** The unanswerable questions are
+excluded: they are already scored exactly by whether the pipeline set
+`insufficient_context`, and replacing a deterministic check with a model's opinion
+would be strictly worse.
+
+Paired on the 67 questions graded in *both* runs, which is the like-for-like
+number:
+
+| | correct | |
+|---|---|---|
+| before, dense-only retrieval | 44/67 (65%) | |
+| **after, hybrid + reranked** | **48/67 (71%)** | |
+| fixed | **7** | q001, q021, q026, q046, q051, q065, q073 |
+| broken | **3** | q019, q024, q054 |
+
+**Net four questions, not twelve.** Chunk recall gained twelve; answer quality
+gained four. Worth being precise about why, because the gap is the interesting
+part: some of the twelve were questions the pipeline already answered correctly
+from a sibling passage, so retrieving the *keyed* chunk changed nothing a grader
+could see. Retrieval metrics are a proxy, and this is the size of the slippage
+between the proxy and the thing it stands for.
+
+**And three questions got worse.** q054 was flagged as a regression by the offline
+bench before any of this was generated — it is the one question the reranker
+demotes. Reporting a mean improvement without them would hide that a change good on
+average was bad for someone.
 
 **The judge is validated before it is trusted, and `run` refuses to start without a
 calibration on file.** An unvalidated judge does not measure quality — it launders
@@ -497,38 +533,42 @@ the generation budget.
   incorrect             1   (1%)
 ```
 
-Paired on the 65 questions graded in both runs:
+Paired on the 66 questions graded in both runs, after the retrieval work:
 
 | | correct |
 |---|---|
-| end-to-end | 43/65 (66%) |
-| **oracle** | **62/65 (95%)** |
-| fixed by supplying the right passage | **19** |
-| **broken by it** | **0** |
+| end-to-end | 47/66 (71%) |
+| **oracle** | **63/66 (95%)** |
+| fixed by supplying the right passage | **17** |
+| **broken by it** | **1** |
 
-Zero regressions is the check that makes this comparison trustworthy: a noisy
-judge or a flaky pipeline would have produced churn in both directions. It did
-not, so the 19 improvements are signal.
+The gap narrowed — 19 questions before, 17 now — which is the retrieval work
+showing up in the only place that ultimately matters. It did not close, and the
+remaining 17 are the honest size of what is still left upstream of generation.
 
-**19 of the 22 end-to-end failures are retrieval's. Three are generation's** —
-q047 cited NIST SP 800-53r5 where the source says FSB Cyber Lexicon, and q048 and
-q051 each state the main rule but omit a material clause. Under oracle every
-category is perfect or close: `amendment` 12/12, `cross_document` 6/6,
-`lookup` 29/29, `entity_scoped` 16/19.
+**17 of the 19 end-to-end failures are still retrieval's. Two are generation's** —
+q047 cites NIST SP 800-53r5 where the source says FSB Cyber Lexicon, and q048
+states the main rule but omits a material clause. q051 moved the other way: it is
+now correct end-to-end and wrong under oracle, which means retrieval found it
+better evidence than the answer key points at. Under oracle every category is
+perfect or close: `amendment` 12/12, `cross_document` 6/6, `lookup` 29/29,
+`entity_scoped` 16/19.
 
 This is the project's central finding, and it splits the system's weaknesses into
 two unrelated problems:
 
-- **On answerable questions, retrieval is the bottleneck.** Generation is 95%
-  correct when handed the right passage; 86% of end-to-end failure is upstream of
-  it. Closing the retrieval gap moves the end-to-end score toward 95%, while
-  prompt work on answerable questions has at most 3 questions to win.
-- **On unanswerable questions, generation is the bottleneck.** Eight are answered
-  anyway even with perfect evidence, and no retrieval work touches them.
+- **On answerable questions, retrieval is still the bottleneck.** Generation is 95%
+  correct when handed the right passage; 89% of end-to-end failure remains upstream
+  of it. The retrieval work moved the end-to-end score from 65% to 69% and closed
+  two of the nineteen — real, and far short of the ceiling.
+- **On unanswerable questions, generation is the bottleneck.** They are answered
+  anyway even with perfect evidence, and no retrieval work touches them. This is
+  the prediction that held up best: seven wrongful refusals were recovered by
+  retrieval, and refusal on unsupported questions moved by one.
 
-Put plainly: the pipeline is bad at finding the right passage, and bad at admitting
-when a passage does not support an answer. Reasoning correctly *from* a passage
-that does — the part that looked hardest — is the part that works.
+Put plainly: the pipeline is still bad at finding the right passage, and no better
+at admitting when a passage does not support an answer. Reasoning correctly *from*
+a passage that does — the part that looked hardest — remains the part that works.
 
 One caveat on oracle mode: **it is only as good as `gold_chunk_ids`.** Where a
 question was authored from a preamble, oracle feeds strictly *weaker* evidence than
@@ -541,13 +581,24 @@ is the only one of the eight with this problem, and it is documented in
 ## What's not solved
 
 - **Refusal on in-scope questions, above all.** A confident wrong answer about
-  banking regulation is worse than no answer, and 2/14 is where the system is
+  banking regulation is worse than no answer, and 3/12 is where the system is
   furthest from usable. Out-of-scope rejection already works; the gap is knowing
-  when a *plausible* question isn't supported by the text in hand.
+  when a *plausible* question isn't supported by the text in hand. Retrieval work
+  was never going to fix this and did not — it moved by one question while wrongful
+  refusals fell by seven.
 - **Amendment directions state deltas, not rules.** ~28% of chunks belong to
   documents that say "paragraph 5.2 shall be substituted" without restating the
   rule. Retrieval can land exactly on the right document and still have nothing to
   answer from.
+
+  A "currently in force" filter — resolving an amendment chain to the rule as it
+  now stands — was the obvious fix and is **not built, on the evidence.** Amendment
+  questions now score **10/12 end-to-end against 12/12 under oracle**, so the whole
+  remaining gap in that category is two questions, and both are ordinary retrieval
+  misses (q077, q078 — q078 never reaches its document at any k) rather than
+  cases of returning a superseded rule. A feature that resolves amendment chains
+  would not fix either one. It stays unbuilt until a question fails *because* the
+  wrong version was returned, which so far none measurably does.
 - **Citation verification checks that quotes are real, not that answers are
   complete, nor that attribution is correct.** See the 16% figure above.
 - **Chunk-level retrieval recall is now 78%, up from 60% — the remaining 15
@@ -558,9 +609,15 @@ is the only one of the eight with this problem, and it is documented in
   normally deal in property?"*), where no ranking function can recover an intent
   the question never expressed. Those need query rewriting, or an answer key that
   admits the question is the defect; `data/qa_review.yaml` has precedent for both.
-- **The end-to-end and judge numbers need re-running against the new retrieval.**
-  Until then the headline 65% describes a pipeline that no longer exists. This is
-  the single most misleading thing in this README and it is called out in place.
+- **Citation falsifiability got worse, not better** — 19% → 22% unfalsifiable, and
+  one quote now appears in all 8 retrieved documents. Better retrieval surfaces more
+  siblings of the right passage, so the two move together. Deduplication before
+  generation is the only thing that separates them, and it is the highest-value
+  unbuilt item in the project now that retrieval has moved.
+- **Three questions regressed** (q019, q024, q054) against the previous pipeline.
+  q054 was predicted by the offline bench before generation ever ran; the other two
+  were not. A change that is good on average is not good for everyone, and the
+  paired table above reports both directions rather than a net.
 - **Deduplication before generation is unbuilt, and now clearly justified.** The
   entity filter cannot separate same-entity boilerplate: after filtering, up to ten
   near-identical copies of one rule still compete for eight slots. That noise costs

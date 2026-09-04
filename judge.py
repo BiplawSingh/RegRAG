@@ -63,7 +63,33 @@ QA = ROOT / "qa.jsonl"
 # An unrelated vendor, deliberately. See the module docstring.
 JUDGE_MODEL = os.getenv("GROQ_JUDGE_MODEL", "qwen/qwen3.6-27b")
 JUDGE_TPM = int(os.getenv("GROQ_JUDGE_TPM_LIMIT", "8000"))
-JUDGE_MAX_OUT = int(os.getenv("GROQ_JUDGE_MAX_OUTPUT_TOKENS", "2048"))
+# Two separate ceilings squeeze this number from both sides, and getting it wrong
+# fails in two different ways -- both of which happened here before it was right.
+#
+# FROM ABOVE: Groq enforces OUTPUT tokens per minute separately from total TPM,
+# and on this model OTPM is 1,000. A request *asking* for 2,048 is rejected before
+# it runs, however short the reply would have been. The old 2048 default failed 17
+# of the first 31 judgements with "Request too large", which reads like an
+# input-size problem and is not one.
+#
+# FROM BELOW: qwen3.6 is a reasoning model and spends thinking tokens from this
+# same budget. Dropping the cap to 512 traded the first error for the second --
+# 400 json_validate_failed with an EMPTY failed_generation, meaning the budget was
+# consumed before a single character of the verdict was emitted. Under a strict
+# schema that is not a shorter answer, it is no answer. rag.py carries the same
+# warning about gpt-oss; the lesson did not transfer until it was re-learned.
+#
+# So: turn the thinking off rather than trying to buy room for it. Reasoning adds
+# nothing to a three-way classification against a reference answer, and with
+# `reasoning_effort="none"` the whole budget belongs to the verdict. Measured
+# across 67 judgements, the object itself is small -- median 58 tokens, p90 112,
+# longest 165 -- so 900 is 5x the longest ever seen and still under OTPM.
+#
+# Changing this changes the grader, so `calibrate` must be re-run afterwards: a
+# calibration measured with reasoning on does not describe a judge running with it
+# off. Groq accepts only "none" or "default" here.
+JUDGE_MAX_OUT = int(os.getenv("GROQ_JUDGE_MAX_OUTPUT_TOKENS", "900"))
+JUDGE_REASONING = os.getenv("GROQ_JUDGE_REASONING_EFFORT", "none")
 
 VERDICTS = ["correct", "partially_correct", "incorrect", "unsupported_refusal"]
 
@@ -169,6 +195,7 @@ def judge_one(question, reference, candidate, said_insufficient, attempts=4):
                 messages=[{"role": "system", "content": SYSTEM},
                           {"role": "user", "content": user}],
                 max_completion_tokens=JUDGE_MAX_OUT,
+                reasoning_effort=JUDGE_REASONING,
                 temperature=0,          # a grader that varies run to run is not a grader
                 response_format={"type": "json_schema", "json_schema": {
                     "name": "verdict", "strict": True, "schema": SCHEMA}},
@@ -285,10 +312,21 @@ def cmd_run(oracle=False, k=8, limit=None):
     src, rows = load_run(oracle, k)
     out = RUNS / f"judged_{'oracle' if oracle else 'e2e'}_k{k}.jsonl"
 
-    done = set()
+    # Resume past what SUCCEEDED, not past what was attempted. Counting a failed
+    # row as done means one transient 429 permanently marks a question unjudged:
+    # the re-run skips it, the tally silently shrinks, and nothing reports that it
+    # happened. Observed for real -- a rate-limit misconfiguration failed 17 of the
+    # first 31 rows, and every one of them would have been skipped forever.
+    done, failed = set(), 0
     if out.exists():
-        done = {json.loads(l)["id"] for l in open(out, encoding="utf-8")}
-        print(f"resuming: {len(done)} already judged")
+        for line in open(out, encoding="utf-8"):
+            row = json.loads(line)
+            if "error" in row:
+                failed += 1
+            else:
+                done.add(row["id"])
+        print(f"resuming: {len(done)} already judged"
+              + (f", retrying {failed} that failed" if failed else ""))
 
     # Only answerable questions. The rest are scored exactly by said_insufficient.
     todo = [r for r in rows
@@ -339,13 +377,24 @@ def cmd_report(k=8):
         p = RUNS / f"judged_{'oracle' if oracle else 'e2e'}_k{k}.jsonl"
         if not p.exists():
             continue
+        # One verdict per question, keeping the most recent. The file is append-only
+        # and resumable, so a question can legitimately appear more than once -- a
+        # row that errored and was later retried, or, as happened here, two runs
+        # appending concurrently because a kill did not take. Counting rows instead
+        # of questions then reports more questions judged than the key contains
+        # (73 of 69), and quietly inflates every category tally with it. A scoreboard
+        # that can print a denominator larger than the answer key is not one to
+        # trust, so the de-duplication lives here rather than in a cleanup script.
         rows = [json.loads(l) for l in open(p, encoding="utf-8")]
-        ok = [r for r in rows if "error" not in r]
+        by_id = {r["id"]: r for r in rows if "error" not in r}
+        ok = list(by_id.values())
         if not ok:
             continue
+        dupes = sum(1 for r in rows if "error" not in r) - len(ok)
         label = "ORACLE" if oracle else "END-TO-END"
         counts = Counter(r["verdict"] for r in ok)
-        print(f"=== {label} ===  {len(ok)} answerable questions judged")
+        print(f"=== {label} ===  {len(ok)} answerable questions judged"
+              + (f"  ({dupes} duplicate row(s) collapsed)" if dupes else ""))
         for v in VERDICTS:
             if counts[v]:
                 print(f"  {v:<22}{counts[v]:>4}  ({counts[v] * 100 // len(ok)}%)")
