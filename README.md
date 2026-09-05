@@ -627,6 +627,32 @@ is the only one of the eight with this problem, and it is documented in
   ones drafted from a preamble they do not, which distorts oracle-mode results.
   q062 is the known instance.
 
+## A local UI — `python space/app.py`
+
+There is a small Gradio app for poking at the pipeline by hand: type a question,
+see the answer, the citation checks, and the eight passages that produced it, with
+any passage bound to the wrong class of institution flagged. Toggles for `k`, the
+entity filter and reranking make the central result touchable — turn reranking off,
+ask the same question, watch the ordering change.
+
+```
+pip install gradio
+python space/sync.py      # assemble it from the modules at the repo root
+python space/app.py       # http://127.0.0.1:7860
+```
+
+**It is not deployed anywhere, deliberately.** It was built to run on Hugging Face
+Spaces and would, but two things argued against it: a public demo draws on a
+personal free-tier allowance of roughly 70 questions a day, so any real traffic
+degrades it to retrieval-only; and a demo is the one artefact that cannot show what
+this project is actually about. You cannot click your way to "the answer key was
+written before the results existed". The measurements are the deliverable, and they
+are all in this file and in `data/eval/`.
+
+The app is assembled by `space/sync.py` from the pipeline's own modules rather than
+being a copy of them, so it cannot quietly drift into demonstrating something the
+measurements no longer describe. `python space/sync.py --check` fails if it has.
+
 ## Tests — `pytest tests/`
 
 31 tests, no corpus, no model, no API key, ~1 second. They cover the machinery

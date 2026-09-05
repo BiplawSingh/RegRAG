@@ -19,6 +19,14 @@ are **checked against the source they claim** rather than merely displayed.
 Full write-up, evaluation harness and measured results:
 **https://github.com/BiplawSingh/RegRAG**
 
+> **Run it locally:** `python space/sync.py && python space/app.py`
+>
+> This app is not currently hosted. The frontmatter above is kept so it *can* be
+> deployed to a Hugging Face Space unchanged, but a public demo would draw on a
+> personal free-tier generation allowance of ~70 questions a day and degrade to
+> retrieval-only under any real traffic. The project's claims rest on the measured
+> results in the repo, not on a demo.
+
 ## What this demo is showing
 
 RBI reissues the same rule once per class of regulated entity, so a KYC amendment
