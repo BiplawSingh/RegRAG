@@ -21,7 +21,7 @@ confirms that span actually occurs in the chunk it was attributed to.
 That check is the point. A model can emit a citation that looks right and quotes
 text no source contains -- prose-parsed citations hide it, and a metric built on
 "the model said [3]" scores a fabrication as a hit. An unverified quote here is a
-visible, countable failure, which is what Week 2's citation-accuracy number needs.
+visible, countable failure, which is what the citation-accuracy metric needs.
 """
 
 import argparse
@@ -55,8 +55,8 @@ for _stream in (sys.stdout, sys.stderr):
         _stream.reconfigure(errors="replace")
 
 # Groq, not Gemini. Gemini's free tier metered ~20 requests per day per model, which
-# a single 20-question batch exhausted -- Week 2 needs ~360 calls (90 questions x
-# baseline + judge + ablations), so that was five days per run.
+# a single 20-question batch exhausted -- a full evaluation needs ~360 calls (90
+# questions x baseline + judge + ablations), so that was five days per run.
 #
 # Groq's free tier is 1,000 requests/day on this model, but requests are not the
 # real ceiling: 200,000 tokens/day is. At ~2,700 tokens per call (8 chunks of

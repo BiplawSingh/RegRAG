@@ -16,9 +16,32 @@ RBI reissues the same rule once per class of regulated entity — a KYC amendmen
 exists as ten near-identical circulars, one each for Commercial Banks, Small
 Finance Banks, NBFCs, and so on. **74% of the corpus sits in a near-duplicate
 family.** Retrieval that ignores which entity a document binds returns the wrong
-institution's rules most of the time (measured: 35% precision unfiltered vs. 92%
-with the entity filter — see `embed.py entity-test`). Every chunk in this pipeline
-carries an `applies_to` tag for exactly this reason.
+institution's rules — and a better ranker does not fix it. Every chunk in this
+pipeline carries an `applies_to` tag for exactly this reason.
+
+Measured across all 36 questions in the answer key that name an institution,
+with the entity filter switched off — `python retrieval_lab.py entity`:
+
+| ranking | passages binding the wrong institution |
+|---|---|
+| dense only | 43% (121 of 281) |
+| hybrid, dense + BM25 | 43% (121 of 281) |
+| hybrid + cross-encoder rerank | **35%** (100 of 286) |
+
+**Better ranking barely touches this.** Keyword search changes nothing, and the
+cross-encoder — which reads the question and the passage together — trims it by
+about a fifth and then stops. A third of what it returns is still another
+institution's copy of the rule, because the copies differ by a single noun. No
+amount of reading the text separates them; only the metadata does.
+
+With the filter on, the rate is zero. That row is left out of the table on purpose:
+a hard filter cannot admit a passage binding another class, so zero is true by
+construction and proves nothing. The finding is the rows above it.
+
+(The original motivation for the filter was `embed.py entity-test`: 8 hand-picked
+queries, dense only, top-10, 35% precision unfiltered vs 92% filtered. It pointed
+the right way, but its query set, depth and denominator all differ from the table
+above, so the two are not comparable and are not presented as a before-and-after.)
 
 This one property shapes every design decision below, and it is also why several
 obvious-looking metrics turn out to measure less than they appear to.
@@ -280,8 +303,8 @@ passages, not documents.
 
 Two honest notes on this table:
 
-- **Structure-aware chunking has no row, and cannot be given one.** It shipped in
-  Week 1, before any measurement existed, so there is no dense-only-over-naive-chunks
+- **Structure-aware chunking has no row, and cannot be given one.** It was in place
+  before any measurement existed, so there is no dense-only-over-naive-chunks
   number to compare against — and one cannot be produced retroactively, because
   `gold_chunk_ids` indexes *these* chunks. Re-chunking invalidates every pointer in
   the answer key, so the comparison would need the key re-authored against the new

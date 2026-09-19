@@ -20,7 +20,7 @@ different questions:
                 and is the thing an eval script reads.
     Langfuse    a UI over *nested* timings -- embed vs. vector-search vs. LLM
                 as separate spans under one trace -- plus token/cost capture
-                and the dataset features Week 2's eval needs.
+                and the dataset features the eval harness needs.
 
 log.jsonl gives one `seconds` number per question. A trace tells you which of
 the three stages spent it.

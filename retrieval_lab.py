@@ -547,6 +547,69 @@ def cmd_baseline(k=DEFAULT_K):
         print("\nthe bench is NOT measuring the deployed pipeline -- fix before trusting it")
 
 
+def cmd_entity(k=DEFAULT_K):
+    """How often retrieval returns the wrong institution's rule, filter on vs off.
+
+    Replaces the 8-query figure in embed.py's entity-test with a measurement over
+    every question in the answer key that names an institution, through the
+    DEPLOYED ranking (hybrid fetch + reranker), not dense retrieval alone.
+
+    Read the two rows differently. "Filter on" is zero by construction -- a hard
+    filter cannot admit a passage binding another class -- so it proves nothing on
+    its own. The finding is the "filter off" row: how much wrong-institution text
+    survives even after a cross-encoder has read the question and the passage
+    together. That is the measured case for putting the filter inside the search.
+    """
+    chunks, vecs, qa = load()
+    ctx = Ctx(chunks, vecs, qa)
+    named = [i for i, q in enumerate(qa) if detect_entities(q["question"])]
+
+    # Every ranking stage, so the table shows what each one does and does not fix.
+    # Measured on the same questions with the same metric, which is what makes the
+    # rows comparable -- an earlier draft of this analysis set an 8-query dense-only
+    # figure beside this one and read a 2x improvement out of two numbers that
+    # differed in query set, k, and denominator. The same-set comparison is ~1.2x.
+    def dense(i, mask):
+        return R.top_k(ctx.vecs @ ctx.qvecs[i], mask, k)
+
+    def hybrid(i, mask):
+        return R.fuse(R.top_k(ctx.vecs @ ctx.qvecs[i], mask, R.DEPTH),
+                      R.top_k(ctx.need_bm25().score(qa[i]["question"]), mask, R.DEPTH))[:k]
+
+    def deployed(i, mask):
+        return R.rerank(qa[i]["question"], R.fuse(
+            R.top_k(ctx.vecs @ ctx.qvecs[i], mask, R.DEPTH),
+            R.top_k(ctx.need_bm25().score(qa[i]["question"]), mask, R.DEPTH)),
+            k, with_header=True)
+
+    def run(rank, use_filter):
+        wrong = slots = 0
+        for i in named:
+            want = set(detect_entities(qa[i]["question"]))
+            for j in rank(i, ctx.masks[i] if use_filter else None):
+                binds = set(chunks[j]["applies_to"] or [])
+                if binds:                    # unscoped passages are never "wrong"
+                    slots += 1
+                    wrong += not (binds & want)
+        return wrong, slots
+
+    print(f"{len(named)} of {len(qa)} questions name an institution | k={k}\n")
+    result = {"questions": len(named), "k": k, "rows": []}
+    for label, rank, use in (("dense only,        filter off", dense, False),
+                             ("hybrid,            filter off", hybrid, False),
+                             ("hybrid + rerank,   filter off", deployed, False),
+                             ("hybrid + rerank,   filter ON ", deployed, True)):
+        w, s = run(rank, use)
+        result["rows"].append({"ranking": label.split(",")[0].strip(),
+                               "filter": use, "wrong": w, "scoped_slots": s})
+        print(f"  {label}   {w:>3}/{s:<4} wrong institution  ({w * 100 / max(s, 1):.0f}%)")
+    print("\n  (the filter-ON row is zero by construction -- the finding is the rows above it)")
+
+    out = ROOT / "eval" / f"entity_filter_k{k}.json"
+    out.write_text(json.dumps(result, indent=1), encoding="utf-8")
+    print(f"\nwrote {out}")
+
+
 def cmd_inspect(qid, k=DEFAULT_K):
     """One question, every variant, with what actually came back.
 
@@ -617,6 +680,8 @@ if __name__ == "__main__":
     c = sub.add_parser("compare", help="table from whatever `run` has scored")
     c.add_argument("-k", type=int, default=DEFAULT_K)
     c.add_argument("--only", nargs="*", choices=list(VARIANTS), default=None)
+    e_ = sub.add_parser("entity", help="wrong-institution rate, filter on vs off")
+    e_.add_argument("-k", type=int, default=DEFAULT_K)
     i = sub.add_parser("inspect", help="one question, every variant")
     i.add_argument("qid")
     i.add_argument("-k", type=int, default=DEFAULT_K)
@@ -629,6 +694,8 @@ if __name__ == "__main__":
         cmd_run(a.names, a.k, a.force)
     elif a.cmd == "compare":
         cmd_compare(a.k, a.only)
+    elif a.cmd == "entity":
+        cmd_entity(a.k)
     elif a.cmd == "inspect":
         cmd_inspect(a.qid, a.k)
     else:

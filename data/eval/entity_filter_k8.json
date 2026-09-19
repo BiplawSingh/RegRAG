@@ -1,0 +1,30 @@
+{
+ "questions": 36,
+ "k": 8,
+ "rows": [
+  {
+   "ranking": "dense only",
+   "filter": false,
+   "wrong": 121,
+   "scoped_slots": 281
+  },
+  {
+   "ranking": "hybrid",
+   "filter": false,
+   "wrong": 121,
+   "scoped_slots": 281
+  },
+  {
+   "ranking": "hybrid + rerank",
+   "filter": false,
+   "wrong": 100,
+   "scoped_slots": 286
+  },
+  {
+   "ranking": "hybrid + rerank",
+   "filter": true,
+   "wrong": 0,
+   "scoped_slots": 283
+  }
+ ]
+}
