@@ -170,3 +170,44 @@ def test_header_text_falls_back_to_bare_text():
     those are tokens the cross-encoder pays for and learns nothing from."""
     c = {"subject": None, "section": None, "text": "The bank shall report."}
     assert R.header_text(c) == "The bank shall report."
+
+
+# ------------------------------ search, with scores --------------------------------
+class _FakeCrossEncoder:
+    """Scores a pair by the passage's length: deterministic, and deliberately an
+    ordering neither channel produced, so the rerank step is actually visible."""
+
+    def predict(self, pairs, **_):
+        return [float(len(p[1])) for p in pairs]
+
+
+@pytest.fixture
+def tiny_corpus(monkeypatch):
+    chunks = [{"text": t, "subject": None, "section": None, "applies_to": []}
+              for t in DOCS]
+    monkeypatch.setitem(R._CACHE, "chunks", chunks)
+    monkeypatch.setitem(R._CACHE, "bm25", R.BM25(DOCS))
+    monkeypatch.setitem(R._CACHE, f"rr:{R.RERANK_MODEL}", _FakeCrossEncoder())
+    return chunks
+
+
+@pytest.mark.parametrize("do_rerank", [True, False])
+def test_asking_for_scores_does_not_change_the_ranking(tiny_corpus, do_rerank):
+    """The API asks for scores; the eval never does. If the flag moved a single
+    chunk, the demo would be showing a ranking the README never measured."""
+    kw = dict(k=3, dense_ids=[3, 0, 1, 2], do_rerank=do_rerank, depth=4)
+    plain = R.search("bank shall report counterfeit notes", **kw)
+    scored = R.search("bank shall report counterfeit notes", with_scores=True, **kw)
+    assert [c["chunk_id"] for c in plain] == [c["chunk_id"] for c in scored]
+    assert all("scores" not in c for c in plain)
+
+
+def test_scores_report_each_stage(tiny_corpus):
+    out = R.search("counterfeit", k=4, dense_ids=[3, 0], depth=4, with_scores=True)
+    by_id = {c["chunk_id"]: c["scores"] for c in out}
+    assert by_id[3]["dense_rank"] == 1 and by_id[0]["dense_rank"] == 2
+    assert by_id[0]["bm25_rank"] == 1            # the only doc with the term
+    assert by_id[1]["dense_rank"] is None        # a channel that never saw it
+    assert by_id[0]["rrf"] == pytest.approx(1 / 62 + 1 / 61)
+    rerank = [c["scores"]["rerank"] for c in out]
+    assert rerank == sorted(rerank, reverse=True)  # final order IS the rerank order

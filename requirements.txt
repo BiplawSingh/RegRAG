@@ -26,6 +26,11 @@ scipy>=1.17
 groq>=1.6
 pydantic>=2.12
 
+# api/ -- the HTTP API the web frontend calls. httpx (above) doubles as the
+# test client's transport.
+fastapi>=0.115
+uvicorn>=0.30
+
 # tracing.py -- LLM observability. Optional at runtime: without LANGFUSE_* keys
 # everything no-ops and the pipeline runs unchanged.
 langfuse>=4.14

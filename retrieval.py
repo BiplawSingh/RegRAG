@@ -196,12 +196,18 @@ def top_k(scores, mask, k):
     return [int(i) for i in idx[np.argsort(-s[idx])]]
 
 
-def rrf(rankings, k_const=60):
-    """Reciprocal-rank fusion: sum of 1/(60 + rank) across the input orderings."""
+def rrf_scores(rankings, k_const=60):
+    """Each id's fused score: sum of 1/(60 + rank) across the input orderings."""
     fused = defaultdict(float)
     for ranking in rankings:
         for rank, idx in enumerate(ranking, 1):
             fused[idx] += 1.0 / (k_const + rank)
+    return fused
+
+
+def rrf(rankings, k_const=60):
+    """Reciprocal-rank fusion: the ids, best fused score first."""
+    fused = rrf_scores(rankings, k_const)
     return [i for i, _ in sorted(fused.items(), key=lambda kv: -kv[1])]
 
 
@@ -217,21 +223,27 @@ def get_reranker(model=None):
     return _CACHE[key]
 
 
-def rerank(question, candidates, k, with_header=True, model=None):
+def rerank(question, candidates, k, with_header=True, model=None, scored=False):
     """Re-sort candidate chunk ids with the cross-encoder, keep the best k.
 
     The ceiling here is fixed by the candidate set, not by the model: whatever the
     fetch missed, no re-sorting recovers. That is why DEPTH is a measured number
     and not a default someone liked the look of.
+
+    `scored=True` returns (id, cross-encoder score) pairs in the same order, for
+    callers that show the score -- the ranking is identical either way.
     """
     if not candidates:
         return []
     chunks = corpus()
     pairs = [(question, header_text(chunks[j]) if with_header else chunks[j]["text"])
              for j in candidates]
-    scores = get_reranker(model).predict(pairs, batch_size=32, show_progress_bar=False)
-    order = np.argsort(-np.asarray(scores))
-    return [candidates[j] for j in order[:k]]
+    scores = np.asarray(get_reranker(model).predict(pairs, batch_size=32,
+                                                    show_progress_bar=False))
+    order = np.argsort(-scores)[:k]
+    if scored:
+        return [(candidates[j], float(scores[j])) for j in order]
+    return [candidates[j] for j in order]
 
 
 def fuse(dense_ids, lexical_ids, depth=DEPTH):
@@ -251,13 +263,19 @@ def lexical_ids(question, entities, use_filter=True, depth=DEPTH):
 
 
 def search(question, k=8, entity=None, use_filter=True, dense_ids=None,
-           do_rerank=None, depth=DEPTH):
+           do_rerank=None, depth=DEPTH, with_scores=False):
     """Retrieve k chunks: hybrid fetch, then cross-encoder rerank.
 
     `dense_ids` lets the caller supply the dense ranking it already has -- the
     pipeline gets it from Qdrant, the offline bench from a numpy dot product.
     Everything after that point is shared, which is the reason the bench's numbers
     transfer to the deployed system instead of merely resembling them.
+
+    `with_scores=True` attaches each stage's view of every returned chunk under
+    `scores`: its rank in each channel (None if that channel did not surface it
+    in the top `depth`), its fused RRF score, and its cross-encoder score. These
+    are the numbers the ranking was already computed from, so asking for them
+    changes nothing about which chunks come back or in what order.
     """
     chunks = corpus()
     do_rerank = RERANK if do_rerank is None else do_rerank
@@ -266,6 +284,7 @@ def search(question, k=8, entity=None, use_filter=True, dense_ids=None,
         dense_ids = _dense_from_qdrant(question, entity if use_filter else None, depth)
     lex = lexical_ids(question, entity, use_filter=use_filter, depth=depth)
 
+    ce = {}
     if not do_rerank:
         # The ablation path. Fusing without reranking is worth +1 question over
         # dense alone, which is the honest measure of how much of the gain belongs
@@ -274,12 +293,22 @@ def search(question, k=8, entity=None, use_filter=True, dense_ids=None,
         pool = fuse(dense_ids, lex, depth)
         ids = pool[:k]
     else:
-        ids = rerank(question, fuse(dense_ids, lex, depth), k)
+        ranked = rerank(question, fuse(dense_ids, lex, depth), k, scored=True)
+        ids = [j for j, _ in ranked]
+        ce = dict(ranked)
+
+    if with_scores:
+        dense_rank = {j: r for r, j in enumerate(dense_ids[:depth], 1)}
+        lex_rank = {j: r for r, j in enumerate(lex[:depth], 1)}
+        fused = rrf_scores([dense_ids[:depth], lex[:depth]])
 
     out = []
     for j in ids:
         c = dict(chunks[j])
         c["chunk_id"] = j
+        if with_scores:
+            c["scores"] = {"dense_rank": dense_rank.get(j), "bm25_rank": lex_rank.get(j),
+                           "rrf": fused.get(j, 0.0), "rerank": ce.get(j)}
         out.append(c)
     return out
 

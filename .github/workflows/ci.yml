@@ -38,8 +38,9 @@ jobs:
         # are ~2GB and are only needed to embed or rerank -- neither of which any
         # test does. The tested modules import numpy, scipy and pydantic, and
         # retrieval.py defers the heavy imports to the functions that need them,
-        # which is what makes this split possible.
-        run: pip install numpy scipy pydantic pytest ruff pyyaml
+        # which is what makes this split possible. fastapi + httpx are for the API
+        # tests, which swap the model-backed stages for fakes.
+        run: pip install numpy scipy pydantic pytest ruff pyyaml fastapi httpx
 
       - name: Lint for real errors
         run: ruff check --select F .
