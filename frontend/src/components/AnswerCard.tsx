@@ -1,16 +1,12 @@
 import type { AskResponse } from '../types'
-import { verdict } from '../verification'
 import { CitationMarkers } from './CitationMarkers'
 
 type Props = {
   result: AskResponse
-  activeCitation: number | null
   onSelectCitation: (id: number) => void
 }
 
-export function AnswerCard({ result, activeCitation, onSelectCitation }: Props) {
-  const active = result.citations.find((c) => c.id === activeCitation)
-  const cited = active ? result.sources[active.source - 1] : undefined
+export function AnswerCard({ result, onSelectCitation }: Props) {
   const verified = result.citations.filter((c) => c.verified).length
 
   return (
@@ -33,7 +29,8 @@ export function AnswerCard({ result, activeCitation, onSelectCitation }: Props) 
 
       {result.insufficient_context && (
         <p className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
-          <strong>The retrieved circulars don't answer this.</strong> The model was told to say so rather than guess.
+          <strong>The retrieved circulars don't answer this.</strong> The model is told to say so rather than guess. The
+          passages it was given are under "How this answer was found".
         </p>
       )}
 
@@ -41,19 +38,10 @@ export function AnswerCard({ result, activeCitation, onSelectCitation }: Props) 
       {result.answer && <p className="whitespace-pre-line leading-relaxed">{result.answer}</p>}
 
       {result.citations.length > 0 && (
-        <CitationMarkers citations={result.citations} active={activeCitation} onSelect={onSelectCitation} />
-      )}
-
-      {active && (
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
-          <p className="text-slate-600">
-            <span className="font-mono">[{active.id}]</span>{' '}
-            cites passage {active.source}
-            {cited && ` · ${cited.circular.number} · ${cited.circular.issue_date ?? 'undated'}`}
-          </p>
-          <blockquote className="mt-2 border-l-2 border-slate-300 pl-3 italic text-slate-800">{active.quote}</blockquote>
-          <p className="mt-2 text-slate-600">{verdict(active).long}</p>
-        </div>
+        <>
+          <CitationMarkers citations={result.citations} onSelect={onSelectCitation} />
+          <p className="text-xs text-slate-500">Open a citation to read the passage it quotes.</p>
+        </>
       )}
     </section>
   )

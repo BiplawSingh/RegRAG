@@ -246,7 +246,71 @@ self-referential. Two numbering systems need two notations.
 **Chose:** `verification.ts` turns a citation into a tone, an icon and one plain
 sentence. Everything that shows a verification result uses it. A verified quote that
 also appears in sibling passages gets its own colour (blue), not green.
-**Why:** the marker, the preview, the side panel and the retrieval table must never
-describe the same result differently. A green tick on a quote that five circulars
+**Why:** the marker, the side panel and the retrieval details must never describe the
+same result differently. A green tick on a quote that five circulars
 share would claim more than the check proved, which is the README's
 unfalsifiable-citation finding made visible.
+
+### 26. The source panel slides over the page; it doesn't split the layout
+**Chose:** a panel that slides in from the right over a dimmed page, full width on
+a phone. Escape, the ✕ or a click outside closes it.
+**Rejected:** expanding the passage inline under the answer; a permanent
+two-column layout.
+**Why:** passages run up to about 2,300 characters, and reading one needs the
+room. Inline expansion pushes the answer and the other markers off screen. Two
+columns squeeze the answer on a laptop and don't fit on a phone at all. An
+overlay gives the passage the whole height on any screen. Because it covers the
+page, it behaves like a dialog: focus moves into it, the page behind stops
+scrolling, and focus returns to the marker that opened it, so keyboard and
+screen-reader users don't get lost.
+
+### 27. The panel shows the passage where the quote actually is
+**Chose:** a misattributed quote opens the passage that really contains it,
+highlighted, with a note saying which passage was cited. A quote found nowhere
+opens the passage it cited, unhighlighted, and prints the quote in the note.
+**Why:** a highlight that wasn't in the text would be a small fabrication of its
+own. Showing where the quote really is makes the verification result checkable
+by eye rather than taken on trust.
+
+### 28. The retrieval details use the browser's `<details>` element
+**Chose:** native `<details>`/`<summary>`.
+**Rejected:** a `useState` open/closed flag and a custom button.
+**Why:** the browser already provides a collapsible section that is
+keyboard-accessible and announced correctly by screen readers, with no state to
+manage. It opens automatically when there is no answer (quota used up, model
+unreachable), because then the passages are the only content. Each new answer
+gets a fresh section via React's `key`, so it doesn't inherit the previous
+answer's open or closed state.
+
+### 29. The retrieval view states only what it can compute
+**Chose:** each passage shows its rank in both searches, its fused score, its
+rerank score, and whether one or both searches found it. Step 1 counts how many
+classes of institution the passages span.
+**Why:** it lets a visitor see the README's findings on their own question: a
+passage the reranker took from #18 to #1, passages only one search found, and an
+unscoped question pulling in near-identical copies of one rule. The wording
+reports counts ("circulars binding 5 different classes") rather than asserting
+the copies are identical, because the UI can count classes but can't prove the
+text matches.
+
+### 30. The example questions were chosen by running them
+**Chose:** four questions, each labelled with the behaviour it shows, all run
+against the live API first.
+**Rejected:** "What is the RBI repo rate?" as the refusal example, although
+`space/app.py` lists it as "not in the corpus -- should decline".
+**Why:** run live, it was answered ("5.25 per cent") with a verified citation.
+The corpus does contain it. A chip promising a refusal and delivering an answer
+would undermine the one claim the demo makes, so the refusal example is an
+off-topic question ("What time do banks close for lunch?"), which the pipeline
+declines, consistent with the README's finding that off-topic refusal works.
+After the first answer the chips shrink to one line, so they stay available
+without pushing the answer down.
+
+### 31. `useCallback` for the panel's close handler, and nowhere else
+**Chose:** `closePanel` is wrapped in `useCallback`.
+**Why:** a function defined inside a component is a new object on every render.
+The panel re-registers its Escape-key listener whenever its `onClose` prop
+changes, so an unwrapped handler would remove and re-add the listener on every
+render. `useCallback` keeps the same function between renders. Nothing else is
+wrapped: elsewhere a new function per render costs nothing measurable, and
+wrapping everything "just in case" is exactly the over-engineering this app avoids.
