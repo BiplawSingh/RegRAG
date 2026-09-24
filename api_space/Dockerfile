@@ -24,6 +24,11 @@ RUN pip install --no-cache-dir --user torch --index-url https://download.pytorch
 RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncoder; \
 SentenceTransformer('BAAI/bge-small-en-v1.5'); CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')"
 
+# From here on the models are on disk, so stop asking the Hub about them. Without
+# this, every start still sends it requests for optional files and retries each
+# one, which slowed a start with no network by minutes.
+ENV HF_HUB_OFFLINE=1
+
 COPY --chown=user . .
 
 # One worker, on purpose: see DECISIONS.md #11.
