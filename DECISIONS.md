@@ -169,3 +169,84 @@ ones, configured from the environment.
 constructor injection (the Spring habit). The fake replaces only `retrieve` and
 `generate`, the two stages that need a model or a key, so response building,
 highlighting and the fallbacks are tested as real code.
+
+---
+
+## The frontend
+
+### 17. One `status` value for the page, not separate loading, error and data flags
+**Chose:** a single piece of state that is exactly one of `idle`, `loading`,
+`error` (with a message) or `done` (with a result). In TypeScript this is a
+"discriminated union", the same idea as a Java `sealed interface` with one
+record per case.
+**Rejected:** `isLoading`, `error` and `data` as three independent pieces of state.
+**Why:** three independent values allow combinations that should never happen, such
+as an error and a stale answer shown together, or a spinner over a finished result.
+Every place that sets them has to remember to reset the other two. With one value,
+the impossible combinations cannot be written, and the compiler checks that a
+result is only read in the `done` state.
+
+### 18. Fetch in the click handler, with no data-fetching library
+**Chose:** `askQuestion()` is called directly from the form's submit handler.
+**Rejected:** `useEffect` that fetches when the question changes; React Query / SWR.
+**Why:** a question is asked because someone pressed a button, not because a value
+changed, so the handler is where the request belongs. An effect would fire on every
+keystroke, or need extra flags to stop it. React Query earns its place with caching,
+background refetching and many endpoints; this app has one POST that should never
+be cached or refetched.
+
+### 19. The API address is a build-time setting (`VITE_API_URL`), not a dev proxy
+**Chose:** the frontend calls `VITE_API_URL` directly in development and production.
+**Rejected:** Vite's dev-server proxy, which hides cross-origin calls locally.
+**Why:** in production the frontend (Vercel) and the API (another host) are on
+different origins, so CORS must work. Calling the API directly in development means
+CORS is exercised on every local run instead of being discovered broken at deploy
+time. Anything prefixed `VITE_` is compiled into the public JavaScript, so this
+variable holds only a URL and never a key.
+
+### 20. The answer is rendered as plain text, not Markdown
+**Chose:** plain text with CSS `whitespace-pre-line`, which keeps the model's line
+breaks.
+**Rejected:** a Markdown renderer.
+**Why:** measured, not assumed: of 19 logged answers, none used bold, bullets or
+tables, and one used a numbered list laid out with line breaks, which
+`pre-line` already displays correctly. A Markdown library adds a dependency, and
+rendering model output as HTML adds a path for injected markup. React escapes
+plain text automatically.
+
+### 21. The question text lives in `App`, not inside the form
+**Chose:** a "controlled" form. `App` holds the text and passes it down with a
+setter, a pattern React calls "lifting state up".
+**Why:** the example-question chips (next phase) have to fill the box and ask. If
+the form kept its own text, nothing outside it could change that text.
+
+### 22. The Ask button is disabled while a request is in flight
+**Chose:** disable the button while loading.
+**Rejected:** cancelling the previous request with `AbortController` when a new one
+starts.
+**Why:** each request costs Groq allowance, so a second request fired while the
+first is running is exactly what the rate limits exist to discourage. Disabling the
+button makes the out-of-order-response problem impossible instead of handling it.
+
+### 23. A 90-second timeout, and error messages written for visitors
+**Chose:** `AbortSignal.timeout(90s)`. Every failure becomes one sentence that says
+what happened and what to do, and every error state has a Try again button.
+**Why:** a free host that has gone to sleep can take close to a minute to wake up,
+so a short timeout would fail exactly the first visitor. A request with no timeout
+at all can spin forever. "Failed to fetch" means nothing to a recruiter; "the free
+host sleeps when idle, try again shortly" tells them it isn't broken.
+
+### 24. `[n]` means a citation; retrieved chunks are "passage n"
+**Chose:** square brackets only for citation markers; passages are named in words.
+**Why:** citation [2] often cites passage 1. The first build wrote both as `[n]`, and
+the preview for citation [2] read "also appears in sources [2], [3]…", which looks
+self-referential. Two numbering systems need two notations.
+
+### 25. Verification is described in one module, with its own colour for "ambiguous"
+**Chose:** `verification.ts` turns a citation into a tone, an icon and one plain
+sentence. Everything that shows a verification result uses it. A verified quote that
+also appears in sibling passages gets its own colour (blue), not green.
+**Why:** the marker, the preview, the side panel and the retrieval table must never
+describe the same result differently. A green tick on a quote that five circulars
+share would claim more than the check proved, which is the README's
+unfalsifiable-citation finding made visible.
