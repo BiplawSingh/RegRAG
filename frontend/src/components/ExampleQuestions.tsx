@@ -16,16 +16,18 @@ type Props = {
 
 export function ExampleQuestions({ onPick, disabled, compact }: Props) {
   if (compact) {
+    // On a phone the four chips would wrap into four rows and push the answer
+    // down, so there they scroll sideways in one row; from `sm` up they wrap.
     return (
-      <div className="flex flex-wrap items-center gap-2 text-sm">
-        <span className="text-slate-500">Try:</span>
+      <div className="-mx-4 flex items-center gap-2 overflow-x-auto px-4 text-sm sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
+        <span className="shrink-0 text-slate-500">Try:</span>
         {EXAMPLES.map((e) => (
           <button
             key={e.question}
             type="button"
             disabled={disabled}
             onClick={() => onPick(e.question)}
-            className="rounded-full border border-slate-200 bg-white px-3 py-1 text-slate-700 hover:border-indigo-300 hover:text-indigo-700 disabled:opacity-50"
+            className="shrink-0 whitespace-nowrap rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-700 hover:border-indigo-300 hover:text-indigo-700 disabled:opacity-50 sm:py-1"
           >
             {e.question}
           </button>

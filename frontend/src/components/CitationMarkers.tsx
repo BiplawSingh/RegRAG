@@ -23,7 +23,8 @@ export function CitationMarkers({ citations, onSelect }: Props) {
             aria-haspopup="dialog"
             aria-label={`Citation ${c.id}: ${v.short}`}
             title={v.long}
-            className={`rounded-md border px-2 py-0.5 font-mono text-sm transition hover:brightness-95 ${toneClasses[v.tone]}`}
+            // min-h-9 on touch screens gives a finger a 36px target; sm: tightens it
+            className={`min-h-9 rounded-md border px-2.5 font-mono text-sm transition hover:brightness-95 sm:min-h-0 sm:py-0.5 ${toneClasses[v.tone]}`}
           >
             [{c.id}] <span aria-hidden="true">{v.icon}</span>
           </button>

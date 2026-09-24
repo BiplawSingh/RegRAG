@@ -52,9 +52,16 @@ export function RetrievalDetails({ result, defaultOpen, onOpenPassage, onOpenCit
             {citations.length > 0 && ` · ${citations.filter((c) => c.verified).length} of ${citations.length} citations verified`}
           </p>
         </div>
-        <span aria-hidden="true" className="text-slate-400 transition group-open:rotate-180">
-          ▾
-        </span>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 20 20"
+          className="size-5 shrink-0 text-slate-400 transition group-open:rotate-180"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M5 8l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </summary>
 
       <div className="space-y-8 border-t border-slate-200 p-5">
@@ -112,6 +119,11 @@ export function RetrievalDetails({ result, defaultOpen, onOpenPassage, onOpenCit
             <div><dt className="inline font-medium text-slate-700">Rerank</dt> <dd className="inline">cross-encoder score, which set this order</dd></div>
           </dl>
 
+          {sources.length === 0 && (
+            <p className="rounded-lg border border-dashed border-slate-300 p-4 text-sm text-slate-500">
+              No passages were retrieved for this question. Try rephrasing it.
+            </p>
+          )}
           <ol className="space-y-3">
             {sources.map((s) => {
               const ch = channel(s.scores)

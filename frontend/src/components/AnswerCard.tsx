@@ -43,6 +43,15 @@ export function AnswerCard({ result, onSelectCitation }: Props) {
           <p className="text-xs text-slate-500">Open a citation to read the passage it quotes.</p>
         </>
       )}
+
+      {/* An answer with no citations has nothing that could be checked. Say so,
+          rather than letting the absence of red markers read as a clean bill. */}
+      {result.answer && !result.insufficient_context && result.citations.length === 0 && (
+        <p className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+          This answer came back without citations, so none of it could be checked against the circulars. Treat it with
+          caution.
+        </p>
+      )}
     </section>
   )
 }

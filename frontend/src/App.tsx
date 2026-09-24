@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import { ApiError, askQuestion } from './api'
+import { About } from './components/About'
 import { AnswerCard } from './components/AnswerCard'
 import { ErrorMessage } from './components/ErrorMessage'
 import { ExampleQuestions } from './components/ExampleQuestions'
@@ -52,7 +53,12 @@ export default function App() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:py-16">
       <header className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight">RegRAG</h1>
+        <div className="flex items-baseline justify-between gap-4">
+          <h1 className="text-3xl font-semibold tracking-tight">RegRAG</h1>
+          <a href="#about" className="text-sm font-medium text-indigo-700 hover:underline">
+            About this project
+          </a>
+        </div>
         <p className="mt-2 text-slate-600">
           Ask a question about Indian banking regulation. Answers are drawn from 506 RBI circulars, and every quote is
           checked against the source it cites.
@@ -82,6 +88,10 @@ export default function App() {
           </>
         )}
       </main>
+
+      <div className="mt-16">
+        <About />
+      </div>
     </div>
   )
 }

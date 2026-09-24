@@ -297,7 +297,8 @@ text matches.
 **Chose:** four questions, each labelled with the behaviour it shows, all run
 against the live API first.
 **Rejected:** "What is the RBI repo rate?" as the refusal example, although
-`space/app.py` lists it as "not in the corpus -- should decline".
+`space/app.py` had labelled it "not in the corpus -- should decline" (since
+corrected).
 **Why:** run live, it was answered ("5.25 per cent") with a verified citation.
 The corpus does contain it. A chip promising a refusal and delivering an answer
 would undermine the one claim the demo makes, so the refusal example is an
@@ -314,3 +315,50 @@ changes, so an unwrapped handler would remove and re-add the listener on every
 render. `useCallback` keeps the same function between renders. Nothing else is
 wrapped: elsewhere a new function per render costs nothing measurable, and
 wrapping everything "just in case" is exactly the over-engineering this app avoids.
+
+### 32. The About figures are recomputed, and the 35% → 92% figure is not used
+**Chose:** six figures, each checked against the repo's own tools before use
+(`judge.py report`, `data/eval/retrieval_k8_filtered*.json`,
+`data/eval/answers_e2e_k8.jsonl`, `data/eval/entity_filter_k8.json`). The
+component lists its sources in a comment.
+**Rejected:** the "entity precision 35% → 92%" headline.
+**Why:** it came from 8 hand-picked queries using dense search only, and the
+README says it is not comparable to the main measurement. The entity figure used
+instead (35% wrong-institution passages even after reranking, across 36
+questions) is the one the README defends. Recomputing, not copying, also caught
+a trap: the judged-answers file is append-only, so it holds more rows than
+questions, and counting rows naively gives 52/73 instead of the correct 48/69.
+`judge.py report` removes the duplicates, so its number is the one quoted.
+
+### 33. The weakest result is on the page too
+**Chose:** a tile saying only 3 of 12 plausible-but-unanswerable questions are
+refused.
+**Why:** the README calls this the project's weakest result. Every other tile
+is a success, and a page of only good numbers reads as marketing. Reporting the
+failure next to them is what makes the successes believable. It's also the most
+interesting thing to discuss in an interview.
+
+### 34. Empty and degraded states say what happened in plain words
+**Chose:** a message for each case: an answer with no citations ("none of it
+could be checked, treat it with caution"), no retrieved passages, generation
+switched off or rate-limited, and the model declining to answer.
+**Why:** an answer with no citations shows no red markers, and that absence
+reads as "all checks passed" when nothing was checked. Each state gets a
+sentence rather than an empty box, so a visitor never has to guess whether the
+page is broken.
+
+### 35. Mobile: bigger touch targets, and example chips scroll sideways
+**Chose:** citation markers are at least 36px tall on phones (26px from the `sm`
+breakpoint up). After the first answer, the example chips become one row that
+scrolls sideways on phones and wraps on wider screens. Tested at 320px, 390px and
+1280px with no sideways scrolling of the page.
+**Why:** on a phone the four chips wrapped into four rows and pushed the answer
+below the fold. A small marker is fine for a mouse but is easy to miss with a
+finger.
+
+### 36. Link previews, no preview image
+**Chose:** a title and description in Open Graph meta tags, and a custom favicon.
+**Rejected:** an `og:image` for now.
+**Why:** the link will be pasted into messages to recruiters, and a preview with a
+real title beats "frontend". An `og:image` needs an absolute URL on the deployed
+site, so it waits until there is one.
