@@ -50,7 +50,8 @@ EXAMPLES = [
     "Which institutions are covered by the term 'All India Financial Institutions'?",
     "What conduct rules apply to recovery agents engaged by Housing Finance Companies?",
     "When is a loan account treated as out of order?",
-    "What is the RBI repo rate?",          # not in the corpus -- should decline
+    "What is the RBI repo rate?",          # in the corpus: answered, with a verified citation
+    "What time do banks close for lunch?",  # not in the corpus -- should decline
 ]
 
 _STATE = {}
