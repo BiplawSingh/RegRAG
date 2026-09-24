@@ -79,6 +79,20 @@ def c():
 
 
 # ---------------------------------------------------------------- contract --
+def test_root_points_at_the_endpoints(c):
+    body = c.get("/").json()
+    assert body["ask"] == "POST /ask" and body["docs"] == "/docs"
+
+
+def test_forwarding_debug_endpoint_is_off_unless_enabled(monkeypatch):
+    with client() as tc:
+        assert tc.get("/debug/forwarding").status_code == 404
+    monkeypatch.setenv("DEBUG_FORWARDING", "1")
+    with client(forwarded_hops=1) as tc:
+        body = tc.get("/debug/forwarding", headers={"X-Forwarded-For": "9.9.9.9, 1.1.1.1"}).json()
+    assert body["rate_limit_key"] == "1.1.1.1"
+
+
 def test_health_reports_ready_after_startup(c):
     body = c.get("/health").json()
     assert body == {"status": "ok", "chunks": 3, "models_loaded": True,

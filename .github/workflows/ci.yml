@@ -47,3 +47,25 @@ jobs:
 
       - name: Tests
         run: pytest tests/ -q
+
+  frontend:
+    # Type-check, lint and build the React app. `npm run build` runs `tsc` first,
+    # so the frontend is checked against its own copy of the contract
+    # (src/types.ts). It does NOT check that copy against api/schemas.py: the two
+    # are kept in step by hand, in the same commit.
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build

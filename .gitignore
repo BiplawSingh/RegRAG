@@ -48,6 +48,13 @@ space/data/
 space/flagged/
 space/.gradio/
 
+# The API Space, assembled the same way by `python space/sync.py --target api`.
+# Only its Dockerfile, README.md, requirements.txt, .gitattributes and
+# .dockerignore are written by hand.
+api_space/*.py
+api_space/api/
+api_space/data/
+
 # PDF downloads: rbidocs.rbi.org.in sits behind a WAF that returns challenge
 # pages, so this stays empty. The corpus comes from data/html/ instead.
 data/circulars/

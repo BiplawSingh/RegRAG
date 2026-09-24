@@ -59,6 +59,27 @@ def create_app(pipeline=None, limiter=None, origins=None, forwarded_hops=None):
         allow_headers=["Content-Type"],
     )
 
+    @app.get("/")
+    def root():
+        # The Hugging Face Space page shows this path. Point a curious visitor
+        # somewhere useful instead of at a 404.
+        return {"name": "RegRAG API", "ask": "POST /ask", "health": "/health",
+                "docs": "/docs", "source": "https://github.com/BiplawSingh/RegRAG"}
+
+    if os.getenv("DEBUG_FORWARDING") == "1":
+        @app.get("/debug/forwarding")
+        def debug_forwarding(request: Request):
+            # Off unless switched on. How many proxies a host puts in front of
+            # the app is not something to guess: set FORWARDED_HOPS wrong and
+            # every visitor shares one rate-limit budget, or anyone can reset
+            # theirs by sending a fake header. This shows the caller their OWN
+            # request as the server sees it, so the setting can be checked once
+            # after deploying and the endpoint switched off again.
+            return {"x_forwarded_for": request.headers.get("x-forwarded-for"),
+                    "peer": request.client.host if request.client else None,
+                    "forwarded_hops": forwarded_hops,
+                    "rate_limit_key": client_ip(request, forwarded_hops)}
+
     @app.get("/health", response_model=Health)
     def health():
         return Health(

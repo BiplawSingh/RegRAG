@@ -1,8 +1,9 @@
 """
-Assemble the Hugging Face Space from the source of truth.
+Assemble a Hugging Face Space from the source of truth.
 
-    python space/sync.py            # copy modules + data into space/
-    python space/sync.py --check    # report drift without copying
+    python space/sync.py                     # the Gradio demo  -> space/
+    python space/sync.py --target api        # the web API      -> api_space/
+    python space/sync.py --check [--target api]   # report drift without copying
 
 WHY A SCRIPT AND NOT A COMMITTED COPY
 A Space is its own git repo, so the obvious move is to paste `retrieval.py` and
@@ -16,8 +17,9 @@ they have drifted. The copied files are gitignored in this repo -- the originals
 are the only version under review here, and the Space repo gets the assembled
 directory.
 
-`app.py` is the one file in space/ that is genuinely written here, because it is
-the only part that has no counterpart in the pipeline.
+In each target, only the files that have no counterpart in the pipeline are
+written by hand: `app.py` for the Gradio demo; the Dockerfile, README and
+requirements for the API.
 """
 
 import argparse
@@ -27,60 +29,72 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SPACE = ROOT / "space"
 
-# Every module app.py imports, directly or transitively.
+# Every pipeline module the app imports, directly or transitively.
 #   retrieval.py   BM25, RRF, entity mask, the reranker -- the whole ranking path
 #   rag.py         generate() and verify(), so citations are checked identically
 #   rbi_scraper.py scan_entities(), the entity detector the filter depends on
 #   env.py         loads .env; stdlib only
 #   tracing.py     rag.py imports it; no-ops without LANGFUSE_* keys
-MODULES = ["retrieval.py", "rag.py", "rbi_scraper.py", "env.py", "tracing.py"]
+PIPELINE = ["retrieval.py", "rag.py", "rbi_scraper.py", "env.py", "tracing.py"]
 
 # 27MB total. Both are gitignored in this repo (derived artifacts) and both must
 # be committed to the Space repo, which is what makes it run without Qdrant.
 DATA = ["data/chunks.jsonl", "data/embeddings.npy"]
 
+TARGETS = {
+    "gradio": (ROOT / "space", PIPELINE + DATA),
+    "api": (ROOT / "api_space",
+            PIPELINE + DATA + ["api/__init__.py", "api/main.py", "api/pipeline.py",
+                               "api/schemas.py", "api/limits.py", "api/highlight.py"]),
+}
 
-def pairs():
-    for rel in MODULES + DATA:
-        yield ROOT / rel, SPACE / rel
+
+def pairs(target):
+    dest, files = TARGETS[target]
+    for rel in files:
+        yield ROOT / rel, dest / rel
 
 
-def cmd_check():
+def cmd_check(target):
+    dest, files = TARGETS[target]
     drift, missing = [], []
-    for src, dst in pairs():
+    for src, dst in pairs(target):
         if not src.exists():
             sys.exit(f"missing source: {src.relative_to(ROOT)} -- nothing to sync from")
         if not dst.exists():
-            missing.append(dst.relative_to(SPACE))
+            missing.append(dst.relative_to(dest))
         elif not filecmp.cmp(src, dst, shallow=False):
-            drift.append(dst.relative_to(SPACE))
+            drift.append(dst.relative_to(dest))
 
     for label, items in (("never copied", missing), ("DRIFTED from the original", drift)):
         for i in items:
             print(f"  {i}  -- {label}")
     if missing or drift:
-        print(f"\n{len(missing) + len(drift)} file(s) out of date -- run: python space/sync.py")
+        flag = "" if target == "gradio" else f" --target {target}"
+        print(f"\n{len(missing) + len(drift)} file(s) out of date -- run: python space/sync.py{flag}")
         return 1
-    print(f"all {len(MODULES) + len(DATA)} file(s) match the source of truth")
+    print(f"all {len(files)} file(s) match the source of truth")
     return 0
 
 
-def cmd_sync():
-    for src, dst in pairs():
+def cmd_sync(target):
+    dest, files = TARGETS[target]
+    for src, dst in pairs(target):
         if not src.exists():
             sys.exit(f"missing source: {src.relative_to(ROOT)}")
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
-        print(f"  {dst.relative_to(SPACE)}  ({dst.stat().st_size:,} bytes)")
-    print(f"\nsynced {len(MODULES) + len(DATA)} file(s) into {SPACE.name}/")
-    print("deploy:  cd space && git init && git remote add origin "
-          "https://huggingface.co/spaces/<user>/RegRAG && git add -A && git push")
+        print(f"  {dst.relative_to(dest)}  ({dst.stat().st_size:,} bytes)")
+    print(f"\nsynced {len(files)} file(s) into {dest.name}/")
+    print("deploy: see DEPLOY.md")
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
+    ap.add_argument("--target", choices=sorted(TARGETS), default="gradio",
+                    help="which Space to assemble (default: gradio)")
     ap.add_argument("--check", action="store_true",
                     help="report drift instead of copying; exits 1 if out of date")
-    sys.exit(cmd_check() if ap.parse_args().check else cmd_sync())
+    a = ap.parse_args()
+    sys.exit(cmd_check(a.target) if a.check else cmd_sync(a.target))

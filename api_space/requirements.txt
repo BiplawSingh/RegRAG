@@ -1,0 +1,18 @@
+# The API Space's runtime. torch is installed separately in the Dockerfile, from
+# the CPU-only index, before this file is read.
+
+fastapi>=0.115
+uvicorn>=0.30
+
+# retrieval: query embedding + the cross-encoder reranker
+sentence-transformers>=5.2
+numpy>=2.4
+scipy>=1.17          # BM25's sparse term-document matrix
+
+# generation + strict JSON-schema output
+groq>=1.6
+pydantic>=2.12
+
+# rbi_scraper.scan_entities() is the entity detector; these are its imports
+httpx>=0.28
+beautifulsoup4>=4.15

@@ -362,3 +362,52 @@ finger.
 **Why:** the link will be pasted into messages to recruiters, and a preview with a
 real title beats "frontend". An `og:image` needs an absolute URL on the deployed
 site, so it waits until there is one.
+
+---
+
+## Deployment
+
+### 37. Hugging Face Spaces for the API, Vercel for the frontend
+**Chose:** a Docker Space on Hugging Face's free CPU tier (16 GB RAM, 2 vCPU), and
+Vercel for the static frontend.
+**Rejected:** Render's free tier (512 MB, too small for torch plus two models);
+Fly.io (no free allowance for new accounts, though it is the right upgrade if a
+warm, always-fast demo becomes worth a few dollars a month); one host for both.
+**Why:** memory decided it before anything else was compared. The API needs about
+1–1.5 GB, and only the Space offers that for free. The cost is a sleep after
+about 48 idle hours and a slow first request after it. The frontend is plain
+files, and a CDN serves those better than any Python host. DEPLOY.md has the full
+comparison.
+
+### 38. The Space is assembled by the existing sync script, and uploaded rather than pushed
+**Chose:** `space/sync.py --target api` copies the pipeline, the API and the data
+into `api_space/` beside a hand-written Dockerfile. `hf upload` sends the folder.
+**Rejected:** a second, hand-maintained copy of the modules; `git init` inside
+`api_space/`.
+**Why:** the sync script already exists to stop a demo drifting from the measured
+pipeline, and `--check` fails loudly if it has. Extending it keeps one mechanism
+for both Spaces. A git repo nested inside this one confuses the outer repo, and
+`hf upload` handles the two large data files without it.
+
+### 39. CPU-only PyTorch, with the models built into the image
+**Chose:** install torch from PyTorch's CPU index, and download both models
+during `docker build`.
+**Why:** the default torch wheel bundles CUDA libraries for a GPU the Space
+doesn't have, which makes the image several gigabytes larger for nothing. Models
+fetched at build time are loaded from disk when the Space wakes, instead of
+downloaded while the first visitor waits.
+
+### 40. The proxy setting is measured after deploying, not assumed
+**Chose:** an endpoint that is off by default (`DEBUG_FORWARDING=1`). It shows
+the caller their own request as the server sees it, so `FORWARDED_HOPS` can be
+checked once and the endpoint switched off again.
+**Why:** how many proxies Hugging Face puts in front of a Space is not something to
+guess. Too few trusted, and every visitor shares one rate-limit budget. Too many,
+and anyone can reset theirs with a fake header. The endpoint only ever shows the
+caller's own addresses, and it stays off after the check.
+
+### 41. The Space is public
+**Why:** a private Space rejects requests that don't carry a Hugging Face login,
+so a visitor's browser could not call it. Everything in the Space is already in
+the public GitHub repo or is the RBI's own published text. The Groq key is a
+Space secret, never a file.
