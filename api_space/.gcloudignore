@@ -1,0 +1,5 @@
+# What `gcloud run deploy --source api_space` leaves out of the upload.
+# Without this file gcloud uploads everything, bytecode caches included.
+.gcloudignore
+**/__pycache__/
+*.pyc

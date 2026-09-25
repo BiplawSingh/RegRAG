@@ -368,6 +368,9 @@ site, so it waits until there is one.
 ## Deployment
 
 ### 37. Hugging Face Spaces for the API, Vercel for the frontend
+*Superseded for the API by #42: Docker Spaces stopped being free. Vercel stands.
+#38–#41 carry over, with Cloud Run in place of the Space.*
+
 **Chose:** a Docker Space on Hugging Face's free CPU tier (16 GB RAM, 2 vCPU), and
 Vercel for the static frontend.
 **Rejected:** Render's free tier (512 MB, too small for torch plus two models);
@@ -411,3 +414,18 @@ caller's own addresses, and it stays off after the check.
 so a visitor's browser could not call it. Everything in the Space is already in
 the public GitHub repo or is the RBI's own published text. The Groq key is a
 Space secret, never a file.
+
+### 42. Google Cloud Run for the API, capped at one instance
+**Chose:** the same container on Cloud Run: 2 GiB, scale to zero,
+`--max-instances 1`, the Groq key in Secret Manager.
+**Rejected:** Hugging Face PRO (a subscription for what was meant to be free);
+Render's free tier plus an ONNX rewrite of both models to fit in 512 MB (code
+churn, and retrieval would have to be re-verified against the measured results).
+**Why:** Hugging Face moved Docker and Gradio Spaces behind PRO. Cloud Run runs
+the existing Dockerfile with one change, reading the port from `$PORT`, and
+costs nothing while idle. The one-instance cap is a correctness setting, not a
+cost one: the rate limits are in memory (#11), so a second instance would
+double every budget, including the global Groq cap. Scaling to zero resets
+those counters more often than a sleeping Space did. That errs in the
+visitor's favour, and Groq's own limit still backs it up. Measured locally, the
+container is ready 14 s after start and holds about 550 MiB after a question.

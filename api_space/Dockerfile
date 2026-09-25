@@ -1,10 +1,10 @@
-# The RegRAG web API, as a Hugging Face Docker Space.
+# The RegRAG web API, as a container for Google Cloud Run.
 # Assembled by `python space/sync.py --target api`; see DEPLOY.md.
 
 FROM python:3.13-slim
 
-# Hugging Face runs Space containers as uid 1000, so the app, the pip installs
-# and the model cache all belong to that user rather than root.
+# Run as an ordinary user, not root: the app, the pip installs and the model
+# cache all belong to it.
 RUN useradd -m -u 1000 user
 USER user
 ENV HOME=/home/user \
@@ -14,7 +14,7 @@ ENV HOME=/home/user \
 WORKDIR /home/user/app
 
 # CPU-only torch first, from PyTorch's own index. The default wheel bundles CUDA
-# (~2.5GB) for a GPU this Space doesn't have; the CPU build is a fraction of it.
+# (~2.5GB) for a GPU this container doesn't have; the CPU build is a fraction of it.
 COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir --user torch --index-url https://download.pytorch.org/whl/cpu \
  && pip install --no-cache-dir --user -r requirements.txt
@@ -31,6 +31,9 @@ ENV HF_HUB_OFFLINE=1
 
 COPY --chown=user . .
 
+# Cloud Run says which port to listen on through $PORT (8080 in practice); the
+# default covers `docker run` locally. `sh -c` so the variable expands, `exec` so
+# uvicorn replaces the shell as PID 1 and receives Cloud Run's SIGTERM directly.
 # One worker, on purpose: see DECISIONS.md #11.
-EXPOSE 7860
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "1"]
+EXPOSE 8080
+CMD ["sh", "-c", "exec uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1"]

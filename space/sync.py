@@ -1,8 +1,8 @@
 """
-Assemble a Hugging Face Space from the source of truth.
+Assemble a deployable directory from the source of truth.
 
     python space/sync.py                     # the Gradio demo  -> space/
-    python space/sync.py --target api        # the web API      -> api_space/
+    python space/sync.py --target api        # the web API      -> api_space/ (Cloud Run)
     python space/sync.py --check [--target api]   # report drift without copying
 
 WHY A SCRIPT AND NOT A COMMITTED COPY
@@ -18,8 +18,8 @@ are the only version under review here, and the Space repo gets the assembled
 directory.
 
 In each target, only the files that have no counterpart in the pipeline are
-written by hand: `app.py` for the Gradio demo; the Dockerfile, README and
-requirements for the API.
+written by hand: `app.py` for the Gradio demo; the Dockerfile, .gcloudignore,
+README and requirements for the API.
 """
 
 import argparse

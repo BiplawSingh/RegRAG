@@ -1,21 +1,21 @@
 # Deploying the web demo
 
-Two pieces, two free hosts:
+Two pieces, two hosts:
 
 | Piece | Host | What it serves |
 |---|---|---|
 | Frontend (`frontend/`) | **Vercel** | Static files: HTML, JS, CSS. No server code. |
-| API (`api/` + the pipeline) | **Hugging Face Spaces**, Docker | FastAPI, both models, the corpus. Calls Groq. |
+| API (`api/` + the pipeline) | **Google Cloud Run** | FastAPI, both models, the corpus. Calls Groq. |
 
 ```
 browser ──HTTPS──▶ Vercel (static React app)
    │
-   └────HTTPS, CORS──▶ Hugging Face Space (FastAPI) ──▶ Groq API
+   └────HTTPS, CORS──▶ Cloud Run (FastAPI container) ──▶ Groq API
 ```
 
-The browser downloads the app from Vercel, then calls the Space directly. The
-Groq key lives only in the Space's secrets. It is never in the frontend bundle,
-the repo, or the browser.
+The browser downloads the app from Vercel, then calls Cloud Run directly. The
+Groq key lives only in Google Secret Manager. It is never in the frontend
+bundle, the repo, the image, or the browser.
 
 ---
 
@@ -27,10 +27,11 @@ most free tiers before anything else is compared.
 
 | Option | RAM | Idle behaviour | Cost | Verdict |
 |---|---|---|---|---|
-| **Hugging Face Spaces (Docker, CPU basic)** | 16 GB, 2 vCPU | sleeps after ~48 h without visitors; the next visit wakes it (a minute or two) | free | **chosen**: fits comfortably, runs any Dockerfile, and is where ML demos are expected to live |
-| Render (free web service) | 512 MB | sleeps after 15 min idle; slow cold starts | free | too little memory for torch plus two models |
-| Fly.io | configurable (2 GB is plenty) | can stay warm | paid: no free allowance for new accounts | good if a warm, always-fast demo is worth a few dollars a month |
-| Qdrant Cloud (free cluster) | 1 GB, vectors only | suspended when unused for a while | free | **not needed**: see below |
+| **Google Cloud Run** | configurable; 2 GiB used | scales to zero when idle; the next request starts a container (models load from the image, ~10–30 s) | billed per second of use, with a monthly free allowance; needs a billing account | **chosen**: runs the existing Dockerfile unchanged, costs nothing while nobody is visiting |
+| Hugging Face Spaces (Docker) | 16 GB, 2 vCPU | sleeps after ~48 h | Docker and Gradio Spaces now need a PRO subscription | was the first choice; still the least work if a subscription is fine |
+| Render (free web service) | 512 MB | sleeps after 15 min idle | free | too little memory for torch plus two models |
+| Fly.io | configurable | can stay warm | paid | good if an always-warm demo is worth a few dollars a month |
+| Qdrant Cloud (free cluster) | 1 GB, vectors only | suspended when unused | free | **not needed**: see below |
 
 **Why no Qdrant Cloud.** The deployed API searches `embeddings.npy` with a numpy
 dot product. `retrieval_lab.py baseline` verifies that path returns exactly the
@@ -49,42 +50,42 @@ any figure above.
 
 ---
 
-## Part 1: the API on Hugging Face Spaces
+## Part 1: the API on Cloud Run
 
-You need a Hugging Face account and a Groq API key (https://console.groq.com).
+You need a Google Cloud project with billing enabled (free-trial credits count),
+a Groq API key (https://console.groq.com), and the gcloud CLI
+(https://cloud.google.com/sdk/docs/install). The commands below are for Git Bash
+or any POSIX shell.
 
-### 1. Create the Space
+### 1. Point gcloud at the project
 
-On https://huggingface.co/new-space:
+```bash
+gcloud auth login
+gcloud config set project <your-project-id>
+gcloud config set run/region asia-south1          # Mumbai; pick one near your visitors
 
-- **Name:** `regrag-api`
-- **SDK:** Docker → Blank
-- **Hardware:** CPU basic (free)
-- **Visibility: Public.** A private Space rejects requests without a Hugging Face
-  login, so the browser could not call it. Everything the Space contains is
-  either in the public GitHub repo already or is the RBI's own published text.
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com \
+    artifactregistry.googleapis.com secretmanager.googleapis.com
+```
 
-Its API address will be `https://<your-hf-username>-regrag-api.hf.space`.
+### 2. Store the Groq key in Secret Manager
 
-### 2. Add the secret and variables
+```bash
+read -rsp "Groq key: " KEY && printf %s "$KEY" \
+    | gcloud secrets create groq-api-key --data-file=- && unset KEY
 
-In the Space: **Settings → Variables and secrets.**
+# Let Cloud Run's runtime identity (the default compute service account) read it.
+PROJECT_NUMBER=$(gcloud projects describe "$(gcloud config get-value project)" \
+    --format='value(projectNumber)')
+gcloud secrets add-iam-policy-binding groq-api-key \
+    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+    --role=roles/secretmanager.secretAccessor
+```
 
-| Name | Kind | Value |
-|---|---|---|
-| `GROQ_API_KEY` | **Secret** | your Groq key |
-| `ALLOWED_ORIGINS` | Variable | `http://localhost:5173` for now; the Vercel URL after Part 2 |
-| `FORWARDED_HOPS` | Variable | `1`, then verify it in step 5 |
-| `DEBUG_FORWARDING` | Variable | `1` until step 5 is done, then delete it |
+`read -s` keeps the key off the screen and out of shell history. To rotate it
+later: `gcloud secrets versions add groq-api-key --data-file=-`, then redeploy.
 
-Optional, all with defaults sized to the Groq free tier (see `.env.example`):
-`RATE_IP_PER_MINUTE` (5), `RATE_IP_GENERATIONS_PER_DAY` (20),
-`RATE_GENERATIONS_PER_MINUTE` (3), `RATE_GENERATIONS_PER_DAY` (60), `GROQ_MODEL`.
-
-Use a **Secret**, not a Variable, for the key: variables are visible to anyone who
-can see the Space.
-
-### 3. Assemble and upload
+### 3. Assemble and deploy
 
 From the repo root, with the corpus built (`data/chunks.jsonl` and
 `data/embeddings.npy` exist):
@@ -93,39 +94,56 @@ From the repo root, with the corpus built (`data/chunks.jsonl` and
 python space/sync.py --target api          # copies pipeline + data into api_space/
 python space/sync.py --target api --check  # confirms nothing has drifted
 
-python -m huggingface_hub.cli.hf auth login   # paste a token with "write" access
-python -m huggingface_hub.cli.hf upload <your-hf-username>/regrag-api api_space . \
-    --repo-type space --exclude "**/__pycache__/**" \
-    --commit-message "Deploy the RegRAG API"
+gcloud run deploy regrag-api --source api_space \
+    --memory 2Gi --cpu 1 --cpu-boost \
+    --min-instances 0 --max-instances 1 \
+    --allow-unauthenticated \
+    --set-secrets GROQ_API_KEY=groq-api-key:latest \
+    --set-env-vars ALLOWED_ORIGINS=http://localhost:5173,FORWARDED_HOPS=1,DEBUG_FORWARDING=1
 ```
 
-`hf upload` handles the two large data files itself and avoids running
-`git init` inside this repo. A git repo nested in another one confuses the
-outer one.
+What the flags are for:
 
-### 4. Watch it build
+- `--source api_space` uploads the folder; Cloud Build builds the Dockerfile in
+  it (about 5–10 minutes the first time, mostly PyTorch) and stores the image in
+  Artifact Registry. Accept when it offers to create a repository.
+- `--max-instances 1` is required, not a tuning choice. The rate limits live in
+  memory (DECISIONS.md #11), so a second instance would get a second copy of
+  every budget, including the global Groq cap. It also caps the bill.
+- `--min-instances 0` lets it scale to zero, so idle time costs nothing. The price
+  is a cold start of roughly 10–30 seconds on the first question after a quiet
+  spell. `--cpu-boost` shortens it.
+- `--allow-unauthenticated` makes it public. Without it every browser request is
+  rejected with 403.
 
-The Space's **Logs** tab shows the Docker build (about 5–10 minutes the first
-time, mostly PyTorch), then startup. It is ready when this returns
-`"status":"ok"`:
+`--set-env-vars` splits on commas. To give `ALLOWED_ORIGINS` several origins,
+change the delimiter: `--update-env-vars "^;^ALLOWED_ORIGINS=https://a.app,http://localhost:5173"`.
+
+The deploy prints the service URL, something like
+`https://regrag-api-xxxxxxxxxx.asia-south1.run.app`. Retrieve it any time with:
 
 ```bash
-curl https://<your-hf-username>-regrag-api.hf.space/health
+gcloud run services describe regrag-api --format='value(status.url)'
 ```
 
-`"status":"starting"` means the models are still loading. Wait a moment. The
-container starts from a built image, so nothing is downloaded at this point.
+It is ready when this returns `"status":"ok"`:
 
-### 5. Check the rate limiter sees real visitor addresses
+```bash
+curl https://<service-url>/health
+```
+
+The container only accepts traffic once the models are loaded, so a slow first
+response is the cold start, not an error.
+
+### 4. Check the rate limiter sees real visitor addresses
 
 Rate limits are per visitor IP, read from the `X-Forwarded-For` header that
-Hugging Face's proxy adds. `FORWARDED_HOPS` says how many entries at the right of
+Google's front end adds. `FORWARDED_HOPS` says how many entries at the right of
 that header were added by trusted proxies. It is worth checking once, not
 guessing:
 
 ```bash
-curl https://<your-hf-username>-regrag-api.hf.space/debug/forwarding \
-     -H "X-Forwarded-For: 203.0.113.9"
+curl https://<service-url>/debug/forwarding -H "X-Forwarded-For: 203.0.113.9"
 ```
 
 - **`rate_limit_key` is your own public IP** (compare with https://ifconfig.me):
@@ -136,17 +154,32 @@ curl https://<your-hf-username>-regrag-api.hf.space/debug/forwarding \
   visitor would share one budget. Raise `FORWARDED_HOPS` by the number of
   entries between your IP and the right-hand end of `x_forwarded_for`.
 
-Then **delete `DEBUG_FORWARDING`** so the endpoint switches off.
-
-### 6. Ask a real question
+Then switch the endpoint off:
 
 ```bash
-curl -X POST https://<your-hf-username>-regrag-api.hf.space/ask \
+gcloud run services update regrag-api --remove-env-vars DEBUG_FORWARDING
+```
+
+### 5. Ask a real question
+
+```bash
+curl -X POST https://<service-url>/ask \
      -H "Content-Type: application/json" \
      -d '{"question": "Who can be an Internal Ombudsman?"}'
 ```
 
 The response should have `"generation": "ok"` and five or so citations.
+
+### 6. Set a budget alert
+
+In the Cloud console: **Billing → Budgets & alerts → Create budget**, scoped to
+this project, with email alerts at 50%, 90% and 100%. A budget only alerts; it
+does not stop spending. `--max-instances 1` is what bounds the cost.
+
+If the project runs on free-trial credits, it stops when the credits run out or
+expire, unless the billing account is upgraded to a paid one. After upgrading,
+Cloud Run's monthly free allowance still applies, and a demo with occasional
+visitors usually stays inside it.
 
 ---
 
@@ -170,8 +203,8 @@ On https://vercel.com/new, import the GitHub repo, then:
 - **Root Directory:** `frontend` (the repo root is the Python project)
 - **Framework Preset:** Vite (detected). Build command `npm run build`, output
   directory `dist`. Leave both as detected.
-- **Environment Variables:** `VITE_API_URL` = `https://<your-hf-username>-regrag-api.hf.space`
-  (no trailing slash)
+- **Environment Variables:** `VITE_API_URL` = the Cloud Run service URL (no
+  trailing slash)
 
 Deploy. The site is at `https://<project>.vercel.app`.
 
@@ -181,19 +214,25 @@ public bundle, so never put a key in one.
 
 ### 3. Allow the frontend to call the API
 
-Back in the Space: set `ALLOWED_ORIGINS` to the Vercel address, for example
+Set `ALLOWED_ORIGINS` to the Vercel address, for example
 `https://regrag.vercel.app`. That's the exact origin, with no trailing slash.
-Keep `http://localhost:5173` after a comma if you still develop locally. The
-Space restarts with the new value.
+Keep `http://localhost:5173` if you still develop locally:
 
-Only that address may call the API from a browser. Vercel's preview deployments
-use other URLs, so they will show "Couldn't reach the server". That is CORS doing
-its job, not a bug.
+```bash
+gcloud run services update regrag-api \
+    --update-env-vars "^;^ALLOWED_ORIGINS=https://regrag.vercel.app,http://localhost:5173"
+```
+
+The update starts a new revision with the new value.
+
+Only those addresses may call the API from a browser. Vercel's preview
+deployments use other URLs, so they will show "Couldn't reach the server". That
+is CORS doing its job, not a bug.
 
 ### 4. Try it
 
-Open the Vercel URL and click an example question. If the Space was asleep, the
-first question can take a minute while it wakes.
+Open the Vercel URL and click an example question. If the service had scaled to
+zero, the first question takes a little longer while a container starts.
 
 ---
 
@@ -201,36 +240,46 @@ first question can take a minute while it wakes.
 
 | Where | Name | Required | Purpose |
 |---|---|---|---|
-| Space (secret) | `GROQ_API_KEY` | yes | generation. Without it the API serves retrieval only |
-| Space | `ALLOWED_ORIGINS` | yes | comma-separated origins allowed to call the API from a browser |
-| Space | `FORWARDED_HOPS` | yes | trusted proxies in front of the app. Verify with Part 1, step 5 |
-| Space | `DEBUG_FORWARDING` | no | `1` enables `/debug/forwarding`. Remove after checking |
-| Space | `RATE_*` | no | rate limits. Defaults fit the Groq free tier |
-| Space | `GROQ_MODEL` | no | default `openai/gpt-oss-120b`. Must support strict JSON schema |
-| Vercel | `VITE_API_URL` | yes | the Space's address, baked in at build time |
+| Cloud Run (from Secret Manager) | `GROQ_API_KEY` | yes | generation. Without it the API serves retrieval only |
+| Cloud Run | `ALLOWED_ORIGINS` | yes | comma-separated origins allowed to call the API from a browser |
+| Cloud Run | `FORWARDED_HOPS` | yes | trusted proxies in front of the app. Verify with Part 1, step 4 |
+| Cloud Run | `DEBUG_FORWARDING` | no | `1` enables `/debug/forwarding`. Remove after checking |
+| Cloud Run | `RATE_*` | no | rate limits. Defaults fit the Groq free tier (see `.env.example`) |
+| Cloud Run | `GROQ_MODEL` | no | default `openai/gpt-oss-120b`. Must support strict JSON schema |
+| Vercel | `VITE_API_URL` | yes | the Cloud Run service URL, baked in at build time |
+
+Cloud Run sets `PORT` itself; the Dockerfile reads it.
 
 ---
 
 ## Running it day to day
 
-- **Updating the API.** Change code in the repo, then re-run step 3 of Part 1:
-  `sync.py --target api`, then `hf upload`. The Space rebuilds.
+- **Updating the API.** Change code in the repo, then
+  `python space/sync.py --target api` and `gcloud run deploy regrag-api --source api_space`.
+  A redeploy without flags keeps the existing secret, variables and limits.
 - **Updating the frontend.** Push to `main`. Vercel rebuilds automatically.
 - **The daily allowance.** Groq's free tier is about 200,000 tokens a day, roughly
   70 answers. The API stops generating at 60 a day (`RATE_GENERATIONS_PER_DAY`),
   keeping a margin. After that, visitors see the retrieved passages with a note
-  explaining why, rather than an error. The count resets on a rolling 24 hours,
-  and also when the Space restarts.
-- **Sleeping.** After about 48 hours without visitors the Space sleeps. Visiting
-  it wakes it. Before sending the link to someone, open it yourself first.
-- **Logs.** The Space's Logs tab shows startup, errors and failed generations.
-  The API does not log questions.
+  explaining why, rather than an error. The counts are in memory, so they reset
+  whenever the container stops, which on Cloud Run happens after it has been
+  idle for a while. If Groq's own limit is reached first, generation fails and
+  the visitor gets the same retrieval-only answer.
+- **Cold starts.** After an idle spell the first request waits for a container to
+  start. Before sending the link to someone, open it yourself first.
+- **Logs.** `gcloud run services logs read regrag-api --limit 50`, or the service's
+  Logs tab in the console. They show startup, errors and failed generations. The
+  API does not log questions.
 
 ## Troubleshooting
 
 | Symptom | Likely cause |
 |---|---|
-| "Couldn't reach the server" on the Vercel site | the Space is asleep or still building, or `ALLOWED_ORIGINS` doesn't exactly match the site's address. The browser console will say "CORS" for the latter |
-| `/health` stuck on `"starting"` | model loading failed. Check the Logs tab for the error |
+| "Couldn't reach the server" on the Vercel site | the first request is still cold-starting, or `ALLOWED_ORIGINS` doesn't exactly match the site's address. The browser console will say "CORS" for the latter |
+| 403 from the service URL | deployed without `--allow-unauthenticated`. Redeploy with it, or grant `allUsers` the Cloud Run Invoker role |
+| Deploy fails with a permission error during the build | the build's service account lacks a role. The error names it; `roles/run.builder` on the default compute service account is the usual fix |
+| Deploy fails reading the secret | step 2's `add-iam-policy-binding` was skipped |
+| Container fails to start, "memory limit exceeded" in the logs | `--memory` below 2Gi |
+| `/health` stuck on `"starting"` | model loading failed. Check the logs for the error |
 | Every answer is retrieval-only | `GROQ_API_KEY` missing or wrong (the note says "switched off"), or the day's allowance is used up (the note says so) |
-| 429 for everyone at once | `FORWARDED_HOPS` too high or too low. Redo Part 1, step 5 |
+| 429 for everyone at once | `FORWARDED_HOPS` too high or too low. Redo Part 1, step 4 |

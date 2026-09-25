@@ -1,19 +1,7 @@
----
-title: RegRAG API
-emoji: 📜
-colorFrom: indigo
-colorTo: green
-sdk: docker
-app_port: 7860
-pinned: false
-license: mit
-short_description: Question answering over 506 RBI circulars, with verified citations
----
-
 # RegRAG API
 
 The backend for the RegRAG web demo: FastAPI over a retrieval pipeline for 506
-Reserve Bank of India circulars.
+Reserve Bank of India circulars, deployed to Google Cloud Run.
 
 - `POST /ask` with `{"question": "..."}` returns the answer, each citation's
   verification result and highlight offsets, the retrieved passages, and every
@@ -25,4 +13,5 @@ Source, evaluation and design notes: https://github.com/BiplawSingh/RegRAG
 
 This directory is assembled by `python space/sync.py --target api`. The pipeline
 modules and data are copies of the originals in that repo and are never edited
-here.
+here. Only the Dockerfile, `.gcloudignore`, this README and `requirements.txt`
+are written by hand.

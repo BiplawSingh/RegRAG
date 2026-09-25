@@ -61,8 +61,8 @@ def create_app(pipeline=None, limiter=None, origins=None, forwarded_hops=None):
 
     @app.get("/")
     def root():
-        # The Hugging Face Space page shows this path. Point a curious visitor
-        # somewhere useful instead of at a 404.
+        # Opening the service URL in a browser lands here. Point a curious
+        # visitor somewhere useful instead of at a 404.
         return {"name": "RegRAG API", "ask": "POST /ask", "health": "/health",
                 "docs": "/docs", "source": "https://github.com/BiplawSingh/RegRAG"}
 

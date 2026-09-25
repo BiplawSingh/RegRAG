@@ -10,6 +10,9 @@ identified retrieval as the bottleneck, and closing it moved the end-to-end scor
 chunk recall **60% → 78%**, and answers fully correct **65% → 69%** (71% on the
 questions graded in both runs). Every number here is reproducible from `data/eval/`.
 
+**Try it: <LIVE_URL>**. The answers show their evidence and how it was found.
+See [the web demo](#the-web-demo).
+
 ## Why this corpus is harder than it looks
 
 RBI reissues the same rule once per class of regulated entity — a KYC amendment
@@ -650,13 +653,72 @@ is the only one of the eight with this problem, and it is documented in
   ones drafted from a preamble they do not, which distorts oracle-mode results.
   q062 is the known instance.
 
-## A local UI — `python space/app.py`
+## The web demo
 
-There is a small Gradio app for poking at the pipeline by hand: type a question,
-see the answer, the citation checks, and the eight passages that produced it, with
-any passage bound to the wrong class of institution flagged. Toggles for `k`, the
-entity filter and reranking make the central result touchable — turn reranking off,
-ask the same question, watch the ordering change.
+**Live: <LIVE_URL>**
+
+![RegRAG answering "Who can be an Internal Ombudsman?", with citation 3 open: the source passage with the quoted sentence highlighted, beside the circular's number, date and the class of institution it binds](docs/screenshot.png)
+
+Ask a question and get the answer with one marker per citation, coloured by what
+verification found. Opening a marker shows the passage with the quoted span
+highlighted. **"How this answer was found"** walks through the pipeline using the
+question's own numbers:
+- whether the entity filter applied;
+- each passage's rank in the dense and keyword searches, its fused score and its
+  cross-encoder score;
+- which search found it;
+- a tally of the citation checks.
+
+The README's findings show up on single questions. On the Ombudsman example, the
+reranker lifts a passage from #18 to #1, and the eight passages come from five
+institution classes' copies of the same rule.
+
+```mermaid
+flowchart LR
+    B["browser"] -->|"static files"| V["Vercel<br/>React + TypeScript"]
+    B -->|"POST /ask · CORS"| H
+    subgraph H ["Google Cloud Run — Docker, FastAPI"]
+        direction TB
+        RL["rate limits<br/>per IP · global daily"] --> P
+        subgraph P ["the evaluated pipeline, unchanged"]
+            direction LR
+            ED["entity detect"] --> DS["dense<br/>numpy over BGE"] & BM["BM25"]
+            DS & BM --> RRF["RRF → 50"] --> CE["cross-encoder → 8"]
+        end
+        P --> VF["verify quotes<br/>+ highlight offsets"]
+    end
+    CE --> G["Groq<br/>gpt-oss-120b"] --> VF
+```
+
+The API calls the same `retrieval.py` and `rag.py` the evaluation measured. The
+one difference is the dense channel: a numpy dot product instead of a Qdrant
+query, which `retrieval_lab.py baseline` shows returns identical results. The
+deployment directory is assembled from the originals by `space/sync.py --target
+api`, so the demo cannot drift away from what was measured.
+
+**It was kept local at first, and the reason still shapes it.** A public demo
+draws on a personal free-tier allowance of about 70 answers a day. So each
+visitor gets a small rate limit, and the server stops generating at 60 answers a
+day. Past that point the demo does not fail: it shows the retrieved passages and
+their scores, with a note saying why. That half of the project is still worth
+seeing. The measurements remain the deliverable; the demo makes them concrete.
+
+Run it locally:
+
+```
+uvicorn api.main:app --port 8000                   # the API, from the repo root
+cd frontend && npm install && npm run dev          # http://localhost:5173
+```
+
+Deployment, hosting trade-offs and every environment variable are in
+[DEPLOY.md](DEPLOY.md). The design choices behind the API and the UI, including
+what was rejected and why, are in [DECISIONS.md](DECISIONS.md).
+
+### The Gradio app, for exploring by hand — `python space/app.py`
+
+A second, local-only UI with toggles for `k`, the entity filter and reranking.
+Turn reranking off, ask the same question, and watch the ordering change. It is
+assembled the same way, by `python space/sync.py`.
 
 ```
 pip install gradio
@@ -664,24 +726,16 @@ python space/sync.py      # assemble it from the modules at the repo root
 python space/app.py       # http://127.0.0.1:7860
 ```
 
-**It is not deployed anywhere, deliberately.** It was built to run on Hugging Face
-Spaces and would, but two things argued against it: a public demo draws on a
-personal free-tier allowance of roughly 70 questions a day, so any real traffic
-degrades it to retrieval-only; and a demo is the one artefact that cannot show what
-this project is actually about. You cannot click your way to "the answer key was
-written before the results existed". The measurements are the deliverable, and they
-are all in this file and in `data/eval/`.
-
-The app is assembled by `space/sync.py` from the pipeline's own modules rather than
-being a copy of them, so it cannot quietly drift into demonstrating something the
-measurements no longer describe. `python space/sync.py --check` fails if it has.
-
 ## Tests — `pytest tests/`
 
-31 tests, no corpus, no model, no API key, ~1 second. They cover the machinery
-underneath the measurements: BM25 scoring, RRF fusion, `top_k` under a filter, the
-entity mask, citation verification, and answer-key validation. CI runs them plus
-`ruff check --select F` on every push.
+66 tests, no corpus, no model, no API key, about 2 seconds. They cover the
+machinery underneath the measurements:
+- BM25 scoring, RRF fusion, `top_k` under a filter and the entity mask;
+- citation verification and answer-key validation;
+- the web API: its contract, highlight offsets, rate limits, fallbacks and CORS.
+
+On every push, CI runs them plus `ruff check --select F`, and type-checks, lints
+and builds the frontend.
 
 **What CI deliberately does not do is run the eval.** Whether the reranker is
 worth twelve questions is a measurement against the answer key, on a machine with
@@ -704,6 +758,9 @@ The tests that earn their place are the ones guarding silent failures:
   reading *"Not answerable from this source"*, passed validation because the field
   was non-empty, and exported into the graded set as an answerable question whose
   gold answer was a refusal.
+- **asking `retrieval.search` for scores never changes the ranking.** The web
+  demo asks for them and the eval never does. If the flag moved a single chunk,
+  the demo would be showing a ranking this README never measured.
 
 ## Every question is logged, automatically
 
@@ -711,6 +768,10 @@ The tests that earn their place are the ones guarding silent failures:
 `data/log.jsonl`, along with the answer, retrieved documents, citation
 verification results, and timing. Nothing is overwritten; `python rag.py history`
 summarizes it. Evaluation runs write separately to `data/eval/`.
+
+The web API is the exception, on purpose: it calls the pipeline's stages
+directly rather than `rag.run_one()`, so strangers' questions to the public demo
+are not kept anywhere.
 
 Tracing is optional: set Langfuse keys in `.env` to get a span per pipeline stage,
 or leave them blank and the pipeline runs identically with tracing disabled.
