@@ -10,7 +10,7 @@ identified retrieval as the bottleneck, and closing it moved the end-to-end scor
 chunk recall **60% → 78%**, and answers fully correct **65% → 69%** (71% on the
 questions graded in both runs). Every number here is reproducible from `data/eval/`.
 
-**Try it: <LIVE_URL>**. The answers show their evidence and how it was found.
+**Try it: https://reg-rag.vercel.app**. The answers show their evidence and how it was found.
 See [the web demo](#the-web-demo).
 
 ## Why this corpus is harder than it looks
@@ -655,7 +655,7 @@ is the only one of the eight with this problem, and it is documented in
 
 ## The web demo
 
-**Live: <LIVE_URL>**
+**Live: https://reg-rag.vercel.app**
 
 ![RegRAG answering "Who can be an Internal Ombudsman?", with citation 3 open: the source passage with the quoted sentence highlighted, beside the circular's number, date and the class of institution it binds](docs/screenshot.png)
 
